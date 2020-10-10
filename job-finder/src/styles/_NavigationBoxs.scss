@@ -1,0 +1,208 @@
+.boxes-container{
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    width: 95%;
+    float: left;
+    margin-top: 350px;
+}
+.box{
+    width: 100%;
+    min-width: 300px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+}
+.box-header{
+    background: white;
+    height: 80px;
+    width: 100%;
+   
+}
+.text-container{
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    &:after{
+        content: '';
+        display: block;
+        border: .5rem solid transparent;
+        width: 0px;
+        height: 0px;
+        border-top-color:  white;
+        position: absolute;
+        margin-top: 95px;
+      
+    }
+}
+.box-contant{
+    max-height:500px;
+    background:#202a68;
+    color: white;
+    padding: 0px 0px;
+    transition: max-height .5s ease-in-out;
+    overflow: hidden;
+}
+.candidate-box>.box-contant{
+    background: url('../images/candidates_bg_mobile.jpg') no-repeat right top #202a68;
+    background-size: 1030px 1240px;
+}
+@media(min-width:$break-point-desktop){
+    .text-container{
+        top: 0px;
+        transition: top .18s linear .15s;
+        &:after{
+            border-width: .35rem;
+          margin-top: 135px;
+          z-index: 50;
+          transition: margin-top .15s linear ;
+        
+        }
+    }
+    .boxes-container{
+        margin-top: 50px;
+     flex-flow: row;
+     justify-content: center;
+    }
+    .box{
+        min-width: unset;
+        width: 220px;
+        height:300px;
+        flex-grow: 0;
+        flex-shrink: 0;
+        margin: 0px 15px;
+        overflow: hidden;
+        justify-content: flex-start;
+    }
+    .box:not(.candidate-box):hover{
+        &>.box-contant{
+            ul{
+                padding-top: 15px;
+                transform: translateY(-335px);
+            }
+        }
+        &>.box-header>.text-container{
+            position: relative;
+            top: -22px;
+          
+
+        &:after{
+              margin-top: 5px;
+              z-index: 50;
+            
+            
+            }
+        }
+        
+    }
+    .box-header{
+     flex-shrink: 0;
+     height:7rem;
+    }
+    
+    .candidate-box>.box-contant{
+        background: url('../images/candidates_bg_mobile.jpg') no-repeat right top #202a68;
+        background-size: contain;
+    }
+   
+}
+.box-contant>ul{
+    list-style: none;
+    padding-right: 15px;
+    li
+    {
+        font-size: .85rem;
+        margin: 25px 0px;
+    }
+
+}
+.salary-tabs-box:not(.expended){
+    &>.box-contant{
+    max-height: 0px;
+    }
+    &>.box-header>.text-container>.fa-plus{
+        display: block;
+    }
+}
+.salary-tabs-box.expended{
+   
+    &>.box-header>.text-container>.fa-minus{
+        display: block;
+    }
+}
+.box.linkedin-box{
+    background: url('../images/linkedin-bg-box.png');
+    background-repeat: no-repeat;
+    margin-top: 50px;
+    margin-right: 20px;
+    background-size: contain;
+    background-position: right;
+    height: 290px;
+    width: min-content;
+}
+.fas,
+.personal-box,
+.senior-box{
+    display: none;
+}
+@media(min-width:$break-point-desktop){
+    .salary-tabs-box:not(.expended){
+        &>.box-contant{
+        max-height: unset;
+        }
+        
+    }
+    .fas,
+    .personal-box,
+    .senior-box{
+         display: inline;
+    } 
+    #minus-font{
+        display: none;
+    }
+    .box-contant{
+        padding-top: 1px;
+        height:80%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        overflow: visible;
+        flex-shrink: 0;
+        max-height: unset;
+        ul{
+            
+            background-color: $dark-blue;
+            height: 110%;
+            margin-top: 0px;
+           
+            z-index: 30;
+            li{
+                margin: 0px;
+            }
+            li:not(:first-child){
+                font-size: .9rem;
+                margin: 9px 0px;
+              }
+    }
+    }
+    .box:not(.candidate-box)>.box-contant>ul{
+        position: relative;
+            top:250px;
+            transition: transform .3s linear;
+    }
+    .senior-box>.box-contant{
+        background-image: url('../images//seniors_bg.jpg');
+    }
+    .salary-tabs-box>.box-contant{
+        background-image: url('../images/salaryTables_bg.gif');
+    }
+    .personal-box>.box-contant{
+        background-image: url('../images//personalBox_bg.jpg');
+    }
+    .box.linkedin-box{
+        margin: 0px 30px;
+        height: 300px;
+        width: 220px;
+    }
+}
