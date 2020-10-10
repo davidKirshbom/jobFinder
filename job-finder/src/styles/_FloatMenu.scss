@@ -1,0 +1,129 @@
+$menu-width:350px;
+
+.menu-container{
+    display: block;
+    position: absolute;
+    background: #242d68;
+    height: 1000vh;
+    width: $menu-width;
+    top: 0px;
+    opacity: .95;
+    transition: transform .5s linear;
+  
+    .menu-item{
+        font-family: 'Arial',sans-serif;
+        font-size: 1rem;
+        line-height: 1;
+        font-weight: 100;
+        margin: 40px 0px;
+        display: flex;
+        flex-flow: column;
+        position: relative;
+   
+        .fas.fa-angle-down{
+            margin-left: 25px;
+        }
+        .menu-item-text{
+            display: flex;
+            justify-content: space-between;
+            padding-right: 10px;
+            height: 50px;
+            &:hover{
+                color: #fb8e0f;
+            }
+
+        }
+    }
+}
+.inner-menu-open{
+    color: #fb8e0f;
+    background: white;
+    
+}
+.close+.menu-container{
+    transform: translateX(150%);
+    
+}
+.open+.menu-container{
+    
+    transform: translateX(0px);
+}
+
+.items-container{
+    margin-top: 25%;
+    padding-right: 0px;
+    list-style: none;
+    position: relative;
+
+}
+.inner-menu{
+    display: none;
+    position: relative;
+    background:#ffffff ;
+    color: #202a68;
+    list-style: none;
+    padding-right: 25px;
+    
+    padding-bottom: 25px;
+  
+
+}
+.inner-menu>li{
+    
+        margin: 40px 0px 0px 0px;
+    
+    &.inner-menu-first{
+        margin-top: 0px;
+    }
+}
+.inner-menu.open{
+    display: inline;
+    
+   
+}
+
+@media(min-width:$break-point-desktop){
+    .items-container>.menu-item{
+        font-size:1.3rem;
+    }
+    
+    
+    .menu-item-text:hover+.inner-menu,
+    .inner-menu.open{
+       
+        display: inline;
+        position: fixed;
+        top:0px;
+        animation: slideIn .3s linear 1 forwards;
+        width: $menu-width;
+        height: 100vh;
+        padding-top: 90px;
+        z-index: -1000;
+        li{
+            color: #202a68;
+            font-size: 1.65rem;
+        }
+        
+       
+    }
+}
+
+@keyframes slideIn{
+    from{
+        transform: translateX(150%);
+        opacity: 0;
+    }
+    to{
+        transform: translateX(-$menu-width);
+        opacity: 1;
+    }
+}
+@keyframes slideOut{
+    from{
+        transform: translateX(0px);
+    }
+    to{
+        transform: translateX(150%);
+     
+    }
+}

@@ -1,0 +1,26 @@
+.icons-container{
+position: absolute;
+    left: 0px;
+    top:90px;
+    z-index: 550;
+}
+.share-icon{
+    width: 30px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 30px;
+    z-index: 550;
+    margin: 15px;
+}
+#facebook-icon{
+background-image: url(https://d2ichgn6omvugs.cloudfront.net/images/19762365/JobInfo_MailS_H_0000_Layer-2.png);
+}
+#linkdin-icon{
+    background-image: url(http://d2ichgn6omvugs.cloudfront.net/images/19762365/JobInfo_MailS_H_0001_Layer-3.png);
+}
+#insta-icon{
+background-image: url(https://d2ichgn6omvugs.cloudfront.net/images/19762365/JobInfo_MailS_H_0002_Layer-4.png);
+}
+#youtube-icon{
+background-image: url(https://d2ichgn6omvugs.cloudfront.net/images/19762365/JobInfo_MailS_H_0003_Layer-5.png);
+}
