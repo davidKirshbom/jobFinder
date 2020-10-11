@@ -2,4 +2,43 @@
 $break-point-desktop:1000px;
 
 //colors
-$dark-blue:#202a68
+$dark-blue:#202a68;
+$orange:#fb8e0f;
+$dark-gray:#706d69;
+$light-gray:#9c9892;
+$smooth-gray:#d9d6d3;
+
+@mixin remove-button-defaults() {
+    overflow: visible; 
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    font: inherit; 
+    line-height: normal;
+    text-decoration: underline; 
+    cursor: pointer; 
+    &::-moz-focus-inner {
+        padding: 0;
+        border: 0;
+    }
+}
+@mixin  remove-links-defaults() {
+    
+    &:link {
+        text-decoration: none;
+      }
+      
+      &:visited {
+          color: unset;
+        text-decoration: none;
+      }
+      
+      &:hover {
+        text-decoration: none;
+      }
+      
+      &:active {
+        text-decoration: none;
+      }
+}

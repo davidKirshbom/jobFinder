@@ -1,0 +1,227 @@
+.categories-container{
+    padding:20px;
+ul{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+}
+
+.category-container{
+    padding: 20px 20px;
+    margin: 10px 0px;
+}
+.category-more-link>.fas{
+    display: inline;
+    
+}
+.plus-icon{
+    width: 15px;
+    height: 15px;
+   margin-left: 12px;
+   transition: rotate .5s linear;
+    rotate: 0deg;
+   &.become-exit-button{
+       rotate: 45deg;
+   }
+}
+.category-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.3rem;
+}
+.category-inner-menu{
+    transition: max-height .3s linear;
+    max-height: 900px;
+    opacity: 1;
+    ul{
+        li{
+            font-size: .9rem;
+            margin: 15px 0px;
+            &:hover{
+
+            }
+        }
+    }
+}
+@media(min-width:$break-point-desktop){
+    .categories-container{
+       display: flex;
+       justify-content: center;
+    ul{
+        flex-shrink: 0;
+        width: 980px;
+        display: grid;
+        grid-template-rows: repeat(2,18.75rem);
+        grid-template-columns: repeat(3,33.33%);
+    }
+    }
+    .category-container{
+       display: flex;
+       flex-flow: column;
+        height: 100%;
+        width: 100%;
+    }
+
+    .plus-icon{
+      display: none;
+    }
+    .category-title{
+      
+    }
+  
+}
+.category-inner-menu.close{
+    max-height: 0px;
+}
+.take-out-from-flow{
+    display: none;
+}
+.category-more-link{
+    @include remove-links-defaults;
+    display: flex;
+    justify-content: flex-end;
+    font-size: .9rem;
+    align-items: center;
+    .fas.fa-arrow-left{
+        font-size: .9rem;
+        margin-right: 5px;
+    }
+}
+.more-jobs-link{
+    background: $smooth-gray;
+    color: $dark-blue;
+    font-size: 1.3rem;
+    margin: 10px 0px;
+    padding: 0px;
+    .fas.fa-arrow-left{
+        background: $orange;
+        height: 100%;
+     display: inline; 
+     padding: 20px 20px;
+    color: white;
+    font-size: 1.5rem;
+    
+    }
+    a{
+        font-size: 1.3rem;
+        color: $dark-blue;
+        align-items: center;
+        padding-right: 20px;
+        display: flex;
+        justify-content: space-between;
+        @include remove-links-defaults;
+    }
+}
+#programing-category{
+    background: white;
+    color: $dark-blue; 
+    .category-inner-menu>a:hover,
+    .category-inner-menu>ul>li:hover{
+        color: orange;
+    }
+}
+#web-category{
+    background: $orange;
+    color: white; 
+    .category-inner-menu>a:hover,
+        .category-inner-menu>ul>li:hover{
+            color: white;
+        }
+}
+#it-category{
+    background: $dark-gray;
+    color: white;
+    .category-inner-menu>a:hover,
+        .category-inner-menu>ul>li:hover{
+            color: $dark-blue;
+        }
+}
+#sineor-category{
+    background: $light-gray;
+    color: white;
+    .category-inner-menu>a:hover,
+        .category-inner-menu>ul>li:hover{
+            color: orange;
+        }
+}
+#embedded-category{
+    background: $dark-blue;
+    color: white;
+    .category-inner-menu>a:hover,
+        .category-inner-menu>ul>li:hover{
+            color: orange;
+        }
+}
+@media(min-width:$break-point-desktop){
+    #programing-category{
+    
+        grid-row: -3/-2;
+        grid-column: 1/2;
+      
+    }
+    #web-category{
+        grid-row: -3/-2;
+        grid-column: 2/3;
+        color: $dark-blue;
+        
+    }
+    #it-category{
+        background-color: $light-gray;
+        grid-row: -2/-1;
+        grid-column: 1/2;
+        
+      
+    }
+    #sineor-category{
+        background: $dark-blue;
+        grid-row: -2/-1;
+        grid-column: 2/3;
+        
+    }
+    #embedded-category{
+        background: $dark-gray;
+        grid-row: -3/-2;
+        grid-column: 3/4;
+        
+        
+    }
+    .more-jobs-link{
+   width: 100%;
+   height: 100%;
+   &:hover{
+    color: orange;
+}
+    .fas.fa-arrow-left{
+      align-self: flex-end;
+        width: 73px;
+        height: 73px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        }
+        a{
+            padding-right: 40px;
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .category-inner-menu{
+        display: flex ;
+        flex-flow: column;
+        justify-content: space-between;
+        max-height: 1000px !important;
+        height: 100%;
+        ul{
+            display: inline;
+            width: fit-content;
+            li{
+            margin: 2px;
+            
+        }
+    }
+  
+}
+}

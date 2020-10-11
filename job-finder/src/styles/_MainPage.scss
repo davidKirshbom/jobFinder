@@ -1,0 +1,35 @@
+.arrow-move-next-section-desktop{
+    display: block;
+    width: 50px;
+    height: 50px;
+    color: #acadad;
+    margin: 30px auto 0px auto;
+    .fas{
+    font-size: 2.5rem;
+    }
+}
+#hi-tech-jobs{
+    background-image:url('../images/hiTech-jobsSection-BG.jpg') ;
+   background-size: cover;
+   background-position: 40% ;
+   background-repeat: no-repeat;
+    width: 100%;
+.catgories-title{
+    font-size: 1.8rem;
+    margin:0 auto;
+    padding-top: 10px;
+    width: fit-content;
+    color: white;
+    font-weight: 100;
+}
+    
+}
+@media(min-width:$break-point-desktop){
+    #hi-tech-jobs{
+        height: 815px;
+    }
+    .catgories-title{
+        padding-top: 30px;
+        font-size: 2.1rem;
+    }
+}

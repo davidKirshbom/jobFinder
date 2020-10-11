@@ -1,0 +1,54 @@
+.rolling-container{
+    position: relative;
+    margin-top: 50px;
+    display:flex;
+    overflow: hidden;
+    flex-flow: row;
+    direction: rtl;   
+    animation-timing-function: linear;
+    height: 100px;
+    width: 80%;
+    top:50px;
+    margin: 0px auto;
+}
+.rolling-group{
+    position: absolute;
+    display:flex;
+    overflow: hidden;
+    flex-flow: row-reverse;
+    transform:translateX(100%);
+    height: 100px;
+    animation-duration: 25s;
+    animation-timing-function: linear;
+   
+}
+
+
+.roll-until-end{
+    
+  animation-name:roll-until-end ;
+    animation-timing-function: linear;
+ 
+}
+.roll-after-end{
+    animation-name: roll-after-end;
+    animation-timing-function: linear;
+
+}
+
+@keyframes roll-until-end{
+    0%{
+        transform: translateX(100%);
+    }
+    100%{
+        transform: translateX(0vw);
+    }
+}
+@keyframes roll-after-end{
+    0%{
+        transform: translateX(0vw);
+    }
+    100%{
+        transform: translateX(-100%);
+    }
+}
