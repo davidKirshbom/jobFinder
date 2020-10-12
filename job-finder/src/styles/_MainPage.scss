@@ -5,24 +5,57 @@
     color: #acadad;
     margin: 30px auto 0px auto;
     .fas{
-    font-size: 2.5rem;
+        font-size: 2.5rem;
     }
 }
 #hi-tech-jobs{
     background-image:url('../images/hiTech-jobsSection-BG.jpg') ;
-   background-size: cover;
-   background-position: 40% ;
-   background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 40% ;
+    background-repeat: no-repeat;
     width: 100%;
-.catgories-title{
-    font-size: 1.8rem;
-    margin:0 auto;
-    padding-top: 10px;
-    width: fit-content;
-    color: white;
-    font-weight: 100;
+    .catgories-title{
+        font-size: 1.8rem;
+        padding-top: 10px;
+        margin:0 auto;
+        color: white;
+        width: fit-content;
+        font-weight: 100;
 }
-    
+   
+}
+#about-us{
+background: $dark-blue;
+padding: 20px 25px;
+color: white;
+    h2{
+    text-align: justify;
+    padding-top: 15px;
+    margin-bottom: 10px;
+    margin-top: 0px;
+    }
+    .about-us-text{
+    display: flex;
+    flex-flow: column;
+        p{
+        font-size: .95rem;
+        margin: 15px 0px;
+         &:first-child{
+            margin-top: 0px;
+            }
+         strong{
+            font-size: 1rem;
+            }    
+        }
+}
+.send-CV{
+    margin: 20px 0px ;
+    height: 65px;
+}
+}
+.guides-tiles{
+    background: white;
+    display: none;
 }
 @media(min-width:$break-point-desktop){
     #hi-tech-jobs{
@@ -32,4 +65,55 @@
         padding-top: 30px;
         font-size: 2.1rem;
     }
+    #about-us{
+        .about-us-text-container{
+        display: flex;
+        flex-flow: column;
+        width: 1000px;
+        margin: 0px auto;
+        .about-us-header{
+            h2{
+            margin-top: 20px;
+            width: max-content;
+            margin-bottom: 0px;
+            display: inline-block;
+            font-size: 1.2rem;
+            position: relative;
+            top: 20px;
+            }
+        }
+            .about-us-text{
+                flex-grow: 0;
+                display: flex;
+                flex-flow: row;
+                justify-content: center;
+                min-width:1000px ;
+                p{
+                width: 280px;
+                margin: 0px 30px;
+                padding: 0px 10px;
+                line-height: 1.7rem;
+                flex-shrink: 0;
+                    &:first-child{
+                    position: relative;
+                    top: 20px;
+                    }
+                    &:last-child{
+                        width: 340px;
+                    }
+            
+                }
+        }
+    }
+        .send-CV{
+           top: unset;
+           right: unset;
+           margin: 40px auto;
+           margin-bottom: 25px;
+           height: 80px;
+        }
+        }
+        .guides-tiles{
+            display: block;
+        } 
 }

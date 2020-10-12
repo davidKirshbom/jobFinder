@@ -1,0 +1,85 @@
+.footer-container{
+    background: $orange;
+    color: white;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-between;
+    .footer-share-icons-container{
+        display: flex;
+     
+        .fab{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid white;
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            margin: 10px 10px;
+            padding: 4px;
+            font-size: 1.4rem;
+        }
+        }
+        .lists-container{
+            h3{
+                color: white;
+                font-weight: 200;
+                margin-bottom: 5px;
+            }
+            .footer-list{
+                list-style: none;
+                padding: 0px ;
+                color: black;
+                margin-top: 5px;
+                li{
+                font-size: .95rem;
+                margin-bottom: 5px;
+                &:hover{
+                    text-decoration: underline;
+                    cursor: pointer;
+                    }
+                }
+            }
+    }
+    padding:50px 0px 100px 0px;
+}
+@media(min-width:$break-point-desktop){
+    .footer-container{
+       
+       
+        .footer-share-icons-container{
+            display: flex;
+         
+            .fab{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 2px solid white;
+                width: 40px;
+                height: 40px;
+                border-radius: 100%;
+                margin: 10px 10px;
+                padding: 4px;
+                font-size: 1.4rem;
+            }
+        }
+            .lists-container{
+                display: flex;
+                padding:50px 0px 100px 0px;
+                h3{
+                    font-weight: 200;
+                    margin-bottom: 5px;
+                }
+                .footer-list{
+                    margin-right:100px ;
+                    li{
+                    font-size: .90rem;
+                    margin-bottom: 5px;
+                    
+                    }
+                }
+                
+            }
+        }
+}

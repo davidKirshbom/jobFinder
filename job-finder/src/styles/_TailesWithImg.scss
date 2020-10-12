@@ -1,0 +1,107 @@
+.tailes-container{
+padding-top: 50px;
+display: flex;
+flex-flow: row;
+justify-content: center;
+align-items: center;
+}
+.tail-container{
+    margin: 100px 30px;
+    background: $bg-gray;
+    height: 290px;
+    width: 285px;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+   overflow: hidden;
+    .img-round-container{
+        height: 172px;
+        width: 172px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        border-radius: 100%;
+        border: .45rem solid black;
+        position: absolute;
+      margin-top: -300px;
+       flex-shrink: 0;
+       &:hover+.text-tail-container{
+           color: $orange;
+       }
+    }
+    .text-tail-container{
+        position: relative;
+        text-align: center;
+        font-size: 1.2rem;
+        color:$dark-blue;
+        &:hover{
+            color: $orange;
+        }
+        .fas.fa-plus{
+            position: relative;
+            top: 10px;
+        }
+    }
+    .box-contant.hiden-tile-menu{
+        position: relative;
+        width: 285px;
+        height: 160px;
+        list-style: none;
+        top: 50px;
+        padding-top: 0px;
+        transition: transform .2s linear;
+        transform: translateY(150px);
+            li{
+                font-size: .85rem;
+                margin: 10px ;
+                &:hover{
+                    color: $orange;
+                }
+            }
+            .little-triangle{
+              margin: 0px auto;
+            }
+        
+    }
+}
+.little-triangle{
+    width: 10px;
+    height: 10px;
+    border: 7px solid white;
+    border-bottom-color:transparent ;
+    border-right-color: transparent;
+    border-left-color: transparent;
+}
+#find-work-tail>.img-round-container{
+    background-image: url('../images/find-work-guid_bg.jpg');
+    border-color: $light-gray;
+}
+#cv-writing-tail>.img-round-container{
+    background-image: url('../images/cv-writing-guid_bg.jpg');
+    border-color: $orange;
+}
+
+#recru-tail{
+
+    &:hover>.box-contant.hiden-tile-menu
+   { 
+       transform: translateY(0px);
+    }
+    &>.img-round-container{
+        background-image: url('../images/recru-guids_bg.jpg');
+        border-color: $dark-blue;
+        &:hover+.text-tail-container{
+            color: $dark-blue;
+        }
+        }
+    &>.text-tail-container{
+  
+            position: relative;
+            top: 95px;
+            &:hover{
+                color: $dark-blue;
+            }
+    }
+    
+}
+
