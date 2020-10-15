@@ -1,22 +1,52 @@
 .navigation-bar{
     background: linear-gradient(to right, rgba(0,0,0,0.13) 0%, rgba(0,0,0,0.4) 100%);
     position: absolute;
+ 
+    top: 0px;
     width:100%;
     height: 3rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    transition: top .3s linear;
     z-index: 1;
+    overflow: hidden;
+    .background-triangle.mobile-only{
+        opacity: 0;
+        z-index: 0;
+        z-index: -1;
+        position: absolute;
+       
+    }
+}
+.float-top.mobile-only{
+    position: fixed;
+    top: 0px;}
+.navigation-bar.float-top.mobile-only{
+    
+    background: url('../images/bgphoto1_mobile.jpg');
+    background-repeat: no-repeat;
+    background-position: top right;
+    background-size: cover;
+ 
+ .darken-skin{
+     position: absolute;
+     height: 100%;
+     width: 100%;
+     z-index: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.13) 0%, rgba(0,0,0,0.4) 100%);
+ }   
+ .background-triangle.mobile-only{
+        position: absolute;
+       left: 0px;
+       border-width: 29vw;
+        opacity: 0.75;
+        z-index: 0;
+    }
 }
 .logo-image{
-background-image: url();
 width: 86px;
 height: 34px;
-display: block;
-margin-left: 20px;
-background-size: contain;
-background-repeat: no-repeat;
-
 }
 .logo-text{
     display: none;
@@ -25,14 +55,15 @@ background-repeat: no-repeat;
     color:white;
     display: flex;
     height: 100%;
-    
+    width: 100%;
+    z-index: 97;
     margin: 0px;
 }
 .navigation-links-container{
     display: flex;
     list-style: none;
     justify-content: space-evenly;
-    margin:auto  15px;
+    margin:auto  75px;
     padding: 0px;
     width: 7.5rem;
     height: 1.5rem;
@@ -47,43 +78,7 @@ background-repeat: no-repeat;
     margin: auto 0px;
     font-size: .9rem;
 }
-.menu-btn{
-  
-    width: 3.7rem;
-    display: flex;
-    flex-flow: column;
-    justify-content: center;
- 
-    background-color: #252e69;
-    .lines-container{
-        height: 35%;
-        display: flex;
-        flex-flow: column;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .menu-btn__line{
-        width: 40%;
-        height: 14%;
-        background-color: white;
-        flex-shrink: 0;
-        flex-grow: 0;
-        z-index: 5;
-        transition: all 0.5s linear;
-        transform-origin:  center left ;
-    }
-}
-.menu-btn.open{ 
-    #top-line{
-        rotate: 40deg;
-    }
-    #middle-line{
-        opacity: 0;
-    }
-    #buttom-line{
-        rotate: -40deg;
-    }
-}
+
 .total-jobs{
     display: none;
 }
@@ -99,24 +94,33 @@ background-repeat: no-repeat;
     font-size: 3.1rem;
     font-weight: 100;
 }
+.logo-container{
+    display: flex;
+    flex-flow: row-reverse;
+   
+   padding-left: 10px;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    .logo-image{
+        position: relative;  
+        float: left;
+        margin-left: 10px;
+    }
+}
+
 @media(min-width:$break-point-desktop){
+   
     .navigation-bar{
-       
-      height: 4.6rem;  
+       position: absolute;
+      height: 4.6rem; 
+      &.float-top.mobile-only{
+        position: absolute;
     }
-    .menu-btn{
-        position: -webkit-sticky;
-        position: sticky;
-       top:0;
-       right: 0;
-        width:5.2rem;
-        z-index: 15;
-        .menu-btn__line{
-            height: 9%;
-        }
     }
+    
     .navigation-links-container{
-        margin: 15px 5px 15px 20px ;
+        margin: 15px 5rem 15px 20px ;
         align-self: flex-start;
     }
     .total-jobs{
@@ -137,16 +141,23 @@ background-repeat: no-repeat;
         margin-top: auto;
         margin-bottom: auto;
         margin-left: 50px;
+        
+        .logo-image{
+            height: 55px;
+            width:141px ;
+            margin-left: 0px;
+            right: 0px;
+            top: 0px;
+          }
     }
-    .logo-image{
-      height: 55px;
-      width:141px ;
-      margin-left: 0px;
-    }
+   
     .logo-text{
         display: inline;
         font-size: .75rem;
         color: white;
+    }
+    .navigation-content{
+        
     }
     
 }

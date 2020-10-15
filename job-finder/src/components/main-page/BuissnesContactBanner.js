@@ -12,12 +12,15 @@ useEffect(() => {
     exitFormButton.addEventListener("click",() => {
         form.classList.add("close");
     })
-    
+    return function cleanUpFaddingInterval(){
+       clearInterval (faddingImagesInterval)
+    }
 }, [])
+    let faddingImagesInterval;
     const startFaddingImages = () => {
         const images=document.getElementsByClassName("recommendation")
         let currentImageIndex = 0;
-       const faddingImagesInterval= setInterval(() => {
+        faddingImagesInterval= setInterval(() => {
                 const nextImageIndex = (currentImageIndex + 1) % images.length
                 images[nextImageIndex].classList.replace('hide', 'hide');
                 images[currentImageIndex].classList.replace('hide', 'show');
@@ -28,10 +31,10 @@ useEffect(() => {
     return (
     <div className="banner-container">
         <div className="fadding-content">
-            <img className="recommendation show" src={require('../images/buisness-banner/rec-hr-1.jpg')} alt="" />
-            <img className="recommendation hide" src={require('../images/buisness-banner/rec-hr-2.jpg')} alt="" />
-            <img className="recommendation hide" src={require('../images/buisness-banner/rec-hr-3.jpg')} alt="" />
-            <img className="recommendation hide" src={require('../images/buisness-banner/rec-recrument.jpg')} alt="" />
+            <img className="recommendation show" src={require('../../images/buisness-banner/rec-hr-1.jpg')} alt="" />
+            <img className="recommendation hide" src={require('../../images/buisness-banner/rec-hr-2.jpg')} alt="" />
+            <img className="recommendation hide" src={require('../../images/buisness-banner/rec-hr-3.jpg')} alt="" />
+            <img className="recommendation hide" src={require('../../images/buisness-banner/rec-recrument.jpg')} alt="" />
             </div>
             <button className="open-contact"><i class="far fa-paper-plane"></i>צור קשר</button>
             <div className="form-container close">

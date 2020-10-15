@@ -1,18 +1,20 @@
 import React from 'react'
-import NavigationBar from './NavigationBar'
+import NavigationBar from '../global/NavigationBar'
+import FloatMenu from'../global/FloatMenu'
 import SearchPanel from './SearchPanel'
 import NavigationBoxes from './NavigationBoxs'
 import BrandsRolling from './RollingText'
 import BuissnesContactBanner from './BuissnesContactBanner'
 import CatgoriseHiThech from './CatgorizeHiTechJobs'
 import GuidesTails from './TailesWithImg'
-import Footer from './Footer'
+import Footer from '../global/Footer'
 import BackToTop from './BackToTopBtn'
-import '../styles/sheared.scss'
+
 
 export default () => 
     (<div className="page-container">
         <NavigationBar />
+        <FloatMenu/>
         <section id="search-panel-section" >
             <SearchPanel />
         </section>

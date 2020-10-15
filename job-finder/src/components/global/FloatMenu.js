@@ -1,7 +1,18 @@
 import React,{useEffect} from 'react';
-
+import {Link} from "react-router-dom"
 export default () => {
     useEffect(() => {
+        const menuButton = document.getElementsByClassName("menu-btn")[0];
+        menuButton.addEventListener("click", () => {
+         
+            if (menuButton.className === "menu-btn")
+                menuButton.classList.add("open")
+            else if (menuButton.classList.contains("open"))
+                menuButton.classList.replace("open","close")
+            else
+                menuButton.classList.replace("close","open")
+
+        })
         let prevOpenMenu;
         const menuItemsList = document.getElementsByClassName("menu-item")
         for (let index = 0; index < menuItemsList.length; index++)
@@ -21,20 +32,46 @@ export default () => {
                     }
                     else prevOpenMenu = null;
             })
+        }
+        let prevScrollpos = window.pageYOffset;
+        window.addEventListener("scroll", () => {
+            const currentScrollPos = window.pageYOffset;
+            
+            console.log(currentScrollPos);
+            if (currentScrollPos>100&&prevScrollpos > currentScrollPos) { 
+                document.getElementsByClassName("menu-btn")[0].classList.add("float-top","mobile-only");
+              } else {
+                document.getElementsByClassName("menu-btn")[0].classList.remove("float-top","mobile-only");
             }
+            prevScrollpos = currentScrollPos;
+            
+        }
+        )
     },[])
     return (
+        <div className="menu-btn-wrapper">
+        <div className="menu-btn close">
+        <div className="lines-container">
+            <div id="top-line" className="menu-btn__line"></div>
+            <div id="middle-line" className="menu-btn__line"></div>
+            <div id="buttom-line" className="menu-btn__line"></div>
+                </div>
+                </div>
         <div className="menu-container">
+        <div className="bg-container"></div>
+    
        <ul className="items-container">
             <li className="menu-item">
-                <div className="menu-item-text" >
+                        <Link className="menu-item-text" to="/search-work" >
+                             
                  חיפוש עבודה<i className="fas fa-angle-down"></i>
-                </div>   
-            </li>
+                </Link>   
+                </li>
+                
             <li className="menu-item">
-                <div className="menu-item-text" >דרושים בהייטק
-                    <i className="fas fa-angle-down"></i>
-                </div>
+            <div className="menu-item-text" >דרושים בהייטק
+            <i className="fas fa-angle-down"></i>
+            </div>
                 <ul className="inner-menu">
                     <li className="inner-menu-first">דרושים תוכנה</li>
                     <li>דרושים אינטרנט</li>
@@ -156,6 +193,6 @@ export default () => {
                </ul>
                 </li>
                 </ul>
-     
+                </div>     
     </div>)
 }

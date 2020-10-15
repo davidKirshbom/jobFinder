@@ -1,6 +1,6 @@
 import React from 'react'
-import { totalJobs } from '../data/jobs'
-import ShareIcons from './FloatShareIcons'
+import { totalJobs } from '../../data/jobs'
+import ShareIcons from '../global/FloatShareIcons'
 export default () => {
     return(<div className="panel-container">
         <div className="background-triangle"/>

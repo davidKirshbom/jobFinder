@@ -1,10 +1,11 @@
 import React from 'react'
-import MainPage from './components/MainPage'
+
+import Router from './router/router'
 import "./styles/styles.scss"
 export default  () => {
     return (
         <div>
-            <MainPage/>
+            <Router/>
         </div>
     )
 }
