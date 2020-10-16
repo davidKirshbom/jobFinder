@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 export default () => {
+    let faddingImagesInterval;
 useEffect(() => {
     startFaddingImages();
     const openFormButton = document.getElementsByClassName("open-contact")[0];
@@ -16,7 +17,7 @@ useEffect(() => {
        clearInterval (faddingImagesInterval)
     }
 }, [])
-    let faddingImagesInterval;
+   
     const startFaddingImages = () => {
         const images=document.getElementsByClassName("recommendation")
         let currentImageIndex = 0;

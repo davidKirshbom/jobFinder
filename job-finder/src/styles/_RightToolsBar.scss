@@ -1,0 +1,154 @@
+@mixin show-inner-tools {
+    display: flex ;
+    position: absolute;
+    margin-top: 540px;
+    right: 0;
+    flex-flow: column;
+    width: 100%;
+    background-color: $dark-gray;
+    list-style: none;
+    padding: 0px 15px;
+    li{
+        margin: 10px 0px;
+       
+        color: white;
+        &::after{
+            content: '';
+            display: block;
+            margin-top: 10px;
+            width: 98%;
+            height: 1px;
+            background: #908d8a;
+        }
+    }
+}
+.inner-tools{
+    display: none;
+}
+.tools-container{
+    display: flex;
+    height: 80px;
+}
+.tool{
+    width: 33.33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .tool-text{
+        color:white;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        
+        &>.fab.fa-studiovinari,
+        &>.far.fa-chart-bar,
+        &>.fas{
+            display: inline;
+            font-size: 1.7rem;
+            margin-bottom: 1px;
+        }
+        &>span{
+            display: flex;
+            width:max-content ;
+            
+            &>.fas{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            font-size: 1.2rem;
+            margin-right: 5px;
+            width: fit-content;
+            font-weight: 600;
+        }
+    }
+    }
+    .inner-tools.open{
+      @include show-inner-tools;
+    }
+    &:hover{
+        cursor: pointer;
+    }
+}
+#send-cv-tool{
+    background: $dark-orange;
+}
+
+#search-work-tool{
+    background: $orange;
+}
+
+#salary-charts-tool{
+    background: $dark-gray;
+   
+}
+@media(min-width:$break-point-desktop){
+    .tools-container{
+       flex-flow: column; 
+       width: fit-content;
+       height: unset;
+    }
+    .tool{
+        position: relative;
+        width: 300px;
+       height: 100px;
+        .tool-text{
+            font-size: 1.7rem;
+            &>span{
+                font-size: inherit;
+                &>.fa-angle-down{
+                    font-size: inherit;
+                    margin-right: .4rem;
+                    margin: auto .4rem;
+                }
+            }
+            &>.fab.fa-studiovinari,
+            &>.far.fa-chart-bar,
+            &>.fas{
+                display: none;
+            }
+        }
+        &>.inner-tools.open{
+            display: none ;
+            
+        }
+        &:hover>.inner-tools{
+          @include show-inner-tools;
+          margin-top: 490px;
+        }
+        .inner-tools{  
+            &>li{
+              font-size: .8rem;
+          }
+        }
+        &:hover{
+            cursor: pointer;
+        }
+    }
+    .shortcuts-container{
+        
+        padding-right: 20px;
+        .shortcut-title{
+            font-size: .9rem;
+            font-weight: 100;
+        }
+        .shortcuts-linkes{
+            list-style: none;
+            padding: 0px;
+
+            li{
+                font-size: .9rem;
+                color:#3c3c6c;
+                &::after{
+                    content: '';
+                    display: block;
+                    margin: 10px 0px;
+                    width: 90%;
+                    height: .7px;
+                    background: #908d8a;
+                }
+            }
+        }
+    }
+}

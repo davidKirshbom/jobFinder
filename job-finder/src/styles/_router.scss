@@ -1,0 +1,31 @@
+header{
+    display: flex;
+    flex-flow: column;
+    .panel_total-jobs{
+        margin-right: 0px;
+        padding-right: 20px;
+        padding-bottom: 10px;
+        background: url('../images/innerbg_mobile.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: right;
+        width: 100%;
+        .total-jobs-text{
+            font-size: 3rem;
+            .total-jobs-number{
+                font-size: 14vw;
+                font-weight: 300;
+                .big-splitter.splitter{
+                    height: 13vw;
+                }
+            }
+        }
+    }
+}
+@media(min-width:$break-point-desktop)
+{
+    .main-section{
+        margin-top: 81px;
+       ;
+}
+}

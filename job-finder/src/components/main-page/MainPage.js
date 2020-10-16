@@ -1,20 +1,19 @@
 import React from 'react'
-import NavigationBar from '../global/NavigationBar'
-import FloatMenu from'../global/FloatMenu'
+
 import SearchPanel from './SearchPanel'
 import NavigationBoxes from './NavigationBoxs'
 import BrandsRolling from './RollingText'
 import BuissnesContactBanner from './BuissnesContactBanner'
 import CatgoriseHiThech from './CatgorizeHiTechJobs'
 import GuidesTails from './TailesWithImg'
-import Footer from '../global/Footer'
+
 import BackToTop from './BackToTopBtn'
 
 
 export default () => 
     (<div className="page-container">
-        <NavigationBar />
-        <FloatMenu/>
+       
+       
         <section id="search-panel-section" >
             <SearchPanel />
         </section>
@@ -44,9 +43,6 @@ export default () =>
                 </div>
             <a className="send-CV"><i class="fab fa-studiovinari "></i> שלח קו"ח אלינו</a>
         </section>
-        <section >
-            <Footer />
-         
-        </section>
+   
         <BackToTop headerSelector="#search-panel-section"/>
     </div>)

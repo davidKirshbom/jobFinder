@@ -36,6 +36,9 @@
         margin-top: 95px;
       
     }
+    .fas{
+        display: none;
+    }
 }
 .box-contant{
     max-height:500px;
@@ -142,7 +145,7 @@
     height: 290px;
     width: min-content;
 }
-.fas,
+
 .personal-box,
 .senior-box{
     display: none;

@@ -14,8 +14,15 @@ body{
     font-family: 'Alef', sans-serif;
     font-size: 1.1rem;
 }
+.desktop-only{
+    display: none !important;
+}
+
 @media(min-width: $break-point-desktop){
     .mobile-only{
         display: none !important;
+    }
+    .desktop-only{
+        display: inline !important;
     }
 }

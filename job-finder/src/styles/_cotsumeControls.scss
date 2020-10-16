@@ -1,0 +1,16 @@
+.big-orange-btn{
+@include remove-button-defaults;
+    background: #fb8e0f; 
+  color: white;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align:middle;
+  margin: 120px 50px 0px 50px;
+  &>.fab{
+    
+    font-size: 1.95rem;
+    
+  }
+}

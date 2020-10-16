@@ -36,6 +36,6 @@ export default () => {
             <a className="advanced-search">חיפוש מתקדם</a>
          
         </form>
-        <a className="send-CV"><i class="fab fa-studiovinari "></i> שלח קו"ח אלינו</a>
+        <a className="send-CV big-orange-butoon"><i class="fab fa-studiovinari "></i> שלח קו"ח אלינו</a>
     </div>)
 }

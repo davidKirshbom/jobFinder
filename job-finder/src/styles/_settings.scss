@@ -4,12 +4,14 @@ $break-point-desktop:1000px;
 //colors
 $dark-blue:#202a68;
 $orange:#fb8e0f;
+$dark-orange:#eb7d00;
 $dark-gray:#706d69;
 $light-gray:#9c9892;
+$dark-cream:#f2f2f0;
 $smooth-gray:#d9d6d3;
 $bg-gray:#edecea;
 
-@mixin remove-button-defaults() {
+@mixin remove-button-defaults{
     overflow: visible; 
     margin: 0;
     padding: 0;
@@ -17,7 +19,7 @@ $bg-gray:#edecea;
     background: transparent;
     font: inherit; 
     line-height: normal;
-    text-decoration: underline; 
+  
     cursor: pointer; 
     &::-moz-focus-inner {
         padding: 0;
@@ -42,4 +44,7 @@ $bg-gray:#edecea;
       &:active {
         text-decoration: none;
       }
+}
+@mixin remove-input-defaults{
+  border: 0px;
 }
