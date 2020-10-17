@@ -1,5 +1,6 @@
 import React,{useEffect} from "react"
 import SearchForm from './SearchForm'
+import ResultList from './ResultList'
 export default () => {
     useEffect(() => {
         
@@ -17,11 +18,14 @@ export default () => {
                 newSearchTooogle.children[0].classList.add("point-left");
             }
         })
-    },[])
+    }, [])
+    
+
     return (<div id="search-page">
         <div className="page-content">
             <h1 className="page-title">חיפוש עבודה</h1>
-           <SearchForm/>
+            <SearchForm />
+            <ResultList/>
     </div>
 </div>)
 }

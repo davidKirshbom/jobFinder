@@ -2,6 +2,7 @@ import React,{useEffect} from 'react'
 import { totalJobs } from '../../data/jobs'
 
 export default () => {
+     
     useEffect(()=>
     {
        

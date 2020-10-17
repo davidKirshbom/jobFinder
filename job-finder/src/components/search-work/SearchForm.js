@@ -1,4 +1,5 @@
 import React from 'react'
+import OrangeCheckBox from '../global/OrangeCheckBox'
 export default () => {
     
     return (
@@ -8,13 +9,7 @@ export default () => {
       <form action="" className="search-form">
         <label for="search-word-input" className="input-label">חפש</label>
         <input type="text" id="search-word-input" />
-        <div className="checkbox-container">
-            <label className="checkbox-text" htmlFor="senior-checkbox">
-                <input className="cheackbox" id="senior-checkbox" type="checkbox" />
-                <span htmlFor="senior-checkbox" className="checkmark"></span>
-               תפקיד ניהולי
-            </label>
-        </div>
+        <OrangeCheckBox id="senior-checkbox" text="תפקיד ניהולי"/>
         
             <div className="radio-btn-group">
                 <h2 className="form-subtitle">הראה משרות</h2>

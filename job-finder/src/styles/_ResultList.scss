@@ -1,0 +1,32 @@
+@media(min-width:$break-point-desktop){
+    .result-list-container{
+        margin-top: 70px;
+    }
+    .result-list-title-row{
+        display: flex !important;
+        background: $dark-blue;
+        padding:10px 15px;
+        align-items: center;
+        .list-title-name{
+            margin-right: 38px;
+        }
+        .list-title-code{
+            margin-right: 240px;
+        }
+        .list-title-location{
+            margin-right: 65px;
+        }
+        .result-title-item{
+            color: white;
+            font-size: .9rem;
+            font-weight: 700;
+           
+        }
+      
+    }
+    .sort-results-icon{
+        color: $dark-gray;
+        font-size: .9rem;
+        margin-right: 5px;
+    }
+}

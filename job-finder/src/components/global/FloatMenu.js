@@ -3,20 +3,28 @@ import {Link} from "react-router-dom"
 export default () => {
     useEffect(() => {
         const menuButton = document.getElementsByClassName("menu-btn")[0];
-        menuButton.addEventListener("click", () => {
-         
-            if (menuButton.className === "menu-btn")
-                menuButton.classList.add("open")
-            else if (menuButton.classList.contains("open"))
-                menuButton.classList.replace("open","close")
-            else
-                menuButton.classList.replace("close","open")
-
-        })
+        menuButton.addEventListener("click", () => FloatMenuToogle(menuButton))
+       setMenuItemEvents()
+        let prevScrollpos = window.pageYOffset;
+        window.addEventListener("scroll", () => prevScrollpos=floatMenuButtonToTopPage(prevScrollpos));
+    }, [])
+    const floatMenuButtonToTopPage = (prevScrollpos) => {
+        const currentScrollPos = window.pageYOffset;
+        const menuButton = document.getElementsByClassName("menu-btn")[0];
+        if (currentScrollPos>100&&prevScrollpos > currentScrollPos) { 
+            menuButton.classList.add("float-top","mobile-only");
+          } else {
+            menuButton.classList.remove("float-top","mobile-only");
+        }
+        return currentScrollPos;
+    }
+    const setMenuItemEvents = () => {
         let prevOpenMenu;
+        const menuButton = document.getElementsByClassName("menu-btn")[0];
         const menuItemsList = document.getElementsByClassName("menu-item")
         for (let index = 0; index < menuItemsList.length; index++)
         {
+            menuItemsList[index].addEventListener("click", () => FloatMenuToogle(menuButton))
             const childrenList = menuItemsList[index].children
             if(childrenList.length>1)
                 childrenList[0].addEventListener("click", (e) => {
@@ -33,21 +41,15 @@ export default () => {
                     else prevOpenMenu = null;
             })
         }
-        let prevScrollpos = window.pageYOffset;
-        window.addEventListener("scroll", () => {
-            const currentScrollPos = window.pageYOffset;
-            
-            console.log(currentScrollPos);
-            if (currentScrollPos>100&&prevScrollpos > currentScrollPos) { 
-                document.getElementsByClassName("menu-btn")[0].classList.add("float-top","mobile-only");
-              } else {
-                document.getElementsByClassName("menu-btn")[0].classList.remove("float-top","mobile-only");
-            }
-            prevScrollpos = currentScrollPos;
-            
-        }
-        )
-    },[])
+    }
+    const FloatMenuToogle = (menuButton) => {
+        if (menuButton.className === "menu-btn")
+        menuButton.classList.add("open")
+    else if (menuButton.classList.contains("open"))
+        menuButton.classList.replace("open","close")
+    else
+        menuButton.classList.replace("close","open")
+    }
     return (
         <div className="menu-btn-wrapper">
         <div className="menu-btn close">
