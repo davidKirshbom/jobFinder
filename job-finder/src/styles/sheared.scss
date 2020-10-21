@@ -17,7 +17,15 @@ body{
 .desktop-only{
     display: none !important;
 }
-
+.yellow-select{
+    background: #ffedd8;
+}
+.blue-small-button{
+    @include remove-button-defaults;
+    background: $light-blue;
+    color: white;
+    padding: 5px;
+}
 @media(min-width: $break-point-desktop){
     .mobile-only{
         display: none !important;

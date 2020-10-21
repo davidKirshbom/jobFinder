@@ -2,7 +2,10 @@
 $break-point-desktop:1000px;
 
 //colors
+$soft-blue:#233292;
+$light-blue:#202968;
 $dark-blue:#202a68;
+$soft-orange:#ffedd8;
 $orange:#fb8e0f;
 $dark-orange:#eb7d00;
 $dark-gray:#706d69;
@@ -26,7 +29,7 @@ $bg-gray:#edecea;
         border: 0;
     }
 }
-@mixin  remove-links-defaults() {
+@mixin  remove-links-defaults {
     
     &:link {
         text-decoration: none;

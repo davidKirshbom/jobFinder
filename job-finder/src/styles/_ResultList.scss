@@ -1,6 +1,8 @@
 @media(min-width:$break-point-desktop){
     .result-list-container{
         margin-top: 70px;
+    width: 714px;
+    overflow: hidden;
     }
     .result-list-title-row{
         display: flex !important;

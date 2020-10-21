@@ -2,6 +2,155 @@
 display: flex;
 flex-flow: column;
 }
+.jobs-button-container{
+    margin: 50px 0px;
+   a{
+        
+       margin: 0px 50px;
+       display: flex;
+       height: 50px;
+       color: white;
+       justify-content: center;
+       align-items: center;
+        font-size: 1.1rem;
+        font-weight: 500;
+   }
+   .new-search-button{
+       
+       background: $light-gray;
+        i{
+            font-size: 1.8rem;
+        margin-left: 5px;
+        }
+   }
+   .send-CV.big-orange-butoon{
+       bottom: 0;
+       width: 95%;
+       margin: 0px; 
+   }
+   .fixed-bg{
+       height: 80px;
+       width: 100%;
+       position: fixed;
+       bottom: 0;
+       background: white;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+   }
+}
+.footer-text{
+    padding: 0px 20px;
+}
 .page-content{
-    height: 600px;
+    flex-shrink: 0;
+}
+.wrapper-content{
+    display: flex;
+    width: 100%;
+   }
+.flex-wrapper{
+    display: flex;
+    width: 99vw;
+    flex-flow: column;
+}
+@media(min-width:$break-point-desktop){
+    #search-page{
+        flex-flow: row;
+    }
+    .flex-wrapper{
+        display: unset;
+        width: unset;
+        flex-flow: unset;
+    }
+   .page-content{
+       width: 720px;
+       margin-left: auto;
+       margin-right: 80px;
+    
+      
+     
+   }
+.jobs-button-container{
+    margin: 50px 0px;
+    display: flex;
+    justify-content: center;
+    a{
+        margin: 0px 70px;
+        width: 180px;
+    }
+    .new-search-button{
+        background: $light-gray;
+         i{
+         font-size: 1.8rem;
+        
+         }
+       }
+           .send-CV.big-orange-butoon{
+              width: 100%;
+               height: 100%;
+              
+               position: relative; 
+               direction: rtl;
+               top: 0px;
+               right: 0px;
+               .fab{
+                   font-size: 2.2rem;
+               }
+           }
+           .fixed-bg{
+               height: 50px;
+               width: 180px;
+              margin: 0px 70px;
+               position: relative;
+               bottom: 0;
+               background: white;
+               display: flex;
+               justify-content: center;
+               align-items: center;
+           }
+        }
+        .footer-text{
+            padding: 0px 20px;
+            
+        }
+        .how-to-use{
+            display: flex !important;
+            flex-wrap: wrap;
+            flex-flow: row-reverse;
+            background: $smooth-gray;
+            height:340px;
+            width: 738px;
+            margin-bottom: 50px;
+            .help-text-container{
+            width: 66%;
+            padding: 10px;
+            .header{
+                display: flex;
+                flex-flow: row-reverse;
+                justify-content: flex-end;
+                align-items: center;
+            .title{
+                    margin-right: 7px;
+                }
+                .fas{
+                    background: transparent;
+                    color:$dark-blue;
+                    font-size: 2rem;
+                }
+            }
+            p{
+                font-size: .95rem;
+            }            }
+        }
+      
+        .how-to-use-image{
+            height: 100%;
+            width: 33%;
+
+        }
+        
+}
+@media(min-width:1450px){
+   
 }

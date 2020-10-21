@@ -4,13 +4,14 @@
 .data-page{
     display: flex;
     flex-flow: column;
+    
 }
 @media(min-width:$break-point-desktop){
     .data-page{
         display: grid;
-        height: max-content;
+        
         grid-template-columns: 300px auto;
-        grid-template-rows:100%;
+        grid-template-rows:1fr ;
         .tools-container{
             grid-row: -3/-1;
         }

@@ -32,7 +32,7 @@ const jobsList = [
         additionalPositions: [],
         jobDescription: "We are looking for a Senior Design Varification Engineer to join our company of inventors that is unlocking 5G, ushering in the age of rapid acceleration in connectivity, and creating new possibilities that will transform industries, generate jobs and enrich lives",
         JobQualifications: {
-            general: "Our company is looking to expand the VLSI team and looking for Senior DV engineer to join the development of our 5G products.",
+            general:[ "Our company is looking to expand the VLSI team and looking for Senior DV engineer to join the development of our 5G products.",],
             minimum: ["Leadership capabilities",
                         "5+ years experience as DV engineer.",
                         "Eager to succeed",
