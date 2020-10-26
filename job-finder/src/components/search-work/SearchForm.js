@@ -1,12 +1,13 @@
 import React from 'react'
+
 import OrangeCheckBox from '../global/OrangeCheckBox'
-export default () => {
+export default (props) => {
     
     return (
-<div>
+<div >
     <div className="new-search-open-form-toggle mobile-only">חיפוש חדש<i class="fas fa-angle-down" aria-hidden="true"></i></div>
     <div className="search-form-container">
-      <form action="" className="search-form">
+      <form id="new-search-form" onSubmit={props.handleSearch}  className="search-form">
         <label for="search-word-input" className="input-label">חפש</label>
         <input type="text" id="search-word-input" />
         <OrangeCheckBox id="senior-checkbox" text="תפקיד ניהולי"/>

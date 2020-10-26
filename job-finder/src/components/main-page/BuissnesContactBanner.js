@@ -7,7 +7,7 @@ useEffect(() => {
     const exitFormButton = document.getElementsByClassName("exit-button")[0];
     const form = document.getElementsByClassName("form-container")[0];
     openFormButton.addEventListener("click", () => {
-        console.log("click")
+     
         form.classList.remove("close");
     })
     exitFormButton.addEventListener("click",() => {

@@ -10,7 +10,7 @@ export default () => {
         window.addEventListener("scroll", () => {
             const currentScrollPos = window.pageYOffset;
             
-            console.log(currentScrollPos);
+       
             if (currentScrollPos>100&&prevScrollpos > currentScrollPos) { 
                 document.getElementsByClassName("navigation-bar")[0].classList.add("float-top","mobile-only");
               } else {

@@ -6,7 +6,7 @@ export default () => {
         for (let index = 0; index < categoriesList.length; index++)
         {
             const currentCategory = categoriesList[index]
-            console.log(currentCategory.id)
+           
             const innerMenu = document.querySelector(`#${currentCategory.id}>.category-inner-menu`);
             const exitButton=document.querySelector(`#${currentCategory.id}>.category-title>.plus-icon`)
             currentCategory.addEventListener("click", (e) => {

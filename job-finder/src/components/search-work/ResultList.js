@@ -1,8 +1,9 @@
 import React from 'react'
 import ListNode from './ResultListNode'
-import { jobsList } from '../../data/jobs'
+// import { jobsList } from '../../data/jobs'
 
-export default () => {
+export default ({ jobsList }) => {
+    console.log(jobsList)
     return (
 
         <div className="result-list-container">
@@ -15,7 +16,7 @@ export default () => {
             </div>
           
             {
-                jobsList.map((job,index)=>(<ListNode  className={index%2===0?"gray-bg":"white-bg"} {...job} index={index}/>))
+              jobsList? (jobsList.filter((job)=>!job.end_date).map((job,index)=>(<ListNode  className={index%2===0?"gray-bg":"white-bg"} {...job} index={index}/>))):""
             }
             
             

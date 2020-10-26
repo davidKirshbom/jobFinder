@@ -1,8 +1,8 @@
 import React,{useEffect,useState} from 'react'
 import OrangeCheckBox from '../global/OrangeCheckBox'
 
-export default ({ name, code, location, className, index, type, experienceYearsNeeded,
-                JobQualifications,companyOccupation,jobDescription,category}) => {
+export default ({ name,role_name, id, location_area, className, index, type, experience_years,
+                qualifications,company_occupation,description,category}) => {
     const [isExtraInfoOpen,setIsExtraInfoOpen]=useState(false)
     // useEffect(() => {
     //     const exitExtraDetails = document.getElementsByClassName("close-extra-data")[0];
@@ -35,19 +35,19 @@ export default ({ name, code, location, className, index, type, experienceYearsN
         <div className={`list-node-container ${className||""}` } onClick={()=>setIsExtraInfoOpen(true)}>
             <div  className={`summary-container ${isExtraInfoOpen?"yellow-select":""}`} >
          
-                <OrangeCheckBox id={"checkbox-code-"+code} />
+                <OrangeCheckBox id={"checkbox-id-"+id} />
                 <div className="data-container">
                     {index!==null?<span className="index-node">{`${index+1}.`}</span>:""}
                     <span className="data-title">שם</span>
-                    <span className="name-data search-data">{name || "not supplied"}</span>
+                    <span className="name-data search-data">{role_name || "not supplied"}</span>
                 </div>
                 <div className="data-container">
                     <span className="data-title">קוד</span>
-                    <span className="code-data search-data">{code || "not supplied"}</span>
+                    <span className="id-data search-data">{id || "not supplied"}</span>
                 </div>
                 <div className="data-container">
                     <span className="data-title">מיקום</span>
-                    <span className="location-data search-data">{location || "not supplied"}</span>
+                    <span className="location_area-data search-data">{location_area || "not supplied"}</span>
                 </div>
                 </div>
                 <div className={`extra-data-container ${isExtraInfoOpen?"open":""} `}>
@@ -114,25 +114,24 @@ export default ({ name, code, location, className, index, type, experienceYearsN
                             </div>
                                 <div className="data-widget-text">
                    
-                                    {`${experienceYearsNeeded}+ year${experienceYearsNeeded > 1 ? "s" : ""}`}</div>
+                                    {`${experience_years}+ year${experience_years > 1 ? "s" : ""}`}</div>
                             </div>
                         </div>
                         <div className="data-widget">
                             <div className="data-widget-content">
                                <div className="icon-container"> <i class="far fa-compass"></i></div>
-                                <div className="data-widget-text">{location}</div>
+                                <div className="data-widget-text">{location_area}</div>
                             </div>
                         </div>
                     </div>
                     <div className="job-info-container">
                         <div className="info-column">
-                            {createList("Job Qualifications:", JobQualifications.general)}
-                            {createParagraph("Company Occupation:", companyOccupation)}
+                            {createParagraph("Job Qualifications:", qualifications)}
+                            {createParagraph("Company Occupation:", company_occupation)}
                         </div>
                         <div className="info-column">
-                        {createList("Advantage:",JobQualifications.preferred)}
                   
-                        {createParagraph("Job Description:", jobDescription)}
+                        {createParagraph("Job Description:", description)}
                         {createParagraph("Category:", category, true)}
                         </div>
                         
@@ -150,7 +149,7 @@ export default ({ name, code, location, className, index, type, experienceYearsN
     </div>)
 // }
 
-// JobQualifications.general.length>0 ? <p><h3>Job Qualifications:</h3>
-//                             {JobQualifications.general}</p> : ""
+// qualifications.general.length>0 ? <p><h3>Job qualifications:</h3>
+//                             {qualifications.general}</p> : ""
     //
 }

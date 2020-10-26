@@ -7,8 +7,9 @@ const publicDirectoryPath = path.join(__dirname, '../public')
 const app = express();
 app.use(express.static(publicDirectoryPath))
 app.use(express.json())
-app.use(jobsRouter)
 app.use(cors())
+app.use(jobsRouter)
+
 app.listen(port, () => {
     console.log('Server connected, port:',port)
 })
