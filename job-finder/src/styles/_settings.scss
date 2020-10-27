@@ -27,6 +27,7 @@ $bg-gray:#edecea;
     &::-moz-focus-inner {
         padding: 0;
         border: 0;
+        outline: none;
     }
 }
 @mixin  remove-links-defaults {

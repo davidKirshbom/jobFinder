@@ -6,22 +6,29 @@ import ResultList from './ResultList'
 import FloatFilterMenu from './FloatFilterMenu'
 
 export default () => {
-    const [jobsList, setJobsList] = useState();
+    const [resultOffset,setResultOffset]=useState(0);
+    const [jobsList, setJobsList] = useState({rows:[],total:0});
     const [activeFilters, setActiveFilters] = useState({});
+    const [sortBy,setSortBy]=useState({isAscending:true})
     const queryParms = new URLSearchParams(useLocation().search);
     const isSearchResultOpen = useLocation().search !== "";
+    console.log(isSearchResultOpen)
+
     useEffect(() => {
-      
         if(!isSearchResultOpen)
         {axios.get('http://localhost:3000/jobs',
             {
                 params: {
-                    resultsLimit: '20',
+                    resultsLimit: '80',
                     openJobsOnly:true
                 }
             }
         ).then((response) => {  
-            setJobsList(response.data);
+            
+            // setJobsList(response.data);
+            console.log(jobsList)
+            // setTotalResults(response.data.total);
+            
         })
         }
         else {
@@ -39,8 +46,10 @@ export default () => {
                     openJobsOnly:true
                 }
             }
-        ).then((response) => {  
-            setJobsList(response.data);
+            ).then((response) => {  
+              
+            // setJobsList(response.data);
+            // setTotalResults(response.data.total);
         })
         }
         const newSearchTooogle = document.getElementsByClassName("new-search-open-form-toggle")[0];
@@ -58,34 +67,39 @@ export default () => {
             }
         })
     }, [])
-    useEffect(() => {newSearch() },[activeFilters])
-    const newSearch = (event) => {   
-       
-            if (event&&event.preventDefault) 
-                event.preventDefault();
+   
+    useEffect(() => { newSearch() }, [resultOffset,activeFilters,sortBy])
+    useEffect(() => {console.log(jobsList) },[jobsList])
+    const newSearch = () => {  
+                
             const form = document.getElementById("new-search-form");
             const searchWord = form.children[1].value;
             const isSenor = document.getElementById("senior-checkbox").checked;
-            const radioBtnGroup = form.children[3];
+        const isSearchOnlyLastWeek = document.getElementById('last-week-jobs-radio-btn').checked;
+        console.log(sortBy)
             let newJobsList;
-            console.log(activeFilters)
+            
             try {
               axios.get('http://localhost:3000/jobs',
                     {
                         params: {
+                            sortBy:sortBy,
                             searchWord: searchWord,
                             isSenorSearch: isSenor,
-                            job_type: activeFilters&&activeFilters.type||"",
-                            positions: activeFilters&&activeFilters.positions||"",
-                            location_area: activeFilters&&activeFilters.location_area||"",
-                            resultsLimit: '20',
-                            resultOffset: '0',
-                            openJobsOnly: true
+                            job_type: activeFilters.type||"",
+                            positions: activeFilters.positions||"",
+                            location_area: activeFilters.location_area||"",
+                            resultsLimit: '80',
+                            resultOffset: resultOffset,
+                            openJobsOnly: true,
+                            dateLimits: isSearchOnlyLastWeek,
                         }
                     }
               ).then((response) => {
-                    console.log(response)
-                    setJobsList(response.data);
+                console.log(response.data)
+                  setJobsList({rows: response.data.rows,total:response.data.total });
+                 
+                //   setTotalResults(response.data.total);
                 })
             } catch (err) {
                 console.log("problem ocuured",err)
@@ -94,23 +108,32 @@ export default () => {
     
     }
     const fillter = (filterObj) => {
-      
         setActiveFilters(filterObj)
-        console.log(activeFilters)
-        // newSearch(undefined)
-        
     }
+ 
     return (<div id="search-page">
     <div className="wrapper-content">
         <div className="page-content">
         <div className="flex-wrapper">
             <h1 className="page-title">חיפוש עבודה</h1>
-                    <SearchForm handleSearch={newSearch}/>
+                    <SearchForm handleSearch={(e) => {
+                        e.preventDefault();
+                        setResultOffset(0)
+                        newSearch();
+                    }}/>
             <div className="result-section">
                 
                 <div>
-                <ResultList jobsList={jobsList||""}/>
-                <div className="jobs-button-container">
+                            <ResultList
+                                totalResults={jobsList.total}
+                                resultOffset={resultOffset}
+                                setResultOffset={setResultOffset}
+                                jobsList={jobsList.rows || ""}
+                                setSort={setSortBy}
+                                sortObj={sortBy}
+                            />
+                
+                            <div className="jobs-button-container">
                 
                     <div className="fixed-bg for-mobile-only">
                     <a className="send-CV big-orange-butoon desktop"><i class="fab fa-studiovinari "></i> שלח קו"ח </a>
@@ -151,7 +174,13 @@ export default () => {
             </div>
                 </div>
                 </div>
-            <FloatFilterMenu filterHandler={fillter}/>
+            <FloatFilterMenu filterHandler={(e)=>
+               {
+                        setResultOffset(0)
+                        fillter();}
+                
+            } />
+         
     </div>
 </div>)
 }

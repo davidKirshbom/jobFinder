@@ -1,7 +1,7 @@
 const express = require('express');
 
 const client  = require('../postgres');
-const {searchJob,getPositionsByJobId} = require('../querys/querys');
+const {searchJob,searchJobCount} = require('../querys/querys');
 const router = new express.Router();
 // const client = new Client({
 //     connectionString: process.env.CONNECTION_STRING,
@@ -16,11 +16,13 @@ router.get('/jobs', async (req, res) => {
     {
         try
         {
-           
-            client.query(searchJob()).then((value) => {
-              
-                 res.send(value); 
-            })
+            Promise.all([client.query(searchJob()), client.query(searchJobCount())])
+            .then(([jobsQueryResult, totalQueryResult]) => {
+                let total = totalQueryResult.rows[0].count
+                console.log("total results ",total)
+                return res.send({rows:jobsQueryResult.rows,total:total})
+        })
+          
          }catch (err) {
             res.send({
                 status: 500,
@@ -28,8 +30,9 @@ router.get('/jobs', async (req, res) => {
         }
     }
     else {
-        const possibaleSearchAttributes = ["resultOffset","openJobsOnly","resultsLimit", "sortBy", "searchWord", "isSenorSearch", "job_type","positions","location_area"]
-        console.log(searchJob(req.query))
+        const possibaleSearchAttributes = ["dateLimits","resultOffset","openJobsOnly","resultsLimit", "sortBy", "searchWord", "isSenorSearch", "job_type","positions","location_area"]
+        console.log("search query: \n", searchJob(req.query))
+        console.log("total query :",searchJobCount(req.query))
         try {
             for (let query in req.query) {
                 if (!possibaleSearchAttributes.includes(query))
@@ -38,13 +41,15 @@ router.get('/jobs', async (req, res) => {
                         message: "query not legal"
                     })
             }
-            
-            client.query(searchJob(req.query)).then(async (value) => {
-                console.log(value.rows)
-                return res.send(value.rows)
+            Promise.all([client.query(searchJob(req.query)), client.query(searchJobCount(req.query))])
+                .then(([jobsQueryResult, totalQueryResult]) => {
+                    let total = totalQueryResult.rows[0].count
+                    // console.log("rows",jobsQueryResult.rows)
+                    console.log("total results",total)
+                    return res.send({ rows: jobsQueryResult.rows, total: total })
             })
-        }
-        catch (err) {
+          
+        }catch (err) {
             res.send({
                 status: 500,
                 message:err.message}) 

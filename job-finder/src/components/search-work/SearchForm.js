@@ -15,12 +15,12 @@ export default (props) => {
             <div className="radio-btn-group">
                 <h2 className="form-subtitle">הראה משרות</h2>
                     <div className="radio-btn-container">
-                    <input name="jobs-filter" id="all-jobs-radio-btn" type="radio" />
-                    <span className="radiomark"></span>
+                    <input  name="jobs-filter" id="all-jobs-radio-btn" value="all" type="radio" />
+                    <span className="radiomark "></span>
                     <label htmlFor="all-jobs-radio-btn">כל המשרות</label>
                 </div>
                 <div className="radio-btn-container">
-                    <input name="jobs-filter" id="last-week-jobs-radio-btn" type="radio" />
+                    <input  name="jobs-filter" id="last-week-jobs-radio-btn" value="last_week" type="radio" />
                     <span className="radiomark"></span>
                     <label htmlFor="last-week-jobs-radio-btn">משרות מהשבוע האחרון</label>
                 </div>
