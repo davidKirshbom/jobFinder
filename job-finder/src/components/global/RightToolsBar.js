@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-
+import React, { useEffect } from 'react';
+import { Link } from "react-router-dom";
 
 export default () => {
     useEffect(() => {
@@ -14,7 +14,7 @@ export default () => {
     },[])
     return (<div className="tools-container">
     <div id="search-work-tool" className="tool">
-            <div id="search-work_tool" className="tool-text"><i class="fas fa-search"></i>חיפוש עבודה</div>
+            <Link to="/search-work" id="search-work_tool" className="tool-text"><i class="fas fa-search"></i>חיפוש עבודה</Link>
     </div>
     <div id="send-cv-tool" className="tool">
         <div className="tool-text"><i class="fab fa-studiovinari " aria-hidden="true"></i>שלח קו"ח אלינו</div>

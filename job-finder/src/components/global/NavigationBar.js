@@ -1,6 +1,6 @@
 import React,{useEffect} from 'react'
 import { totalJobs } from '../../data/jobs'
-
+import {Link}from 'react-router-dom'
 export default () => {
      
     useEffect(()=>
@@ -43,9 +43,11 @@ export default () => {
         </div>
        
            <div className="background-triangle mobile-only"></div>
-        <div className="logo-container">    
+        <div className="logo-container">
+        <Link to="/">  
            <img className="logo-image" src="https://www.jobinfo.co.il/Portals/_default/Skins/Jobinfo-2016Design/images/JI_logo_mobile.png" alt="" />
-           <span className="logo-text">הרבה מעבר לחברת השמה</span>
+        </Link> 
+            <span className="logo-text">הרבה מעבר לחברת השמה</span>
        </div>
     </nav>)
 }

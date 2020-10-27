@@ -13,7 +13,6 @@ const searchJob = (parameters) => {
         job_type = parameters.job_type
         dateLimits=parameters.dateLimits
     }
-   
     return (`SELECT jobs.*,companies.category AS company_occupation,p.category FROM jobs
             INNER JOIN companies ON jobs.company_uid=companies.uuid 
             INNER JOIN (SELECT position_jobs_connection.job_id,string_agg(positions.name,',') AS category FROM position_jobs_connection

@@ -4,54 +4,29 @@ import {useLocation} from 'react-router-dom'
 import SearchForm from './SearchForm'
 import ResultList from './ResultList'
 import FloatFilterMenu from './FloatFilterMenu'
-
+import {locationsAreas as locationDictonary} from './dictionaty'
 export default () => {
     const [resultOffset,setResultOffset]=useState(0);
     const [jobsList, setJobsList] = useState({rows:[],total:0});
     const [activeFilters, setActiveFilters] = useState({});
     const [sortBy,setSortBy]=useState({isAscending:true})
     const queryParms = new URLSearchParams(useLocation().search);
-    const isSearchResultOpen = useLocation().search !== "";
-    console.log(isSearchResultOpen)
-
+    const handleSearchAtStart = () => {
+        const searchWordInput = document.getElementById('search-word-input');
+        const areasFillterList = document.getElementById('location_checkbox').children;
+       searchWordInput.value = (queryParms.get('searchWord'));
+     
+       for (let index = 0; index < areasFillterList.length; index++)
+       {
+           console.log("filter ","'"+locationDictonary.get(areasFillterList[index].textContent)+"'","\nparams ",queryParms.get('location_area') )
+           if ("'" + locationDictonary.get(areasFillterList[index].textContent) + "'" === queryParms.get('location_area'))
+               areasFillterList[index].firstChild.firstChild.checked = true;
+            
+       }
+       setActiveFilters({ location_area:queryParms.get('location_area'),positions:"",type:""})//useEffect fires new search
+    }
     useEffect(() => {
-        if(!isSearchResultOpen)
-        {axios.get('http://localhost:3000/jobs',
-            {
-                params: {
-                    resultsLimit: '80',
-                    openJobsOnly:true
-                }
-            }
-        ).then((response) => {  
-            
-            // setJobsList(response.data);
-            console.log(jobsList)
-            // setTotalResults(response.data.total);
-            
-        })
-        }
-        else {
-            axios.get('http://localhost:3000/jobs',
-            {
-                params: {
-                    sortBy: queryParms.get('sortBy'),
-                    searchWord: queryParms.get('searchWord'),
-                    isSenorSearch: queryParms.get('isSenorSearch'),
-                    job_type: queryParms.get('job_type'),
-                    positions: queryParms.get('positions'),
-                    location_area:queryParms.get('location_area'),
-                    resultsLimit: '20',
-                    resultOffset:'0',
-                    openJobsOnly:true
-                }
-            }
-            ).then((response) => {  
-              
-            // setJobsList(response.data);
-            // setTotalResults(response.data.total);
-        })
-        }
+        handleSearchAtStart();
         const newSearchTooogle = document.getElementsByClassName("new-search-open-form-toggle")[0];
         const form = document.getElementsByClassName("search-form-container")[0];
         newSearchTooogle.addEventListener("click", () => {
@@ -68,17 +43,13 @@ export default () => {
         })
     }, [])
    
-    useEffect(() => { newSearch() }, [resultOffset,activeFilters,sortBy])
-    useEffect(() => {console.log(jobsList) },[jobsList])
+     useEffect(() => { newSearch() }, [resultOffset,activeFilters,sortBy])
     const newSearch = () => {  
                 
-            const form = document.getElementById("new-search-form");
-            const searchWord = form.children[1].value;
-            const isSenor = document.getElementById("senior-checkbox").checked;
-        const isSearchOnlyLastWeek = document.getElementById('last-week-jobs-radio-btn').checked;
-        console.log(sortBy)
-            let newJobsList;
-            
+        const form = document.getElementById("new-search-form");
+        const searchWord = form.children[1].value;
+        const isSenor = document.getElementById("senior-checkbox").checked;
+        const isSearchOnlyLastWeek = document.getElementById('last-week-jobs-radio-btn').checked;          
             try {
               axios.get('http://localhost:3000/jobs',
                     {
@@ -98,8 +69,6 @@ export default () => {
               ).then((response) => {
                 console.log(response.data)
                   setJobsList({rows: response.data.rows,total:response.data.total });
-                 
-                //   setTotalResults(response.data.total);
                 })
             } catch (err) {
                 console.log("problem ocuured",err)
