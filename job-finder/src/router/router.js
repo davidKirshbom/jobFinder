@@ -8,7 +8,7 @@ import history from '../router/history'
 import NavigationBar from '../components/global/NavigationBar'
 import FloatMenu from '../components/global/FloatMenu'
 import FloatShareIcons from '../components/global/FloatShareIcons'
-
+import CompanyRegisterPage from '../components/companyRegister/CompanyRegisterPage'
 import Footer from '../components/global/Footer';
 import DataRoute from '../router/DataRoute'
  
@@ -31,8 +31,10 @@ export default () => {
                     
                 <Route path="/" exact={true} component={MainPage} />
               
-                    <DataRoute path="/search-work" component={SearchWorkPage} />
-                    <DataRoute component={NotFondPage}/>
+                        <DataRoute path="/search-work" component={SearchWorkPage} />
+                        <DataRoute path="/register/company" component={CompanyRegisterPage}/>
+                        <DataRoute component={NotFondPage} />
+                     
                     </Switch>
                    
             </section>

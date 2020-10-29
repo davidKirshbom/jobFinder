@@ -56,5 +56,7 @@ router.get('/jobs', async (req, res) => {
         }
     }
 })
-
+router.post('/registar/company', async (req, res) => {
+    console.log(req.data)
+})
 module.exports = router;

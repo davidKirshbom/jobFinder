@@ -1,7 +1,7 @@
 import React,{useEffect,useState} from 'react'
 import OrangeCheckBox from '../global/OrangeCheckBox'
 
-export default ({ name,role_name, id, location_area, className, index, type, experience_years,
+export default ({additional_positions, name,role_name, id, location_area, className, index, type, experience_years,
                 qualifications,company_occupation,description,category}) => {
     const [isExtraInfoOpen,setIsExtraInfoOpen]=useState(false)
     // useEffect(() => {
@@ -132,6 +132,7 @@ export default ({ name,role_name, id, location_area, className, index, type, exp
                         <div className="info-column">
                   
                         {createParagraph("Job Description:", description)}
+                        {createParagraph("Additional Positions:", additional_positions,true)}
                         {createParagraph("Category:", category, true)}
                         </div>
                         

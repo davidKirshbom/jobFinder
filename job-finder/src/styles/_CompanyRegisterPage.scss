@@ -1,0 +1,50 @@
+.page-title{
+    color: $dark-blue;
+    font-size: 2.5rem;
+    font-weight: 500;
+}
+.form-register-container{
+    background-color: $light-cream;
+    margin: 10px;
+    padding: 20px 0px;
+    h5{
+        font-size: 1.2rem;
+        font-weight: 500;
+        color:$dark-gray;
+        margin:20px 5px;
+    }
+    form{
+        display: flex;
+        flex-flow: column;
+       *{
+           margin: 10px 15px ;          
+        }
+        input,select{
+            height: 45px;
+            border: none;
+        }
+    }
+}
+.input-text-area{
+    height: 180px;
+    resize: none;
+    border: none;
+}
+.letters-counter{
+    font-size: .8rem;
+}
+.registar-button{
+    @include remove-button-defaults;
+    background:$orange;
+    color: white;
+    height: 3.3rem;
+}
+#registar-form>.area-select{
+    appearance:none;
+}
+#registar-form>.checkbox-container{
+    margin: 0px;
+    .checkbox-text{
+        margin: 0px;
+    }
+}

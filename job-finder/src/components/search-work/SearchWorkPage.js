@@ -57,9 +57,9 @@ export default () => {
                             sortBy:sortBy,
                             searchWord: searchWord,
                             isSenorSearch: isSenor,
-                            job_type: activeFilters.type||"",
-                            positions: activeFilters.positions||"",
-                            location_area: activeFilters.location_area||"",
+                            job_type:activeFilters&&activeFilters.type? activeFilters.type:"",
+                            positions:activeFilters&&activeFilters.positions? activeFilters.positions:"",
+                            location_area:activeFilters&&activeFilters.location_area? activeFilters.location_area:"",
                             resultsLimit: '80',
                             resultOffset: resultOffset,
                             openJobsOnly: true,
@@ -143,10 +143,11 @@ export default () => {
             </div>
                 </div>
                 </div>
-            <FloatFilterMenu filterHandler={(e)=>
-               {
+            <FloatFilterMenu filterHandler={(obj)=>
+            {
+               
                         setResultOffset(0)
-                        fillter();}
+                        fillter(obj);}
                 
             } />
          

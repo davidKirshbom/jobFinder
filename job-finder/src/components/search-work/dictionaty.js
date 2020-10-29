@@ -1,4 +1,5 @@
 let locationsAreas = new Map();
+locationsAreas.set('תל אביב והמרכז', 'Tel_Aviv');
 locationsAreas.set('תל אביב והמרכז', 'Tel-Aviv');
 locationsAreas.set('אזור הדרום', 'south');
 locationsAreas.set('אזור השפלה', 'hashfela');
