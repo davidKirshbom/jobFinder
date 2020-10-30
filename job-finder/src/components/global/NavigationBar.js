@@ -29,7 +29,7 @@ export default () => {
                 <ul className="navigation-links-container">
                     <li id="loginbtn" className="nav-item">כניסה</li>
                     <div className="splitter"></div>
-                    <li id="signinbtn" className="nav-item">הצטרפות</li>
+                    <Link to="/register" id="signinbtn" className="nav-item">הצטרפות</Link>
                 </ul>
                 <div className="total-jobs">
                     <div className="big-splitter splitter"></div>

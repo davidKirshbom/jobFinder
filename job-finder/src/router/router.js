@@ -4,11 +4,13 @@ import MainPage from '../components/main-page/MainPage'
 import SearchWorkPage from '../components/search-work/SearchWorkPage'
 import NotFondPage from '../components/NotFoundPage'
 import history from '../router/history'
+import ChooseRegisterTypePage from '../components/register/ChooseTypeRegisterPage'
 
 import NavigationBar from '../components/global/NavigationBar'
 import FloatMenu from '../components/global/FloatMenu'
 import FloatShareIcons from '../components/global/FloatShareIcons'
-import CompanyRegisterPage from '../components/companyRegister/CompanyRegisterPage'
+import CompanyRegisterPage from '../components/register/CompanyRegisterPage'
+import ClientRegisterPage from '../components/register/SearchWorkRegisterPage'
 import Footer from '../components/global/Footer';
 import DataRoute from '../router/DataRoute'
  
@@ -32,7 +34,10 @@ export default () => {
                 <Route path="/" exact={true} component={MainPage} />
               
                         <DataRoute path="/search-work" component={SearchWorkPage} />
+                        <DataRoute path="/register/user" component={ClientRegisterPage}/>
                         <DataRoute path="/register/company" component={CompanyRegisterPage}/>
+                        <DataRoute path="/register" component={ChooseRegisterTypePage}/>
+                        
                         <DataRoute component={NotFondPage} />
                      
                     </Switch>

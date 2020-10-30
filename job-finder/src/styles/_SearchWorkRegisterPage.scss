@@ -1,0 +1,129 @@
+#search-work-register{
+    margin:0px 10px;
+    .form-register-container{
+        margin: 0px;
+    }
+}
+.service-pros-container{
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+}
+.v-symbol{
+    display: inline-block;
+    border: 3px solid $orange;
+    border-top: none;
+    border-right: none;
+    rotate: -45deg;
+    width: 18px;
+    height: 10px;
+    margin:0px 5px 4px 5px;
+    
+}
+.service-pro{
+    font-size: .88rem;
+    color: $dark-gray;
+    margin: 10px 10px;
+}
+.file-input-btn{
+    background-color: $dark-orange;
+    width: 100px;
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 600;
+    margin: 10px 0px;
+}
+#registar-form>.form-bottom-section>.checkbox-container>.checkbox-text{
+color: $dark-gray;
+.checkmark{
+    margin-left: 15px;
+}
+}
+.files-rules,
+.cv-name{
+    margin: 10px 0px;
+}
+@media(min-width:$break-point-desktop){
+    #search-work-register{
+        margin-right: 15px;
+    }
+    .service-pros-container{
+        flex-flow: row;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+    .form-register-container{
+        width: 750px;
+        
+    }
+    #registar-form{
+        display: flex;
+        flex-flow: row;
+        flex-wrap: wrap;
+        
+        input:not([type='email']){
+            margin: 10px 10px;
+            width: 320px;
+        }
+        input[type='email']{
+            margin: 10px;
+            width: 660px;
+        }
+        div.small-letters-container{
+          display: inline;
+          position: relative;
+          top: 45px;
+        }
+    .checkbox-container>.checkbox-text{
+    color: $dark-gray;
+    .checkmark{
+        margin-left: 10px;
+    }
+    }
+}
+    .files-rules,
+    .cv-name{
+        margin: 10px 0px;
+    }
+    p.page-explain{
+        margin:25px 10px;
+        width: 750px;
+        text-align: center;
+        font-size: 1.05rem;
+    }
+    #registar-form>.form-bottom-section>input.registar-button{
+        position: relative;
+        top: 30px;
+        float: left;
+        height: 60px;
+        width: 200px;
+    }
+    .select-not-send-companies{
+        display: flex !important;
+        
+    }
+    .select-not-send-companies>.lists-control-button-container{
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        margin: 0px 10px;
+       
+    }
+    #all-companies-list{
+        height: 200px;
+        overflow-y: scroll;
+        width:300px;
+        list-style: none;
+        padding: 0px;
+        padding-right: 5px;
+        background: white;
+        li:focus{
+            background: #0078d7;
+            border: none;
+            outline: none;
+        }
+    }
+}

@@ -16,8 +16,9 @@
     form{
         display: flex;
         flex-flow: column;
-       *{
-           margin: 10px 15px ;          
+        padding: 0px 15px;
+       *:not(label){
+           margin: 10px 0px ;          
         }
         input,select{
             height: 45px;
@@ -47,4 +48,9 @@
     .checkbox-text{
         margin: 0px;
     }
+}
+.small-letters-container.unvalid-label{
+    color: red;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }

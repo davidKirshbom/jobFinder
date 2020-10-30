@@ -1,11 +1,44 @@
-import React,{useState} from 'react'
+import  { useState, useEffect } from 'react'
+import React from 'react'
+import validator from 'validator'
 import OrangeCheckBox from '../global/OrangeCheckBox'
 import axios from 'axios'
 
-export default () => {
-    
+
+const Comp= () => {
     const [textAreaLettersCount, setTextAreaLettersCount] = useState(0);
-    const maxLattersTextArea = 300
+    const [unValidFields,setUnValidFields]=useState([])
+    const maxLattersTextArea = 300;
+    // const formFields=document.getElementById('registar-form').children
+    const handleFormValidation = (formObj) => {
+        let result=false
+        let unvalueFields = []
+        if (!formObj.name||validator.isAlpha(formObj.name,'en-US'))
+        {
+            unvalueFields.push('name');
+            result = true;
+        }
+        if (!formObj.phone_number||! (/^0\d([\d]{0,1})([-]{0,1})\d{7}$/.test(formObj.phone_number)))
+        {
+            unvalueFields.push('phoneNumber');
+            result = true;
+        }
+        if (!formObj.email||(!validator.isEmail(formObj.email)))
+        {
+        
+            unvalueFields.push('email');
+            result = true;
+            }
+          
+        if (!formObj.password||formObj.password.length !== 8)
+        {
+            unvalueFields.push('password');
+            result = true;
+        }
+        setUnValidFields(unvalueFields)
+        return result;
+    }
+    useEffect(()=>{console.log(unValidFields)},[unValidFields])
     const Registar = (e) => {
         e.preventDefault()
         const result = {};
@@ -16,28 +49,35 @@ export default () => {
         result.password = formInputs[3].value;
         result.area_location = formInputs[4].value;
         result.category = formInputs[5].value;
+        if(!handleFormValidation(result))
         try {
             axios.post('http://localhost:3000/users/registar/company', {
                 headers: {
-                    'Content-Type': 'application/json',
-                },
+                            'Content-Type': 'application/json',
+                         },
                 data: JSON.stringify(result)
             })
-        } catch (err) {
-            
         }
+        catch (err) {
+            console.log(err)
+            }
+        
     }
-    
+   
         return (
             <div>
                 <div className="page-title">הוספת חברה</div>
                 <div className="form-register-container">
                     <h5>מציאת עובדים בכל הארץ! מלאו פרטים והצטרפו למשפחת ג'ובאינפו</h5>
                     <form onSubmit={Registar} id="registar-form" >
-                        <input type="text" placeholder="*שם (באנגלית)" required></input>
-                        <input type="text" placeholder="*טלפון" required></input>
-                        <input type="email" placeholder="*דואר אלקטרוני" required></input>
-                        <input type="password" placeholder="*סיסמא" maxLength='8' required></input>
+                        <input type="text" placeholder="*שם (באנגלית)" ></input>
+                        <label className="small-letters-container unvalid-label" hidden={!unValidFields.includes('name')}>חובה להזין שם באנגלית </label>
+                        <input  type="text" placeholder="*טלפון"  ></input>
+                        <label className="small-letters-container unvalid-label" hidden={!unValidFields.includes('phoneNumber')}>חובה להזין מספר טלפון חוקי </label>
+                        <input  type="email" placeholder="*דואר אלקטרוני" ></input>
+                        <label className="small-letters-container unvalid-label" hidden={!unValidFields.includes('email')}>חובה להזין איימיל חוקי </label>
+                        <input  type="password" placeholder="*סיסמא" maxLength='8' ></input>
+                        <label className="small-letters-container unvalid-label" hidden={!unValidFields.includes('email')}>חובה להזין סיסמא בעלת 8 תווים </label>
                         <select id="arear-selection" className="area-select">
                             <option value="Tel_Aviv">תל אביב-יפו</option>
                             <option value="south">אזור הדרום</option>
@@ -72,3 +112,4 @@ export default () => {
         )
     
 }
+export default Comp 
