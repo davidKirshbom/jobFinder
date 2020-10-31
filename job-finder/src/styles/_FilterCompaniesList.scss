@@ -1,0 +1,78 @@
+@media(min-width:$break-point-desktop){
+    .toggle-line{
+        margin: 0px !important;
+        padding: 15px;
+       
+        padding-left: 25px;
+        display: flex;
+        justify-content: space-between;
+        span{
+            color: $dark-gray;
+            font-size: .95rem;
+            
+            strong{
+                font-size: .95rem;
+            }
+        }
+    }
+    .select-not-send-companies{
+        display: flex !important;
+        flex-flow: column;
+        width: 95%;
+        background: white;
+        outline: 1px solid $smooth-gray;
+     .lists-container{
+         display: flex;
+         align-items: center;
+     }   
+    }
+    .lists-container>.lists-control-button-container{
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        margin: 0px 10px;
+       
+    }
+    #all-companies-list{
+        height: 200px;
+        overflow-y: scroll;
+        width:300px;
+        list-style: none;
+        padding: 0px;
+        padding-right: 5px;
+        background: white;
+        li.selected{
+            background: #0078d7;
+            border: none;
+            outline: none;
+        }
+    }
+    .lists-container.hide{
+        display: none;
+    }
+    .company-filter-list{
+        border: 1px solid $smooth-gray;
+    }
+    .all-companies-container{
+        margin-top: 0px !important;
+        span.list-title{
+            font-size: 1rem;
+            
+           }
+    }
+    .list-control-button{
+        @include remove-button-defaults;
+        background: $orange;
+        color: white;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .fas{
+            padding-top: 2px;
+            font-size: .9rem;
+            margin: 2px 2px;
+        }
+    }
+    
+}

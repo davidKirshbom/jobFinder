@@ -1,3 +1,4 @@
+
 #search-work-register{
     margin:0px 10px;
     .form-register-container{
@@ -47,6 +48,7 @@ color: $dark-gray;
     margin: 10px 0px;
 }
 @media(min-width:$break-point-desktop){
+   
     #search-work-register{
         margin-right: 15px;
     }
@@ -65,11 +67,11 @@ color: $dark-gray;
         flex-wrap: wrap;
         
         input:not([type='email']){
-            margin: 10px 10px;
+          
             width: 320px;
         }
         input[type='email']{
-            margin: 10px;
+            
             width: 660px;
         }
         div.small-letters-container{
@@ -94,36 +96,23 @@ color: $dark-gray;
         text-align: center;
         font-size: 1.05rem;
     }
-    #registar-form>.form-bottom-section>input.registar-button{
+    #registar-form>input.registar-button{
         position: relative;
         top: 30px;
         float: left;
+        margin-right: auto;
         height: 60px;
         width: 200px;
     }
-    .select-not-send-companies{
-        display: flex !important;
-        
-    }
-    .select-not-send-companies>.lists-control-button-container{
-        display: flex;
-        flex-flow: column;
-        justify-content: center;
-        margin: 0px 10px;
-       
-    }
-    #all-companies-list{
-        height: 200px;
-        overflow-y: scroll;
-        width:300px;
-        list-style: none;
-        padding: 0px;
-        padding-right: 5px;
-        background: white;
-        li:focus{
-            background: #0078d7;
-            border: none;
-            outline: none;
+    #registar-form{
+        .input-container{
+            margin: 5px;
         }
     }
+    
+}
+.input-container{
+    display: flex;
+    flex-flow: column;
+    
 }
