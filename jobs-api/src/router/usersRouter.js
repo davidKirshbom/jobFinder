@@ -1,7 +1,7 @@
 const express = require('express');
 const client = require('../postgres');
 const {insertNewCompany,insetNewUser}=require('../querys/insertQuerys')
-const router = new express.Router();//"/users"
+const router =  express.Router();//"/users"
 router.post('/registar/company', async (req, res) => {
     const data = JSON.parse(req.body.data);
     console.log((insertNewCompany({...data})))

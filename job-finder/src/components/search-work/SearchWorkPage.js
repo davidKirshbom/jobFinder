@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import axios from 'axios'
-import {useLocation} from 'react-router-dom'
+import {useLocation,useHistory} from 'react-router-dom'
 import SearchForm from './SearchForm'
 import ResultList from './ResultList'
 import FloatFilterMenu from './FloatFilterMenu'
@@ -11,6 +11,7 @@ export default () => {
     const [activeFilters, setActiveFilters] = useState({});
     const [sortBy,setSortBy]=useState({isAscending:true})
     const queryParms = new URLSearchParams(useLocation().search);
+    const history = useHistory();
     const handleSearchAtStart = () => {
         const searchWordInput = document.getElementById('search-word-input');
         const areasFillterList = document.getElementById('location_checkbox').children;
@@ -22,11 +23,17 @@ export default () => {
            if ("'" + locationDictonary.get(areasFillterList[index].textContent) + "'" === queryParms.get('location_area'))
                areasFillterList[index].firstChild.firstChild.checked = true;
             
-       }
+        }
+       
        setActiveFilters({ location_area:queryParms.get('location_area'),positions:"",type:""})//useEffect fires new search
+        history.replace({
+            search: '',
+          })
     }
+
     useEffect(() => {
         handleSearchAtStart();
+        
         const newSearchTooogle = document.getElementsByClassName("new-search-open-form-toggle")[0];
         const form = document.getElementsByClassName("search-form-container")[0];
         newSearchTooogle.addEventListener("click", () => {
@@ -43,8 +50,8 @@ export default () => {
         })
     }, [])
    
-     useEffect(() => { newSearch() }, [resultOffset,activeFilters,sortBy])
-    const newSearch = () => {  
+     useEffect(() => { newSearch().then() }, [resultOffset,activeFilters,sortBy])
+    const newSearch =async () => {  
                 
         const form = document.getElementById("new-search-form");
         const searchWord = form.children[1].value;
@@ -88,7 +95,7 @@ export default () => {
                     <SearchForm handleSearch={(e) => {
                         e.preventDefault();
                         setResultOffset(0)
-                        newSearch();
+                        newSearch().then();
                     }}/>
             <div className="result-section">
                 

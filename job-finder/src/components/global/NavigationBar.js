@@ -1,8 +1,20 @@
-import React,{useEffect} from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
 import { totalJobs } from '../../data/jobs'
-import {Link}from 'react-router-dom'
-export default () => {
-     
+import { Link } from 'react-router-dom'
+
+export default ({ onLoginPress }) => {
+    const [jobsCount, setJobsCount] = useState(0)
+    useEffect(() => {
+        try
+       { axios.get('http://localhost:3000/utils/get-jobs-count').then((value) => {
+           console.log(value.data[0].count)
+           setJobsCount(value.data[0].count)
+       }).catch(err=>console.log(err))
+        } catch (err) {
+            console.log(err)
+        }
+    },[])
     useEffect(()=>
     {
        
@@ -23,11 +35,12 @@ export default () => {
     }
         , [])
     return (<nav className="navigation-bar">
+       
        <div className="darken-skin mobile-only"></div>
             <div className="navigation-content">
                 
                 <ul className="navigation-links-container">
-                    <li id="loginbtn" className="nav-item">כניסה</li>
+                    <li onClick={()=>onLoginPress()} id="loginbtn" className="nav-item">כניסה</li>
                     <div className="splitter"></div>
                     <Link to="/register" id="signinbtn" className="nav-item">הצטרפות</Link>
                 </ul>
@@ -35,7 +48,7 @@ export default () => {
                     <div className="big-splitter splitter"></div>
                     <div className="total-jobs-text">
                     <span className="total-jobs-number">
-                        {totalJobs}
+                        {jobsCount}
                         <span className="total-jobs-subtitle">משרות מחכות לך</span> 
                     </span>
                </div>

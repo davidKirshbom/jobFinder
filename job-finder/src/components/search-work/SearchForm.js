@@ -24,9 +24,11 @@ export default (props) => {
                     <span className="radiomark"></span>
                     <label htmlFor="last-week-jobs-radio-btn">משרות מהשבוע האחרון</label>
                 </div>
+                    </div>
+                    <div className="input-container">
+            <input type="submit" className="big-orange-btn submit-search-btn" value="חפש משרות"></input><i class="fas fa-search"></i>
             </div>
-            <button type="submit" className="big-orange-btn submit-search-btn"><i class="fas fa-search"></i>חפש משרות</button>
-      </form>
+            </form>
             </div>
         </div>)
 }

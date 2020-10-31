@@ -2,7 +2,7 @@ const express = require('express');
 
 const client  = require('../postgres');
 const {searchJob,searchJobCount} = require('../querys/querys');
-const router = new express.Router();
+const router =  express.Router();
 // const client = new Client({
 //     connectionString: process.env.CONNECTION_STRING,
 // })
@@ -10,7 +10,7 @@ const router = new express.Router();
 // client.connect();
 
 
-router.get('/jobs', async (req, res) => {
+router.get('', async (req, res) => {
    console.log(req.query)
     if (Object.keys(req.query).length === 0)
     {

@@ -2,4 +2,8 @@ const getAllCompanies = () => {
     
     return("select * from companies")
 }
-module.exports={getAllCompanies}
+const getOpenJobsCount = () => {
+    
+    return ("SELECT COUNT(id) FROM jobs WHERE jobs.end_date IS NOT NULL")
+}
+module.exports={getAllCompanies,getOpenJobsCount}
