@@ -7,6 +7,7 @@ export default (props) => {
     const organizeFillterObj = (e) => {
         const result = {};
         const jobType = document.getElementById("job-type_checkboxs")
+       
         result.type = "";
         for (let index = 1; index < jobType.children.length-1; index++){
             const checkbox = jobType.children[index].firstChild.firstChild;

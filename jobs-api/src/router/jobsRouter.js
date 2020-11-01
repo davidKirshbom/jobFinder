@@ -11,7 +11,8 @@ const router =  express.Router();
 
 
 router.get('', async (req, res) => {
-   console.log(req.query)
+console.log("jobs=>req, res", req, res)
+   
     if (Object.keys(req.query).length === 0)
     {
         try

@@ -66,7 +66,6 @@ export default () => {
         result.phone_number = formInputs[2].firstChild.value;
         result.password = formInputs[3].firstChild.value;
         result.email = formInputs[4].firstChild.value;
-    
         result.email_subscribe = formInputs[7].firstChild.firstChild.checked;
         result.send_auto_cv = formInputs[8].firstChild.firstChild.checked;
         result.cv = formInputs[5].firstChild.children[1].files[0];

@@ -10,4 +10,7 @@ const insetNewUser = ({ first_name, last_name, phone_number, password, email, em
     return (`INSERT INTO users (first_name, last_name, phone_number, password, email,email_subscribe, send_auto_cv)
     VALUES ('${first_name}','${last_name}','${phone_number}','${password}','${email}','${email_subscribe}','${send_auto_cv}')`)
 }
-module.exports={insertNewCompany,insetNewUser}
+const insertUserToken = (email,token) => {
+    return (`INSERT INTO tokens (email,token) VALUES ('${email}','${token}')`)
+}
+module.exports={insertNewCompany,insetNewUser,insertUserToken}

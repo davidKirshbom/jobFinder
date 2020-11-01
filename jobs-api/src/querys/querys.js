@@ -81,6 +81,14 @@ const getPositionsByJobId = (idString) => {
             WHERE jobs.id IN (${idString})
     `)
 }
+const getUserLoginData = (userEmail) => {
+    return (`SELECT users.uid,users.email,users.password,'user' AS user_type FROM users
+            WHERE users.email='${userEmail}'
+            UNION
+            SELECT companies.uuid,companies.email,companies.password,'company' AS user_type FROM companies
+            WHERE companies.email='${userEmail}'
+    `)
+}
 
-module.exports = {searchJob,getPositionsByJobId,searchJobCount};
+module.exports = {searchJob,getPositionsByJobId,searchJobCount,getUserLoginData};
 // OR (description LIKE '%${searchWord}%') OR ( qualifications LIKE '%${searchWord}%'))

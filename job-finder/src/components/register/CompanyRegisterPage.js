@@ -13,7 +13,7 @@ const Comp= () => {
     const handleFormValidation = (formObj) => {
         let result=false
         let unvalueFields = []
-        if (!formObj.name||validator.isAlpha(formObj.name,'en-US'))
+        if (!formObj.name||!validator.isAlpha(formObj.name,'en-US'))
         {
             unvalueFields.push('name');
             result = true;
@@ -43,18 +43,21 @@ const Comp= () => {
         e.preventDefault()
         const result = {};
         const formInputs = e.target.children;
+        console.log("Registar -> formInputs", formInputs)
         result.name = formInputs[0].value;
-        result.phone_number = formInputs[1].value;
-        result.email = formInputs[2].value;
-        result.password = formInputs[3].value;
-        result.area_location = formInputs[4].value;
-        result.category = formInputs[5].value;
+        result.phone_number = formInputs[2].value;
+        result.email = formInputs[4].value;
+        result.password = formInputs[6].value;
+        result.area_location = formInputs[8].value;
+        result.category = formInputs[9].value;
+        console.log("Registar -> result", result)
+        
         if(!handleFormValidation(result))
         try {
             axios.post('http://localhost:3000/users/registar/company', {
                 headers: {
-                            'Content-Type': 'application/json',
-                         },
+                    'Content-Type': 'application/json',
+                },
                 data: JSON.stringify(result)
             })
         }
