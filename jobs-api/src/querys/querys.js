@@ -86,8 +86,8 @@ const getUserByUidAndType = (uid, type) => {
     return (`SELECT users.*,'user' AS user_type FROM users
     WHERE users.uid='${uid}'`)
     else
-   `return(SELECT companies.*,'company' AS user_type FROM companies
-    WHERE companies.uuid='${uid}') `
+   return(`SELECT companies.*,'company' AS user_type FROM companies
+    WHERE companies.uuid='${uid}' `)
 }
 const getUserLoginData = (userEmail) => {
     return (`SELECT users.uid,users.email,users.password,'user' AS user_type FROM users

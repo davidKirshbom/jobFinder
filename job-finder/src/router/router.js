@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 import { Link, Switch, Route, Router } from "react-router-dom";
 import MainPage from '../components/main-page/MainPage'
 import SearchWorkPage from '../components/search-work/SearchWorkPage'
+import CompanyJobsWall from '../components/usersData/CompanyJobsWall'
 import NotFondPage from '../components/NotFoundPage'
 import history from '../router/history'
 import ChooseRegisterTypePage from '../components/register/ChooseTypeRegisterPage'
@@ -13,7 +14,7 @@ import CompanyRegisterPage from '../components/register/CompanyRegisterPage'
 import ClientRegisterPage from '../components/register/SearchWorkRegisterPage'
 import Footer from '../components/global/Footer';
 import DataRoute from '../router/DataRoute'
-
+import PrivateRoute from '../router/PrivateRoute'
 export default () => {
     const [isLoginBarOpen,setIsLoginBarOpen]=useState(false)
     return (
@@ -42,7 +43,7 @@ export default () => {
                         <DataRoute path="/register/user" component={ClientRegisterPage}/>
                         <DataRoute path="/register/company" component={CompanyRegisterPage}/>
                         <DataRoute path="/register" component={ChooseRegisterTypePage}/>
-                        
+                        <PrivateRoute path="/my-jobs-wall" component={CompanyJobsWall}/>
                         <DataRoute component={NotFondPage} />
                      
                     </Switch>

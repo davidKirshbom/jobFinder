@@ -71,6 +71,7 @@ export default () => {
         result.send_auto_cv = formInputs[8].firstChild.firstChild.checked;
         result.cv = formInputs[5].firstChild.children[1].files[0];
         result.uid = user.data.uid;
+        result.clientType='user'
         console.log(result)
     
         if (!handleFormValidation(result))

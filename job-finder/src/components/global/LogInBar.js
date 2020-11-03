@@ -5,8 +5,6 @@ export default ({ isOpen, setIsOpen }) => {
     const {user, setUser} = useContext(userContext);
     const [isBadLoginData,setIsBadLoginData]=useState(false)
     const handleLogin =async (email, password) => {
-   
-        
         axios.post('http://localhost:3000/users/login', {
             headers: { 'Content-Type': 'application/json' },
             data: ({ email, password })

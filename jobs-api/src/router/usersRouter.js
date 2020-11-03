@@ -81,9 +81,11 @@ const generateAuthToken = async (email) => {
   }
 };
 const getUserData = async (uid, type) => {
-  console.log("getUserData -> uid, type", uid, type);
+  
+  console.log("getUserData -> getUserByUidAndType(uid, type)", getUserByUidAndType(uid, type))
+
   const user = await client.query(getUserByUidAndType(uid, type));
-  console.log("getUserData -> user", user);
+  
   return user;
 };
 router.get('/get-user/:uid/:user_type', async (req, res) => {

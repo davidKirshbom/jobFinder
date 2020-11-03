@@ -1,13 +1,15 @@
-import  { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import React from 'react'
 import validator from 'validator'
 import OrangeCheckBox from '../global/OrangeCheckBox'
+import userContext from '../../contexts/UserContext'
 import axios from 'axios'
 
 
 const Comp= () => {
     const [textAreaLettersCount, setTextAreaLettersCount] = useState(0);
-    const [unValidFields,setUnValidFields]=useState([])
+    const [unValidFields, setUnValidFields] = useState([])
+    const { user, setUser } = useContext(userContext);
     const maxLattersTextArea = 300;
     // const formFields=document.getElementById('registar-form').children
     const handleFormValidation = (formObj) => {
@@ -29,16 +31,59 @@ const Comp= () => {
             unvalueFields.push('email');
             result = true;
             }
-          
-        if (!formObj.password||formObj.password.length !== 8)
+
+        if ((user.data&&(formObj.password.length!==0&&formObj.password.length!==8))||(!user.data&&formObj.password.length !== 8))
         {
             unvalueFields.push('password');
             result = true;
         }
         setUnValidFields(unvalueFields)
+        console.log("handleFormValidation -> unvalueFields", unvalueFields)
         return result;
     }
-    useEffect(()=>{console.log(unValidFields)},[unValidFields])
+    const updateUserData = (e) => {
+        e.preventDefault()
+        console.log(user)
+        const result = {};
+        const formInputs = e.target.children;
+        result.name = formInputs[0].value;
+        result.phone_number = formInputs[2].value;
+        result.email = formInputs[4].value;
+        result.password = formInputs[6].value;
+        result.area_location = formInputs[8].value;
+        result.category = formInputs[9].value;
+        result.uid = user.data.uuid;
+        result.clientType='company'
+    
+        if (!handleFormValidation(result))
+        {
+            console.log("updateUserData -> user.token", user.token)
+        try {
+            axios.put('http://localhost:3000/users/update', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization':JSON.stringify('Bearer '+user.token),
+                   
+                         },
+                data: JSON.stringify(result)
+            }).then(() => {
+                try
+                {
+                    axios.get(`http://localhost:3000/users/get-user/${result.uid}/company`).then((value) => {
+                        setUser({ data: value.data.rows[0], token: user.token })
+                    console.log("updateUserData -> value", value)
+                    })
+                }
+                catch (err) {
+                    throw new Error("cant get new user")
+                }
+            })
+        }
+        catch (err) {
+            console.log(err)
+            }}
+    }
+ 
     const Registar = (e) => {
         e.preventDefault()
         const result = {};
@@ -72,25 +117,30 @@ const Comp= () => {
                 <div className="page-title">הוספת חברה</div>
                 <div className="form-register-container">
                     <h5>מציאת עובדים בכל הארץ! מלאו פרטים והצטרפו למשפחת ג'ובאינפו</h5>
-                    <form onSubmit={Registar} id="registar-form" >
-                        <input type="text" placeholder="*שם (באנגלית)" ></input>
-                        <label className="small-letters-container unvalid-label" hidden={!unValidFields.includes('name')}>חובה להזין שם באנגלית </label>
-                        <input  type="text" placeholder="*טלפון"  ></input>
+                    <form onSubmit={user.data?updateUserData:Registar} id="registar-form" >
+                        <input
+                            type="text"
+                            placeholder="*שם (באנגלית)"
+                            defaultValue={user.data?user.data.name:""}></input>
+                        <label className="small-letters-container unvalid-label"
+                            hidden={!unValidFields.includes('name')}
+                            >חובה להזין שם באנגלית </label>
+                        <input  type="text" placeholder="*טלפון" defaultValue={user.data?user.data.phone_number:""}  ></input>
                         <label className="small-letters-container unvalid-label" hidden={!unValidFields.includes('phoneNumber')}>חובה להזין מספר טלפון חוקי </label>
-                        <input  type="email" placeholder="*דואר אלקטרוני" ></input>
+                        <input  type="email" placeholder="*דואר אלקטרוני" defaultValue={user.data?user.data.email:""} ></input>
                         <label className="small-letters-container unvalid-label" hidden={!unValidFields.includes('email')}>חובה להזין איימיל חוקי </label>
-                        <input  type="password" placeholder="*סיסמא" maxLength='8' ></input>
+                        <input  type="password" placeholder="*סיסמא" maxLength='8'  ></input>
                         <label className="small-letters-container unvalid-label" hidden={!unValidFields.includes('email')}>חובה להזין סיסמא בעלת 8 תווים </label>
                         <select id="arear-selection" className="area-select">
-                            <option value="Tel_Aviv">תל אביב-יפו</option>
-                            <option value="south">אזור הדרום</option>
-                            <option value="Tel-Aviv,">אזור המרכז</option>
-                            <option value="north">אזור הצפון</option>
-                            <option value="hasharon">אזור צפון השרון</option>
-                            <option value="europe,USA,">חוץ לארץ</option>
-                            <option value="europe">Europe</option>
-                            <option value="far east">Far East</option>
-                            <option value="USA">United States</option>
+                            <option selected={user.data?user.data.area_location==='Tel_Aviv':""} value="Tel_Aviv">תל אביב-יפו</option>
+                            <option selected={user.data?user.data.area_location==='south':""} value="south">אזור הדרום</option>
+                            <option selected={user.data?user.data.area_location==='Tel_Aviv':""} value="Tel-Aviv,">אזור המרכז</option>
+                            <option selected={user.data?user.data.area_location==='north':""} value="north">אזור הצפון</option>
+                            <option selected={user.data?user.data.area_location==='hasharon':""} value="hasharon">אזור צפון השרון</option>
+                            <option selected={user.data?user.data.area_location==='europe,USA,':""} value="europe,USA,">חוץ לארץ</option>
+                            <option selected={user.data?user.data.area_location==='europe':""} value="europe">Europe</option>
+                            <option selected={user.data?user.data.area_location==='far east':""} value="far east">Far East</option>
+                            <option selected={user.data?user.data.area_location==='USA':""} value="USA">United States</option>
                             <option selected="true" value="all_areas">כל האזורים</option>
                         </select>
                     
@@ -100,6 +150,7 @@ const Comp= () => {
                             placeholder="*מה עושה החברה?"
                             maxLength={maxLattersTextArea}
                             onChange={(e) => setTextAreaLettersCount(e.target.value.length)}
+                            defaultValue={user.data?user.data.category:""}
                         ></textarea>
                         <div className='letters-counter'>{textAreaLettersCount}/{maxLattersTextArea}</div>
                         <OrangeCheckBox
@@ -107,7 +158,7 @@ const Comp= () => {
                             value='subscribe-mail'
                             id='subscribe-mail-checkbox' />
                         <div className="small-letters-container">*שדה חובה</div>
-                        <input className="registar-button" type="submit" value="הירשם" />
+                        <input className="registar-button" type="submit" value={user.data?'עדכן':'הירשם'} />
                     </form>
                 </div>
     
