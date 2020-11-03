@@ -9,15 +9,17 @@
     align-items: center;
     justify-content: space-between;
     transition: top .3s linear;
-    z-index: 1;
-    overflow: hidden;
+    z-index: 1;   
     .background-triangle.mobile-only{
-        opacity: 0;
         z-index: 0;
         z-index: -1;
-        position: absolute;
+        position: relative;
        
     }
+}
+.navigation-bar:not(.float-top)>.triangle-container{
+        overflow: visible; 
+      
 }
 .float-top.mobile-only{
     position: fixed;
@@ -35,15 +37,22 @@
      width: 100%;
      z-index: 0;
     background: linear-gradient(to right, rgba(0,0,0,0.13) 0%, rgba(0,0,0,0.4) 100%);
- }   
+ } 
+ 
  .background-triangle.mobile-only{
-        position: absolute;
+        position: relative;
        left: 0px;
        border-width: 29vw;
         opacity: 0.75;
         z-index: 0;
     }
 }
+.triangle-container{
+    position: absolute;
+    left: 0px;
+    height: 54px;
+    overflow: hidden;
+} 
 .logo-image{
 width: 86px;
 height: 34px;
@@ -55,7 +64,7 @@ height: 34px;
     color:white;
     display: flex;
     height: 100%;
-    width: 100%;
+    width: 70%;
     z-index: 97;
     margin: 0px;
 }
@@ -67,6 +76,10 @@ height: 34px;
     padding: 0px;
     width: 7.5rem;
     height: 1.5rem;
+
+    &.hide{
+        width: 50px;
+    }
 }
 .splitter{
     width: 2px;
@@ -161,4 +174,84 @@ height: 34px;
         
     }
     
+}
+.user-detail-container{
+    z-index: 100;
+    height: 100%;
+    .name-title{
+        height: 100%;
+        margin: auto 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        width: 110px;
+        padding-right: 10px;
+        right: 30px;
+        margin-right: 10px;
+        &:hover{
+            color: $orange;
+            cursor: pointer;
+        }
+        .fas{
+            margin-top: 5px;
+            margin-right: 10px;
+            font-size: .9rem;
+        }
+        &.open{
+            background: darken($color:white, $amount: 40);
+        }
+    }
+}
+.user-menu-container{
+   width: fit-content;
+    max-height: 0px;
+    overflow: hidden;
+    list-style: none;
+    background: white;
+    margin-top: 0px;
+    padding: 0px;
+    position: relative;
+    right: 60px;
+    a,
+    li{
+        display: flex;
+        
+        align-items: center;
+       width: 170px;
+        height: 60px;
+        border-bottom: 1px solid #d8d7d5;
+        padding: 7px;
+        margin: 0px 5px;
+        color: $dark-blue;
+        &:hover{
+            cursor: pointer;
+            color: $orange;
+        }
+       
+    }
+    
+}
+.user-menu-container.open{
+    
+    max-height: 200px;
+}
+.background-triangle{
+    float: left;
+    direction: ltr;
+    border: 12vw solid ;
+    opacity: 0.8;
+    border-color: #fb8e0f;
+    border-bottom-color: transparent;
+    border-right-color: transparent;
+    z-index: -1;
+    width: 10px;
+    height: 10px;
+}
+@media(min-width:$break-point-desktop){
+    .user-detail-container{
+        position: absolute;
+        right: 700px;
+     
+    } 
 }

@@ -7,18 +7,7 @@
     background-image: url(https://www.jobinfo.co.il/Portals/_default/Skins/Jobinfo-2016Design/images/bgphoto1_mobile.jpg);
 }
 
-.background-triangle{
-    float: left;
-    direction: ltr;
-    border: 21vw solid ;
-    opacity: 0.8;
-    border-color: #fb8e0f;
-    border-bottom-color: transparent;
-    border-right-color: transparent;
-    z-index: -1;
-    width: 10px;
-    height: 10px;
-}
+
 
 @media (min-width:$break-point-desktop){
     .panel-container{

@@ -67,6 +67,11 @@
         font-size: 2rem;
     }
 }
+.bad-login-error{
+    position: absolute;
+    bottom: 40px;
+    right: 45px;
+}
 @media(min-width:$break-point-desktop){
    
     #login-form{
@@ -106,5 +111,9 @@
         height: 150px;
         
     }
-   
+   .bad-login-error{
+       bottom: 22px;
+       right: 210px;
+   }
 }
+

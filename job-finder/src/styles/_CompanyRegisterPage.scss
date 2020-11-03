@@ -54,3 +54,20 @@
     margin-top: 0px;
     margin-bottom: 0px;
 }
+@media(min-width:$break-point-desktop){
+    #registar-form{
+        textarea,
+        select,
+        input{
+            margin: 10px 10px;
+        }
+        .input-text-area{
+            width: 92%;
+        }
+    }
+    .letters-counter{
+        margin: 0px;
+        position: relative;
+        right: 13px;
+    }
+}

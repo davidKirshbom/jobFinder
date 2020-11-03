@@ -30,4 +30,5 @@ router.get('/get-jobs-count', async (req, res) => {
     
     }
 })
+
 module.exports = router;
