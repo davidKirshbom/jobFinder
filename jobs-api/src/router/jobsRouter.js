@@ -1,7 +1,14 @@
 const express = require('express');
 
 const client  = require('../postgres');
-const {searchJob,searchJobCount} = require('../querys/querys');
+const { searchJob, searchJobCount, getJobPositionById } = require('../querys/querys');
+const { updateJobsTable } = require('../querys/updateQuery')
+const { removePosition } = require('../querys/removeQuerys');
+const { insertPositions } = require('../querys/insertQuerys');
+const { getJobCompanyUid } = require('../querys/utilsQuerys')
+const { isTokenValid } = require('../utils/tokenUtils');
+const { json } = require('express');
+const jwt = require("jsonwebtoken");
 const router =  express.Router();
 // const client = new Client({
 //     connectionString: process.env.CONNECTION_STRING,
@@ -57,7 +64,46 @@ console.log("jobs=>req, res", req, res)
         }
     }
 })
+router.get('/jobs-get-positions/:id', (req, res) => {
+    
+    // console.log("getJobPositionById(req.params.id)", getJobPositionById(req.params.id))
+    console.log("req.params", req.params)
+    client.query(getJobPositionById(req.params.id)).then((value) => {
+    
+        res.send(value.rows)
+    }).catch(err=>console.log(err))
+})
 router.post('/registar/company', async (req, res) => {
     console.log(req.data)
+})
+router.put('/update',async (req, res) => {
+    const data =JSON.parse(req.body.data);
+    console.log("data", data)
+    const positionList=data.positions
+    console.log("req.body.headers.Authorization", req.body.headers.Authorization)
+    const isAuth = await isTokenValid(data.userEmail, JSON.parse(req.body.headers.Authorization))
+    const companyUid=await getJobCompanyUid(data.id)
+    const isJobOwner=data.userId===companyUid
+    if(isAuth&&isJobOwner)
+    {try
+    {
+        const updateJobsTableQuery = await client.query(updateJobsTable(data))
+       
+        console.log("updateJobsTableQuery", updateJobsTableQuery)
+        console.log(positionList)
+        if(positionList)
+        { removeOldPosition=await client.query(removePosition(data.id))  
+        await positionList.forEach(async position => {
+            console.log("queryAnser", position)
+            const queryAnser = await client.query(insertPositions(data.id, position.id))
+            
+        });}
+       
+        res.send('update successful')
+    } catch (err) {
+        res.status(500).send({status:500,message:'error while updates'})
+    }}
+    
+    
 })
 module.exports = router;

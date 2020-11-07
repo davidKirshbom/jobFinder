@@ -1,0 +1,78 @@
+import React, { useEffect,useState } from 'react'
+import axios from 'axios'
+export default ({className="",onChange,jobId}) => {
+    const [positionsList, setPositionsList] = useState([]);
+    const [selectedPositions, setSelectedPositions] = useState([]);
+    const [selectedIndexPositionList, setSelectedIndexPositionList] = useState();
+    const [selectedIndexSelectedPositionsList, setSelectedIndexSelectedPositionsList] = useState();
+    useEffect(async() => {
+        try {
+            const positions=(await axios.get('http://localhost:3000/utils/get-positions')).data
+        
+            const selectedPositions = (await axios.get(`http://localhost:3000/jobs/jobs-get-positions/${jobId}`)).data
+            setPositionsList(positions)
+            
+            setSelectedPositions(selectedPositions)
+            console.log('positions',positions)
+        } catch (err) {
+            console.log(err)
+        }
+    },[])
+    useEffect(() => { positionsList.sort();selectedPositions.sort()},[positionsList,selectedPositions])
+    useEffect(() => {
+       
+        onChange(selectedPositions)
+    },[selectedPositions])
+    return (
+        <div className="select-Positions">
+        <div className={`lists-container `}>
+                <div className="all-positions-container">
+                   <span className="list-title">תפקידים</span> 
+        <ul className="positions-list" name="positions-list" id="all-positions-list">
+                {positionsList.map((position, index) => {
+                    return <li
+                        className={className + (selectedIndexPositionList === index ? ' selected' : '')}
+                        onClick={(e) => setSelectedIndexPositionList(index)}
+                        value={position.name}>{position.name}</li>
+                })}
+        </ul>
+    </div>
+    <div className="lists-control-button-container">
+            <button
+                className="list-control-button"
+                onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedPositions((noSelectedPositions)=>[...noSelectedPositions, positionsList[selectedIndexPositionList]])
+                    setPositionsList(positionsList.filter((company, index) => index !== selectedIndexPositionList))
+                    setSelectedIndexPositionList(null)
+                    onChange(selectedPositions)
+                }
+                }
+            >הוסף<i class="fas fa-angle-double-left"></i></button>
+            <button className="list-control-button"
+                onClick={(e)=>
+                {
+                    e.preventDefault();
+                    setPositionsList((positionsList)=>[...positionsList, selectedPositions[selectedIndexSelectedPositionsList]])
+                    setSelectedPositions(selectedPositions.filter((company, index) => index !== selectedIndexSelectedPositionsList))
+                    setSelectedIndexSelectedPositionsList(null)
+                    
+                }
+                    }
+            ><i class="fas fa-angle-double-right"></i>הסר</button>
+    </div>
+                <div className="all-positions-container">
+                    <span className="list-title">תפקידים נבחרו</span>
+    <ul className="selected-positions" name="selected-positions" id="selected-positions-list">
+                        {selectedPositions.map((position, index) => {
+                    
+                    return <li
+                        className={className + (selectedIndexSelectedPositionsList === index ? ' selected' : '')}
+                        value={position.name}
+                        onClick={(e) => setSelectedIndexSelectedPositionsList(index)}>{position.name}</li>
+                })}
+                    </ul>
+                    </div>
+</div>
+</div>    )
+}

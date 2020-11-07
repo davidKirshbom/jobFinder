@@ -4,14 +4,7 @@ import OrangeCheckBox from '../global/OrangeCheckBox'
 export default ({additional_positions, name,role_name, id, location_area, className, index, type, experience_years,
                 qualifications,company_occupation,description,category}) => {
     const [isExtraInfoOpen,setIsExtraInfoOpen]=useState(false)
-    // useEffect(() => {
-    //     const exitExtraDetails = document.getElementsByClassName("close-extra-data")[0];
-    //     const extraDataContainer = document.getElementsByClassName("extra-data-container")[0];
-    //     exitExtraDetails.addEventListener("click", )
-    //     const summaryLine = document.getElementsByClassName("summary-container")[0];
-    //     summaryLine.addEventListener("click",)
-    // },[])
-    
+  
     const createList = (title, attribute) => {
         if(Array.isArray(attribute))
         if (attribute.length>0)

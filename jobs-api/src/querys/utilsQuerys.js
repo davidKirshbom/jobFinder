@@ -9,4 +9,16 @@ const getOpenJobsCount = () => {
 const getTokenRow = (email, token) => {
     return (`SELECT * from tokens WHERE email='${email}' AND token='${token}'`)
 }
-module.exports={getAllCompanies,getOpenJobsCount,getTokenRow}
+const getCategoryList = () => {
+    return ('SELECT * FROM positions_category')
+}
+const getPositionsList = () => {
+    return ('SELECT * FROM positions')
+}
+const getCategoryIdByName = (name) => {
+    return (`SELECT name FROM positions_category WHERE name='${ name }'`)
+}
+const getJobCompanyUid = (jobId) => {
+    return(`SELECT company_uid from jobs WHERE job_id=${jobId}`)
+}
+module.exports={getJobCompanyUid,getPositionsList,getCategoryIdByName,getCategoryList,getAllCompanies,getOpenJobsCount,getTokenRow}

@@ -1,5 +1,6 @@
 import React,{useContext} from 'react';
 import { Route, Redirect } from 'react-router-dom'
+import DataRoute from '../router/DataRoute'
 import userContext from '../contexts/UserContext'
 export default ({
     isAuthenticated
@@ -9,7 +10,7 @@ export default ({
     const { user } = useContext(userContext);
 
     return (
-    <Route {...rest} component={(props) => 
+    <DataRoute {...rest} component={(props) => 
             user.data ? (
                 <div>
                 

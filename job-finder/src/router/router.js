@@ -37,7 +37,7 @@ export default () => {
             
                 <Switch>
                     
-                <Route path="/" exact={true} component={MainPage} />
+                <Route path="/" exact component={MainPage} />
               
                         <DataRoute path="/search-work" component={SearchWorkPage} />
                         <DataRoute path="/register/user" component={ClientRegisterPage}/>

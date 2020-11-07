@@ -98,6 +98,13 @@ const getUserLoginData = (userEmail) => {
     `)
 }
 
-
-module.exports = {searchJob,getPositionsByJobId,searchJobCount,getUserLoginData,getUserByUidAndType};
+const getCompanysJobs = (uid) => {
+    return(`SELECT * FROM jobs WHERE company_uid='${uid}'`)
+}
+const getJobPositionById = (id) => {
+    return (`SELECT positions.name FROM positions
+            INNER JOIN position_jobs_connection ON position_jobs_connection.position_id=positions.id
+            WHERE position_jobs_connection.job_id='${id}'`)
+}
+module.exports = {getJobPositionById,searchJob,getCompanysJobs,getPositionsByJobId,searchJobCount,getUserLoginData,getUserByUidAndType};
 // OR (description LIKE '%${searchWord}%') OR ( qualifications LIKE '%${searchWord}%'))

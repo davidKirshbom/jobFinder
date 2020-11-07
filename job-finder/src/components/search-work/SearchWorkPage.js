@@ -3,6 +3,7 @@ import axios from 'axios'
 import {useLocation,useHistory} from 'react-router-dom'
 import SearchForm from './SearchForm'
 import ResultList from './ResultList'
+import ResultListNode from '../search-work/ResultListNode'
 import FloatFilterMenu from './FloatFilterMenu'
 import {locationsAreas as locationDictonary} from './dictionaty'
 export default () => {
@@ -107,6 +108,7 @@ export default () => {
                                 jobsList={jobsList.rows || ""}
                                 setSort={setSortBy}
                                 sortObj={sortBy}
+                                NodeComponent={ResultListNode}
                             />
                 
                             <div className="jobs-button-container">

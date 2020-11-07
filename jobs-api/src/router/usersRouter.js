@@ -7,8 +7,10 @@ const {
   insetNewUser,
   insertUserToken,
 } = require("../querys/insertQuerys");
-const { getTokenRow } = require('../querys/utilsQuerys')
-const {updateUser}=require('../querys/updateQuery')
+
+const { updateUser } = require('../querys/updateQuery')
+const { getCompanysJobs } = require('../querys/querys')
+const {isTokenValid}=require('../utils/tokenUtils')
 const { getUserLoginData, getUserByUidAndType } = require("../querys/querys");
 const { json } = require("express");
 const router = express.Router(); //"/users"
@@ -61,7 +63,7 @@ const generateAuthToken = async (email) => {
     process.env.SECRET_TOKEN,
 
     {
-      expiresIn: "1h",
+      expiresIn: "6h",
     }
   );
 
@@ -139,23 +141,7 @@ router.post("/login", async (req, res) => {
     });
   }
 });
-const isTokenValid =async (email, token) => {
-    const isTokenInDb = (await client.query(getTokenRow(email, token))).rowCount === 1;
-    console.log("isTokenValid -> isTokenInDb", isTokenInDb)
-  console.log("isTokenValid -> getTokenRow(email, token)", getTokenRow(email, token))
-  try {
-    const isTokenValid = jwt.verify(token, process.env.SECRET_TOKEN)
 
-    if(isTokenValid._id)
-      return true;
-    else
-      return false
-  }
-  catch (err) {
-    throw new Error("bad token")
-  
-  }
-}
 router.put("/update", async (req, res) => {
     const data =JSON.parse( req.body.data);
     console.log("data /update", data)
@@ -184,4 +170,31 @@ router.put("/update", async (req, res) => {
       });
     }
   });
+router.get("/company-job-wall/:email/:uid",async (req, res) => {
+  const token = req.headers.authorization;
+  console.log("token", token)
+  const email = req.params.email;
+  const uid = req.params.uid;
+  console.log("uid", uid)
+  console.log("/company-job-wall->email", email)
+  
+  
+  
+    try
+    {
+      const isAuth = await isTokenValid(email, token)
+      console.log("isAuth", isAuth)
+      if (isAuth) {
+        console.log("getCompanysJobs(uid)", getCompanysJobs(uid))
+        const jobsListQuery = await client.query(getCompanysJobs(uid))
+      
+       return res.send(jobsListQuery.rows)
+      } else
+     return res.status(505).send({status:505,message:'bad Token'})
+    } catch (err) {
+      console.log(err)
+    }
+  }
+ 
+)
 module.exports = router;

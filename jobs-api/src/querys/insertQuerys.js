@@ -13,4 +13,7 @@ const insetNewUser = ({ first_name, last_name, phone_number, password, email, em
 const insertUserToken = (email,token) => {
     return (`INSERT INTO tokens (email,token) VALUES ('${email}','${token}')`)
 }
-module.exports={insertNewCompany,insetNewUser,insertUserToken}
+const insertPositions = (job_id,position_id) => {
+    return (`INSERT INTO position_jobs_connection (job_id,position_id) VALUES ('${ job_id }','${position_id}')`)
+}
+module.exports={insertPositions,insertNewCompany,insetNewUser,insertUserToken}

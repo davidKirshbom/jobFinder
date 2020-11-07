@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react'
 import ListNode from './ResultListNode'
 // import { jobsList } from '../../data/jobs'
 
-export default ({sortObj,setSort, jobsList, resultOffset, setResultOffset,totalResults }) => {
+export default ({NodeComponent,sortObj,setSort, jobsList, resultOffset, setResultOffset,totalResults }) => {
     const [pageOffset, setPageOffset] = useState(0);
     console.log(totalResults)
     const [previouseButtonClicked,setPreviouseButtonClicked]=useState();
@@ -28,7 +28,7 @@ export default ({sortObj,setSort, jobsList, resultOffset, setResultOffset,totalR
             </div>
           
             {
-              jobsList? (jobsList.slice(pageOffset,pageOffset+20).filter((job)=>!job.end_date).map((job,index)=>(<ListNode  className={index%2===0?"gray-bg":"white-bg"} {...job} index={resultOffset+ pageOffset+ index}/>))):""
+              jobsList? (jobsList.slice(pageOffset,pageOffset+20).filter((job)=>!job.end_date).map((job,index)=>(<NodeComponent  className={index%2===0?"gray-bg":"white-bg"} {...job} index={resultOffset+ pageOffset+ index}/>))):""
             }
             
             <div className="list-navigator-container">

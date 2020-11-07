@@ -3,6 +3,7 @@ import React from 'react'
 import validator from 'validator'
 import OrangeCheckBox from '../global/OrangeCheckBox'
 import userContext from '../../contexts/UserContext'
+import AreasSelect from '../global/AreasSelect'
 import axios from 'axios'
 
 
@@ -131,18 +132,7 @@ const Comp= () => {
                         <label className="small-letters-container unvalid-label" hidden={!unValidFields.includes('email')}>חובה להזין איימיל חוקי </label>
                         <input  type="password" placeholder="*סיסמא" maxLength='8'  ></input>
                         <label className="small-letters-container unvalid-label" hidden={!unValidFields.includes('email')}>חובה להזין סיסמא בעלת 8 תווים </label>
-                        <select id="arear-selection" className="area-select">
-                            <option selected={user.data?user.data.area_location==='Tel_Aviv':""} value="Tel_Aviv">תל אביב-יפו</option>
-                            <option selected={user.data?user.data.area_location==='south':""} value="south">אזור הדרום</option>
-                            <option selected={user.data?user.data.area_location==='Tel_Aviv':""} value="Tel-Aviv,">אזור המרכז</option>
-                            <option selected={user.data?user.data.area_location==='north':""} value="north">אזור הצפון</option>
-                            <option selected={user.data?user.data.area_location==='hasharon':""} value="hasharon">אזור צפון השרון</option>
-                            <option selected={user.data?user.data.area_location==='europe,USA,':""} value="europe,USA,">חוץ לארץ</option>
-                            <option selected={user.data?user.data.area_location==='europe':""} value="europe">Europe</option>
-                            <option selected={user.data?user.data.area_location==='far east':""} value="far east">Far East</option>
-                            <option selected={user.data?user.data.area_location==='USA':""} value="USA">United States</option>
-                            <option selected="true" value="all_areas">כל האזורים</option>
-                        </select>
+                        <AreasSelect userArea={user.data?user.data.location_area:undefined}></AreasSelect>
                     
                         <textarea
                             className="input-text-area"
