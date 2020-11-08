@@ -4,7 +4,7 @@ const client  = require('../postgres');
 const { searchJob, searchJobCount, getJobPositionById } = require('../querys/querys');
 const { updateJobsTable } = require('../querys/updateQuery')
 const { removePosition } = require('../querys/removeQuerys');
-const { insertPositions } = require('../querys/insertQuerys');
+const { insertPositions,insertJobsTableReturnId } = require('../querys/insertQuerys');
 const { getJobCompanyUid } = require('../querys/utilsQuerys')
 const { isTokenValid } = require('../utils/tokenUtils');
 const { json } = require('express');
@@ -65,9 +65,10 @@ console.log("jobs=>req, res", req, res)
     }
 })
 router.get('/jobs-get-positions/:id', (req, res) => {
-    
+    const id=req.params.id
     // console.log("getJobPositionById(req.params.id)", getJobPositionById(req.params.id))
     console.log("req.params", req.params)
+    if(id)
     client.query(getJobPositionById(req.params.id)).then((value) => {
     
         res.send(value.rows)
@@ -78,26 +79,65 @@ router.post('/registar/company', async (req, res) => {
 })
 router.put('/update',async (req, res) => {
     const data =JSON.parse(req.body.data);
-    console.log("data", data)
+    console.log("update data", data)
     const positionList=data.positions
     console.log("req.body.headers.Authorization", req.body.headers.Authorization)
-    const isAuth = await isTokenValid(data.userEmail, JSON.parse(req.body.headers.Authorization))
-    const companyUid=await getJobCompanyUid(data.id)
-    const isJobOwner=data.userId===companyUid
+    const isAuth = await isTokenValid(data.user.data.email, JSON.parse(req.body.headers.Authorization))
+    const companyUid=(await client.query(getJobCompanyUid(data.id))).rows[0].company_uid
+    console.log("companyUid", companyUid)
+    console.log("data.user.data.userId", data.user.data.uuid)
+    const isJobOwner=data.user.data.uuid===companyUid
+    
+    console.log("isJobOwner", isJobOwner)
     if(isAuth&&isJobOwner)
     {try
     {
         const updateJobsTableQuery = await client.query(updateJobsTable(data))
-       
-        console.log("updateJobsTableQuery", updateJobsTableQuery)
+       console.log('data',data)
+        console.log("updateJobsTable(data)", updateJobsTable(data))
         console.log(positionList)
         if(positionList)
         { removeOldPosition=await client.query(removePosition(data.id))  
         await positionList.forEach(async position => {
-            console.log("queryAnser", position)
-            const queryAnser = await client.query(insertPositions(data.id, position.id))
             
+            const queryAnser = await client.query(insertPositions(data.id, position.id))
+            console.log("queryAnser", position)
         });}
+       
+        res.send('update successful')
+    } catch (err) {
+        res.status(500).send({status:500,message:'error while updates'})
+    }}
+    
+    
+})
+router.put('/insert',async (req, res) => {
+    const data = JSON.parse(req.body.data);
+    const userData=data.user.data
+    console.log("insert data", data)
+    const positionList=data.positions
+    console.log("req.body.headers.Authorization", req.body.headers.Authorization)
+    const isAuth = await isTokenValid(userData.email, JSON.parse(req.body.headers.Authorization))
+    console.log("isAuth", isAuth)
+    console.log('insert data ,userData', data, userData)
+    console.log("insertJobsTable({...data,...userData,company_uid:userData.uuid})", insertJobsTableReturnId({...data,...userData,company_uid:userData.uuid,category:data.category}))
+    if(isAuth)
+    {
+        try
+        {
+       
+        const updateJobsTableQuery = await client.query(insertJobsTableReturnId({...data,...userData,company_uid:userData.uuid,category:data.category}))
+       
+        console.log("updateJobsTableQuery", updateJobsTableQuery)
+        console.log(positionList)
+        if (positionList) {
+          
+            await positionList.forEach(async position => {
+                console.log("queryAnser", position)
+                const queryAnser = await client.query(insertPositions(updateJobsTableQuery.rows[0].id, position.id))
+            
+            });
+        }
        
         res.send('update successful')
     } catch (err) {

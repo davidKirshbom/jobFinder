@@ -19,6 +19,6 @@ const getCategoryIdByName = (name) => {
     return (`SELECT name FROM positions_category WHERE name='${ name }'`)
 }
 const getJobCompanyUid = (jobId) => {
-    return(`SELECT company_uid from jobs WHERE job_id=${jobId}`)
+    return(`SELECT company_uid from jobs WHERE id='${jobId}'`)
 }
 module.exports={getJobCompanyUid,getPositionsList,getCategoryIdByName,getCategoryList,getAllCompanies,getOpenJobsCount,getTokenRow}

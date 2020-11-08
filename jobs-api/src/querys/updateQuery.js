@@ -29,6 +29,7 @@ const updateUser = (client,userType) => {
     
 }
 const updateJobsTable = ({role_name,description ,qualifications,start_date,end_date,id,location_area,type,experience_years,category,is_managerial_position}) => {
+    console.log(is_managerial_position)
     return (`UPDATE jobs SET
         ${role_name ? `role_name='${role_name}' ` : "role_name=role_name"} ,
         ${description ? `description='${description}' ` : "description=description"} ,
@@ -38,7 +39,7 @@ const updateJobsTable = ({role_name,description ,qualifications,start_date,end_d
         ${type ? `type='${type} '` : "type=type"} ,
         ${experience_years ? `experience_years='${experience_years}' ` : "experience_years=experience_years"},
         ${category ? `category='${category}' ` : "category=category"} ,
-        ${is_managerial_position ? `is_managerial_position='${is_managerial_position}' ` : "is_managerial_position=is_managerial_position"} 
+        ${is_managerial_position!=null ? `is_managerial_position=${is_managerial_position} ` : "is_managerial_position=is_managerial_position"} 
         WHERE
         jobs.id=${id}
     `)
