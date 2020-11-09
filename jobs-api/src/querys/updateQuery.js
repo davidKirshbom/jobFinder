@@ -39,6 +39,7 @@ const updateJobsTable = ({role_name,description ,qualifications,start_date,end_d
         ${type ? `type='${type} '` : "type=type"} ,
         ${experience_years ? `experience_years='${experience_years}' ` : "experience_years=experience_years"},
         ${category ? `category='${category}' ` : "category=category"} ,
+        ${end_date?`end_date=${end_date}`:'end_date=end_date'},
         ${is_managerial_position!=null ? `is_managerial_position=${is_managerial_position} ` : "is_managerial_position=is_managerial_position"} 
         WHERE
         jobs.id=${id}

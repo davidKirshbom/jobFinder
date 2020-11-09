@@ -3,7 +3,7 @@ const express = require('express');
 const client  = require('../postgres');
 const { searchJob, searchJobCount, getJobPositionById } = require('../querys/querys');
 const { updateJobsTable } = require('../querys/updateQuery')
-const { removePosition } = require('../querys/removeQuerys');
+const { removePosition,removeJob } = require('../querys/removeQuerys');
 const { insertPositions,insertJobsTableReturnId } = require('../querys/insertQuerys');
 const { getJobCompanyUid } = require('../querys/utilsQuerys')
 const { isTokenValid } = require('../utils/tokenUtils');
@@ -77,24 +77,36 @@ router.get('/jobs-get-positions/:id', (req, res) => {
 router.post('/registar/company', async (req, res) => {
     console.log(req.data)
 })
-router.put('/update',async (req, res) => {
-    const data =JSON.parse(req.body.data);
-    console.log("update data", data)
-    const positionList=data.positions
-    console.log("req.body.headers.Authorization", req.body.headers.Authorization)
-    const isAuth = await isTokenValid(data.user.data.email, JSON.parse(req.body.headers.Authorization))
-    const companyUid=(await client.query(getJobCompanyUid(data.id))).rows[0].company_uid
-    console.log("companyUid", companyUid)
-    console.log("data.user.data.userId", data.user.data.uuid)
-    const isJobOwner=data.user.data.uuid===companyUid
-    
-    console.log("isJobOwner", isJobOwner)
-    if(isAuth&&isJobOwner)
-    {try
+const isJobsOwner = async (email, token, jobId,userId) => {
+    token = token.replace('Bearer', '').trim();
+    let companyUid
+    try
     {
+        const isAuth = await isTokenValid(email, token)
+        console.log("getJobCompanyUid(jobId)", getJobCompanyUid(jobId))
+         companyUid = (await client.query(getJobCompanyUid(jobId))).rows[0].company_uid
+        
+        console.log("companyUid", companyUid)
+    } catch (err) {
+        console.log('error with confirm job owner')
+      
+    }
+    return userId===companyUid
+}
+router.put('/update', async (req, res) => {
+    
+    const data =JSON.parse(req.body.data);
+    const positionList=data.positions
+    // const isAuth = await isTokenValid(data.user.data.email, JSON.parse(req.body.headers.Authorization))
+    // const companyUid=(await client.query(getJobCompanyUid(data.id))).rows[0].company_uid
+  
+    if(await isJobsOwner(data.user.data.email, JSON.parse(req.body.headers.Authorization),data.id,data.user.data.uuid))
+    {try
+        {
+       
         const updateJobsTableQuery = await client.query(updateJobsTable(data))
        console.log('data',data)
-        console.log("updateJobsTable(data)", updateJobsTable(data))
+       
         console.log(positionList)
         if(positionList)
         { removeOldPosition=await client.query(removePosition(data.id))  
@@ -145,5 +157,29 @@ router.put('/insert',async (req, res) => {
     }}
     
     
+})
+router.delete('/remove/:id/:email', async (req, res) => {
+    console.log("req.body.data", req.body)
+    const email = req.params.email
+   
+  
+    const id=req.params.id
+    console.log("/remove id", id)
+    console.log("removeJob(id)", removeJob(id))
+    if(await isJobsOwner(email, JSON.parse(req.body.Authorization),id,req.body.user.uuid))
+    {
+        console.log('is auth')
+        try
+        {
+           
+        const removeJobsTableQuery = await client.query(removeJob(id))
+        
+        console.log("removeJobsTableQuery", removeJobsTableQuery)
+        const  removeOldPosition=await client.query(removePosition(id))    
+        console.log("removeOldPosition", removeOldPosition)
+        res.send('update successful')
+    } catch (err) {
+        res.status(500).send({status:500,message:'error while updates'})
+    }}
 })
 module.exports = router;
