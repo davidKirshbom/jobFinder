@@ -1,6 +1,6 @@
 const express = require('express');
 const client = require('../postgres');
-const {getPositionsList,getAllCompanies,getCategoryList,getOpenJobsCount}=require('../querys/utilsQuerys')
+const {getPositionsList,getAllCompanies,getCategoryList,getOpenJobsCount,getPositionsAvailableByPositionCategory}=require('../querys/utilsQuerys')
 const router =  express.Router();//"/utils"
 router.get('/get-all-companies', async (req, res) => {
     console.log((getAllCompanies()))
@@ -44,6 +44,20 @@ router.get('/get-positions', async (req, res) => {
         client.query(getPositionsList()).then((value) => {
             res.send(value.rows)
         })
+    } catch (err) {
+        console.log(err)
+    }
+});
+
+router.get('/jobs-by-category', async (req, res) => {
+    const categoryId = req.query.categoryId;
+    console.log("/jobs-by-category", categoryId)
+    try {
+        const queryResult = (await client.query(getPositionsAvailableByPositionCategory(categoryId)))
+        const sendResult = { data: queryResult.rows, total: queryResult.rowCount };
+        res.send(sendResult);
+        console.log("sendResult", sendResult)
+        
     } catch (err) {
         console.log(err)
     }

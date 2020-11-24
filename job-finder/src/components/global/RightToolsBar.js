@@ -14,13 +14,13 @@ export default () => {
     },[])
     return (<div className="tools-container">
     <div id="search-work-tool" className="tool">
-            <Link to="/search-work" id="search-work_tool" className="tool-text"><i class="fas fa-search"></i>חיפוש עבודה</Link>
+            <Link to="/search-work" id="search-work_tool" className="tool-text"><i className="fas fa-search"></i>חיפוש עבודה</Link>
     </div>
     <div id="send-cv-tool" className="tool">
-        <div className="tool-text"><i class="fab fa-studiovinari " aria-hidden="true"></i>שלח קו"ח אלינו</div>
+        <div className="tool-text"><i className="fab fa-studiovinari " aria-hidden="true"></i>שלח קו"ח אלינו</div>
     </div>
     <div id="salary-charts-tool" className="tool">
-            <div className="tool-text"><i class="far fa-chart-bar"></i><span>טבלאות שכר<i class="fas fa-angle-down"></i></span>
+            <div className="tool-text"><i className="far fa-chart-bar"></i><span>טבלאות שכר<i className="fas fa-angle-down"></i></span>
             </div>
             <ul className="inner-tools ">
                 <li>תוכנה</li>

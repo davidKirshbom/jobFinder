@@ -1,5 +1,19 @@
 #jobs-wall-node{
-    
+    .summary-container{
+        width: 95%;
+        direction: rtl;
+        .data-container{
+            direction: rtl;
+            margin: 5px 0px;
+            .data-title{
+                margin: 0px ;
+                margin-left: 15px;
+                width: 80px;
+                direction: rtl;
+
+            }
+        }
+    }
   .extra-data-container{
   
     .all-positions-container{
@@ -66,7 +80,7 @@
     #selected-positions-list,
 #all-positions-list{
     overflow-y: scroll;
-    min-height: 100px;
+    min-height: 250px;
     max-height: 400px;
     list-style: none;
     padding: 0px;
@@ -88,4 +102,42 @@
     
 }
 }
+.summary-container.hide{
+    display: none;
+    height: 100px;
+    width: 70%;
+}
+.status_toggle{
+    @include remove-button-defaults;
+    color: $orange;
+    background: none;
+    border: 1px solid $orange;
+    &:hover{
+        background: $light-blue;
+        border-color: $light-blue;
+    }
+}
+.remove-button,
+.submit-button{
+    @include remove-button-defaults;
+    width: 95%;
+    height: 70px;
+    font-size: 1.3rem;
+    color: white;
+    background: $orange;
+    margin: 10px 10px;
+    padding: 5px ;
+    border: 1px solid $orange;
+    &:hover{
+        background: $light-blue;
+        border-color: $light-blue;
+    }
+}
+.remove-button{
+    background: red;
+    border-color: red;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
 
+}

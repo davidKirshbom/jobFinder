@@ -11,9 +11,9 @@ export default () => {
     const floatMenuButtonToTopPage = (prevScrollpos) => {
         const currentScrollPos = window.pageYOffset;
         const menuButton = document.getElementsByClassName("menu-btn")[0];
-        if (currentScrollPos>100&&prevScrollpos > currentScrollPos) { 
+        if (menuButton&&currentScrollPos>100&&prevScrollpos > currentScrollPos) { 
             menuButton.classList.add("float-top","mobile-only");
-          } else {
+          } else if(menuButton) {
             menuButton.classList.remove("float-top","mobile-only");
         }
         return currentScrollPos;
@@ -75,25 +75,25 @@ export default () => {
             <i className="fas fa-angle-down"></i>
             </div>
                 <ul className="inner-menu">
-                    <li className="inner-menu-first">דרושים תוכנה</li>
-                    <li>דרושים אינטרנט</li>
-                    <li>דרושים חומרה</li>
-                    <li>דרושים תשתיות</li>
-                    <li>דרושים מערכות מידע</li>
+                    <Link to='/software-wanted' className="inner-menu-first">דרושים תוכנה</Link>
+                    <Link to='/internet-wanted' >דרושים אינטרנט</Link>
+                    <Link to='/hardware-wanted' >דרושים חומרה</Link>
+                    <Link to='/infrastructure-wanted'>דרושים תשתיות</Link>
+                    <Link to='/information-system-wanted'>דרושים מערכות מידע</Link>
                 </ul>
             </li>
             <li className="menu-item">
-            <div className="menu-item-text" >
+            <Link className="menu-item-text" to='/'>
                     דף הבית
                 <i className="fas fa-angle-down"></i>
-            </div>
+            </Link>
             </li>
             <li className="menu-item">
                 <div className="menu-item-text" >השמת בכירים
                     <i className="fas fa-angle-down"></i>
                 </div>
                 <ul className="inner-menu">
-                    <li className="inner-menu-first">פנייה אישית ודיסקרטית</li>
+                    <Link to='/senor-email' className="inner-menu-first">פנייה אישית ודיסקרטית</Link>
                 </ul>
             </li>
             <li className="menu-item">

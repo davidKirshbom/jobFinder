@@ -15,7 +15,7 @@ export default () => {
         <div className="box-header">
                 <div className="text-container">
                     מידע למועמדים
-                    <i class="fas fa-plus"></i>
+                    <i className="fas fa-plus"></i>
                 </div>
         </div>
             <div className="box-contant">
@@ -32,7 +32,7 @@ export default () => {
         <div className="box-header">
                 <div className="text-container">
                     בכירים
-                    <i class="fas fa-plus"></i>
+                    <i className="fas fa-plus"></i>
                 </div>
         </div>
             <div className="box-contant">
@@ -47,8 +47,8 @@ export default () => {
         <div className="box-header">
                 <div className="text-container">
                     טבלאות שכר 
-                    <i class="fas fa-plus"></i> 
-                    <i id="minus-font" class="fas fa-minus"></i>
+                    <i className="fas fa-plus"></i> 
+                    <i id="minus-font" className="fas fa-minus"></i>
                 </div>
         </div>
             <div className="box-contant">
@@ -68,7 +68,7 @@ export default () => {
         <div className="box-header">
                 <div className="text-container">
                     פנייה אישית
-                    <i class="fas fa-plus"></i>
+                    <i className="fas fa-plus"></i>
                 </div>
         </div>
         <div className="box-contant">

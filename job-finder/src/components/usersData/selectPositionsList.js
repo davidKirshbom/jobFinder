@@ -5,18 +5,25 @@ export default ({className="",onChange,jobId}) => {
     const [selectedPositions, setSelectedPositions] = useState([]);
     const [selectedIndexPositionList, setSelectedIndexPositionList] = useState();
     const [selectedIndexSelectedPositionsList, setSelectedIndexSelectedPositionsList] = useState();
-    useEffect(async() => {
+    useEffect(
+        ()=>{
+      return ( async () => {
         try {
-            const positions=(await axios.get('http://localhost:3000/utils/get-positions')).data
-        
-            const selectedPositions = (await axios.get(`http://localhost:3000/jobs/jobs-get-positions/${jobId}`)).data
+            const positions = (await axios.get('http://localhost:3000/utils/get-positions')).data
+         
+            if(jobId)
+            {
+                const selectedPositionsData = (await axios.get(`http://localhost:3000/jobs/jobs-get-positions/${jobId}`)).data
+                setSelectedPositions(selectedPositionsData)
+                console.log('selectedPositionsData',selectedPositionsData)
+            }
             setPositionsList(positions)
             
-            setSelectedPositions(selectedPositions)
+         
             console.log('positions',positions)
         } catch (err) {
             console.log(err)
-        }
+        }})()
     },[])
     useEffect(() => { positionsList.sort();selectedPositions.sort()},[positionsList,selectedPositions])
     useEffect(() => {
@@ -33,7 +40,7 @@ export default ({className="",onChange,jobId}) => {
                     return <li
                         className={className + (selectedIndexPositionList === index ? ' selected' : '')}
                         onClick={(e) => setSelectedIndexPositionList(index)}
-                        value={position.name}>{position.name}</li>
+                        value={position}>{position.name}</li>
                 })}
         </ul>
     </div>
@@ -48,7 +55,7 @@ export default ({className="",onChange,jobId}) => {
                     onChange(selectedPositions)
                 }
                 }
-            >הוסף<i class="fas fa-angle-double-left"></i></button>
+            >הוסף<i className="fas fa-angle-double-left"></i></button>
             <button className="list-control-button"
                 onClick={(e)=>
                 {
@@ -59,7 +66,7 @@ export default ({className="",onChange,jobId}) => {
                     
                 }
                     }
-            ><i class="fas fa-angle-double-right"></i>הסר</button>
+            ><i className="fas fa-angle-double-right"></i>הסר</button>
     </div>
                 <div className="all-positions-container">
                     <span className="list-title">תפקידים נבחרו</span>
@@ -68,7 +75,7 @@ export default ({className="",onChange,jobId}) => {
                     
                     return <li
                         className={className + (selectedIndexSelectedPositionsList === index ? ' selected' : '')}
-                        value={position.name}
+                        value={position}
                         onClick={(e) => setSelectedIndexSelectedPositionsList(index)}>{position.name}</li>
                 })}
                     </ul>

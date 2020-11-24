@@ -7,11 +7,14 @@ import axios from 'axios';
 export default () => {
     const [resultOffset,setResultOffset]=useState(0);
     const [jobsList, setJobsList] = useState({rows:[],total:0});
-    const [activeFilters, setActiveFilters] = useState({});
+  const [activeFilters, setActiveFilters] = useState({});
+  const [isNewJobFormOpen, setIsNewJobFormOpen] = useState(false);
     const [sortBy,setSortBy]=useState({isAscending:true})
     const {user,setUser}=useContext(userContext)
-    useEffect(()=>{},[])
-    useEffect(async () => {
+ 
+  useEffect(
+    
+    ()=>(async () => {
         console.log("useEffect user", user)
         try {
           const queryResult=await  axios.get(`http://localhost:3000/users/company-job-wall/${user.data.email}/${user.data.uuid}`, {
@@ -26,7 +29,7 @@ export default () => {
       } catch (err) {
           console.log(err)
         }
-    },[resultOffset,sortBy])
+    })(),[resultOffset,sortBy])
     
     return (<div>
         <ResultList
@@ -36,7 +39,11 @@ export default () => {
             setResultOffset={setResultOffset}
             totalResults={jobsList.total}
             jobsList={jobsList.rows}
-            NodeComponent={JobWallNode}></ResultList>
+        NodeComponent={JobWallNode}></ResultList>
+      <button onClickCapture={(e)=>setIsNewJobFormOpen(true)} className="add-job-button ">הוסף חדש</button>
+      <div className='add-job-modal open'>
+        <JobWallNode isNewJob={true} isOpen={isNewJobFormOpen} hideSummary={true}/>
+      </div>
     </div>)
 }
  

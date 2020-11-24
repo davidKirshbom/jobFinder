@@ -4,8 +4,8 @@ export default () => {
     return (
     <div className="footer-container">
             <div className="footer-share-icons-container">
-                <i class="fab fa-facebook-f"></i>
-                <i class="fab fa-linkedin-in"></i>
+                <i className="fab fa-facebook-f"></i>
+                <i className="fab fa-linkedin-in"></i>
             </div>
             <div className="lists-container">
            

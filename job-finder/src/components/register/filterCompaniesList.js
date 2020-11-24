@@ -29,7 +29,7 @@ export default ({className="",onChange}) => {
 
                 onClick={()=>setIsCompaniesListFilterOpen(!isCompaniesListFilterOpen)}
                 className="toggle-line">
-                <span>אנו מאפשרים לכם לבחור חברות אליהן <strong>אינכם</strong> מעוניינים שישלחו קורות החיים שלכם. </span><i class="fas fa-chevron-down"></i>
+                <span>אנו מאפשרים לכם לבחור חברות אליהן <strong>אינכם</strong> מעוניינים שישלחו קורות החיים שלכם. </span><i className="fas fa-chevron-down"></i>
             </div>
         <div className={`lists-container ${isCompaniesListFilterOpen?"":'hide'}`}>
                 <div className="all-companies-container">
@@ -55,7 +55,7 @@ export default ({className="",onChange}) => {
                     setSelectedIndexSendList(null)
                 }
                 }
-            >הוסף<i class="fas fa-angle-double-left"></i></button>
+            >הוסף<i className="fas fa-angle-double-left"></i></button>
             <button className="list-control-button"
                 onClick={(e)=>
                 {
@@ -65,7 +65,7 @@ export default ({className="",onChange}) => {
                     setSelectedIndexNotSendList(null)
                 }
                     }
-            ><i class="fas fa-angle-double-right"></i>הסר</button>
+            ><i className="fas fa-angle-double-right"></i>הסר</button>
     </div>
                 <div className="all-companies-container">
                     <span className="list-title">נא <strong>לא</strong> לשלוח לחברות הבאות: </span>

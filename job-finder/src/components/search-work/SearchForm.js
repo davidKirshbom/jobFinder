@@ -5,7 +5,7 @@ export default (props) => {
     
     return (
 <div >
-    <div className="new-search-open-form-toggle mobile-only">חיפוש חדש<i class="fas fa-angle-down" aria-hidden="true"></i></div>
+    <div className="new-search-open-form-toggle mobile-only">חיפוש חדש<i className="fas fa-angle-down" aria-hidden="true"></i></div>
     <div className="search-form-container">
       <form id="new-search-form" onSubmit={props.handleSearch}  className="search-form">
         <label for="search-word-input" className="input-label">חפש</label>
@@ -26,7 +26,7 @@ export default (props) => {
                 </div>
                     </div>
                     <div className="input-container">
-            <input type="submit" className="big-orange-btn submit-search-btn" value="חפש משרות"></input><i class="fas fa-search"></i>
+            <input type="submit" className="big-orange-btn submit-search-btn" value="חפש משרות"></input><i className="fas fa-search"></i>
             </div>
             </form>
             </div>

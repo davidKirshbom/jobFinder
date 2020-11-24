@@ -23,9 +23,18 @@ router.post("/registar/company", async (req, res) => {
     client
       .query(insertNewCompany({ ...data, password: hashPassword }))
       .then(async (value) => {
+        console.log("🚀 ~ file: usersRouter.js ~ line 36 ~ .then ~ value", value)
         const token = await generateAuthToken(data.email);
-        res.send(token);
-      });
+        const userData = await getUserData(value.rows[0].uuid
+            ,
+            "company"
+        );
+        res.send({data:userData.rows[0],token});
+      }).catch((err)=>res.status(500).send({
+        status: 500,
+        message: err.message,
+      }));
+       
   } catch (err) {
     res.send({
       status: 500,
@@ -44,8 +53,10 @@ router.post("/registar/users", async (req, res) => {
       .query(insetNewUser({ ...data, password: hashPassword }))
       .then(async (value) => {
         const token = await generateAuthToken(data.email);
-        console.log("token registar/users", token);
-        res.send(token);
+        const userData = await getUserData(value.rows[0].uid
+          ,"user");
+      res.send({data:userData.rows[0],token});
+       
       })
       .catch((err) => console.log("error ", err));
   } catch (err) {

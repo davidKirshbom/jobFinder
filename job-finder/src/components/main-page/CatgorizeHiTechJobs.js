@@ -66,7 +66,7 @@ export default () => {
                         <li>System Architect</li>
                         <li>RT/Embedded</li>
                         </ul>
-                    <a className="category-more-link" href="">משרות תוכנה<i class="fas fa-arrow-left"></i></a>
+                    <a className="category-more-link" href="">משרות תוכנה<i className="fas fa-arrow-left"></i></a>
                     </div>
             </div>
             <div id="web-category" className="category-container">    
@@ -81,7 +81,7 @@ export default () => {
                         <li>מתכנת HTML</li>
                             <li>קידום אתרים</li>
                         </ul>
-                        <a className="category-more-link" href="">משרות אינטרנט<i class="fas fa-arrow-left"></i></a>
+                        <a className="category-more-link" href="">משרות אינטרנט<i className="fas fa-arrow-left"></i></a>
                     </div>
             </div>
             <div id="embedded-category" className="category-container">    
@@ -96,7 +96,7 @@ export default () => {
                         <li>מהנדס מערכת</li>
                         <li>מהנדס RF</li>
                         </ul>
-                        <a className="category-more-link" href="">משרות חומרה<i class="fas fa-arrow-left"></i></a>
+                        <a className="category-more-link" href="">משרות חומרה<i className="fas fa-arrow-left"></i></a>
                     </div>
             </div>
             <div id="it-category"  className="category-container">    
@@ -108,7 +108,7 @@ export default () => {
                         <li>תמיכה טכנית</li>
                         <li>מומחה אבטחת מידע</li>
                         </ul>
-                        <a className="category-more-link" href="">משרות תשתיות<i class="fas fa-arrow-left"></i></a>
+                        <a className="category-more-link" href="">משרות תשתיות<i className="fas fa-arrow-left"></i></a>
                     </div>
             </div>
             <div id="sineor-category" className="category-container">    
@@ -121,11 +121,11 @@ export default () => {
                         <li>שיווק</li>
                         <li>מכירות</li>
                         </ul>
-                        <a className="category-more-link" href="">משרות בכירות<i class="fas fa-arrow-left"></i></a>
+                        <a className="category-more-link" href="">משרות בכירות<i className="fas fa-arrow-left"></i></a>
                     </div>
                 </div>
                 <div className="more-jobs-link">
-                    <a href="">למשרות הייטק נוספות<i class="fas fa-arrow-left"></i></a>
+                    <a href="">למשרות הייטק נוספות<i className="fas fa-arrow-left"></i></a>
                 </div>
             </ul>
         </div>

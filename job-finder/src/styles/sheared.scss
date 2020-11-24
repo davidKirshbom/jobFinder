@@ -38,6 +38,18 @@ text-decoration: none;
     color: white;
     padding: 5px;
 }
+.emphasis{
+    color: $dark-blue;
+}
+.orange-button{
+     @include remove-button-defaults;
+     background: $orange;
+     color: white;
+     padding: 15px;
+}
+.gray-title{
+    color: $dark-gray;
+}
 @media(min-width: $break-point-desktop){
     .mobile-only{
         display: none !important;

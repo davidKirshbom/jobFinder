@@ -1,0 +1,38 @@
+
+.wanted-page{
+    padding: 15px;
+}
+.positions-list-container{
+    margin: 5px 0px;
+ul{
+    display: flex;
+    flex-flow: column;
+    flex-wrap: wrap;
+    width: 85%;
+    padding: 0px;
+    a{
+       display: flex;
+       flex-flow: row;
+       align-items: center;
+       font-size: .9rem;
+       width: max-content;
+       color: $soft-blue;
+       margin: 5px 0px;
+       .small-letters-container{
+           margin-right: 10px;
+        align-self: flex-end;
+        font-size: .6rem ;
+       }
+    }
+    a:visited{
+        color: $soft-blue;
+    }
+}
+}
+a.search-work-button{
+    position: relative;
+    
+    display: inline;
+   margin: 5px auto ;
+   right: 34%;
+}

@@ -73,8 +73,9 @@ $menu-width:350px;
   
 
 }
+.inner-menu>a,
 .inner-menu>li{
-    
+    display: block;
         margin: 40px 0px 0px 0px;
     
     &.inner-menu-first{
@@ -176,6 +177,7 @@ $menu-width:350px;
     }
     .menu-item-text:hover+menu-item>.inner-menu,
     .menu-item-text:hover+.inner-menu,
+    .inner-menu:hover,
     .inner-menu.open{
         top:0px;
         transform: translateX(-$menu-width);

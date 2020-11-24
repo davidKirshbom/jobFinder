@@ -5,7 +5,7 @@ import validator from 'validator'
 import OrangeCheckBox from '../global/OrangeCheckBox'
 import axios from 'axios'
 import FilterCompaniesList from './filterCompaniesList'
-
+import {useHistory} from 'react-router-dom'
 
 export default () => {
    
@@ -15,6 +15,7 @@ export default () => {
     const cvFileInputRef = useRef(null);
     const {user,setUser}=useContext(userContext)
     const maxLattersTextArea = 300;
+    const history = useHistory();
     // const formFields=document.getElementById('registar-form').children
     
     const handleFormValidation = (formObj) => {
@@ -47,12 +48,6 @@ export default () => {
             unvalueFields.push('password');
             result = true;
         }
-        // console.log(formObj.cv.name)
-        // if (!formObj.cv||(!formObj.cv.name.includes('.pdf')&&!formObj.cv.name.includes('.doc')&&!formObj.cv.name.includes('.docx')))
-        // {
-        //     unvalueFields.push('cv');
-        //     result = true;
-        // }
         setUnValidFields(unvalueFields)
         return result;
     }
@@ -117,17 +112,28 @@ export default () => {
         result.email_subscribe = formInputs[7].firstChild.firstChild.checked;
         result.send_auto_cv = formInputs[8].firstChild.firstChild.checked;
         result.cv = formInputs[5].firstChild.children[1].files[0];
-       
-        console.log(result)
         if(!handleFormValidation(result))
-        try {
-            axios.post('http://localhost:3000/users/registar/users', {
-                headers: {
-                            'Content-Type': 'application/json',
-                         },
-                data: JSON.stringify(result)
-            })
-        }
+            try {
+                axios.post('http://localhost:3000/users/registar/users', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    data: JSON.stringify(result)
+                }).then((value) => {
+                    console.log("🚀 ~ file: CompanyRegisterPage.js ~ line 122 ~ Registar ~ value", value)
+                    setUser(value.data)
+                    history.push({
+                        pathname: '/',
+                        search: '?message_open=true&send_success=true'
+                    })
+                }).catch(err => {
+                    console.log(err);
+                    history.push({
+                        pathname: '/',
+                        search: '?message_open=true&send_success=false'
+                    })
+                })
+            }
         catch (err) {
             console.log(err)
             }

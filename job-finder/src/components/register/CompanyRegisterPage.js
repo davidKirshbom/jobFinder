@@ -1,16 +1,19 @@
-import { useState, useEffect, useContext } from 'react'
+import { useState, useContext } from 'react'
 import React from 'react'
 import validator from 'validator'
 import OrangeCheckBox from '../global/OrangeCheckBox'
 import userContext from '../../contexts/UserContext'
 import AreasSelect from '../global/AreasSelect'
 import axios from 'axios'
+import {useHistory} from 'react-router-dom'
+import ResultModal from '../global/ResultModal'
 
-
-const Comp= () => {
+const Comp = () => {
+    const history = useHistory();
     const [textAreaLettersCount, setTextAreaLettersCount] = useState(0);
     const [unValidFields, setUnValidFields] = useState([])
     const { user, setUser } = useContext(userContext);
+    const [registarResult,setRegistarResult]=useState({isSendRegister:false,isSuccess:false})
     const maxLattersTextArea = 300;
     // const formFields=document.getElementById('registar-form').children
     const handleFormValidation = (formObj) => {
@@ -28,7 +31,6 @@ const Comp= () => {
         }
         if (!formObj.email||(!validator.isEmail(formObj.email)))
         {
-        
             unvalueFields.push('email');
             result = true;
             }
@@ -55,7 +57,7 @@ const Comp= () => {
         result.category = formInputs[9].value;
         result.uid = user.data.uuid;
         result.clientType='company'
-    
+        
         if (!handleFormValidation(result))
         {
             console.log("updateUserData -> user.token", user.token)
@@ -90,12 +92,12 @@ const Comp= () => {
         const result = {};
         const formInputs = e.target.children;
         console.log("Registar -> formInputs", formInputs)
-        result.name = formInputs[0].value;
-        result.phone_number = formInputs[2].value;
-        result.email = formInputs[4].value;
-        result.password = formInputs[6].value;
-        result.area_location = formInputs[8].value;
-        result.category = formInputs[9].value;
+        result.name = formInputs[0].firstChild.value;
+        result.phone_number = formInputs[1].children[0].value;
+        result.email = formInputs[2].children[0].value;
+        result.password = formInputs[3].children[0].value;
+        result.area_location = formInputs[4].value;
+        result.category = formInputs[5].value;
         console.log("Registar -> result", result)
         
         if(!handleFormValidation(result))
@@ -105,9 +107,23 @@ const Comp= () => {
                     'Content-Type': 'application/json',
                 },
                 data: JSON.stringify(result)
+            }).then((value) => {
+                console.log("🚀 ~ file: CompanyRegisterPage.js ~ line 122 ~ Registar ~ value", value)
+                setUser(value.data)
+                history.push({
+                    pathname:'/',
+                    search:'?message_open=true&send_success=true'
+                })
+            }).catch(err => {
+                console.log(err);
+                history.push({
+                    pathname:'/',
+                    search:'?message_open=true&send_success=false'
+                })
             })
         }
         catch (err) {
+            setRegistarResult({isSendRegister:true,isSuccess:false})
             console.log(err)
             }
         
@@ -119,6 +135,7 @@ const Comp= () => {
                 <div className="form-register-container">
                     <h5>מציאת עובדים בכל הארץ! מלאו פרטים והצטרפו למשפחת ג'ובאינפו</h5>
                     <form onSubmit={user.data?updateUserData:Registar} id="registar-form" >
+                        <div className='input-container'>
                         <input
                             type="text"
                             placeholder="*שם (באנגלית)"
@@ -126,13 +143,20 @@ const Comp= () => {
                         <label className="small-letters-container unvalid-label"
                             hidden={!unValidFields.includes('name')}
                             >חובה להזין שם באנגלית </label>
+                        </div>
+                        <div className='input-container'>
                         <input  type="text" placeholder="*טלפון" defaultValue={user.data?user.data.phone_number:""}  ></input>
                         <label className="small-letters-container unvalid-label" hidden={!unValidFields.includes('phoneNumber')}>חובה להזין מספר טלפון חוקי </label>
-                        <input  type="email" placeholder="*דואר אלקטרוני" defaultValue={user.data?user.data.email:""} ></input>
+                        </div>
+                        <div className='input-container'>
+                            <input type="text" placeholder="*דואר אלקטרוני" defaultValue={user.data ? user.data.email : ""} ></input>
                         <label className="small-letters-container unvalid-label" hidden={!unValidFields.includes('email')}>חובה להזין איימיל חוקי </label>
-                        <input  type="password" placeholder="*סיסמא" maxLength='8'  ></input>
-                        <label className="small-letters-container unvalid-label" hidden={!unValidFields.includes('email')}>חובה להזין סיסמא בעלת 8 תווים </label>
-                        <AreasSelect userArea={user.data?user.data.location_area:undefined}></AreasSelect>
+                        </div>
+                        <div className='input-container'>
+                            <input type="password" placeholder="*סיסמא" maxLength='8'  ></input>
+                        <label className="small-letters-container unvalid-label" hidden={!unValidFields.includes('password')}>חובה להזין סיסמא בעלת 8 תווים </label>
+                        </div>
+                            <AreasSelect userArea={user.data ? user.data.location_area : undefined}></AreasSelect>
                     
                         <textarea
                             className="input-text-area"
@@ -151,7 +175,6 @@ const Comp= () => {
                         <input className="registar-button" type="submit" value={user.data?'עדכן':'הירשם'} />
                     </form>
                 </div>
-    
             </div>
         )
     

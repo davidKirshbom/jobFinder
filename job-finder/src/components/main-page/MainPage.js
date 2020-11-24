@@ -1,18 +1,39 @@
-import React from 'react'
-
+import React,{useEffect,useState} from 'react'
 import SearchPanel from './SearchPanel'
 import NavigationBoxes from './NavigationBoxs'
 import BrandsRolling from './RollingText'
 import BuissnesContactBanner from './BuissnesContactBanner'
 import CatgoriseHiThech from './CatgorizeHiTechJobs'
 import GuidesTails from './TailesWithImg'
-
+import ResultModal from '../global/ResultModal'
 import BackToTop from './BackToTopBtn'
+import {useLocation,useHistory} from 'react-router-dom'
 
+export default () => {
+  
+    const queryParams = new URLSearchParams(useLocation().search);
+    const [messageStatus,setMessageStatus]=useState({isShown:false,isSuccess:false})
+    const history = useHistory();
+    useEffect(() => {
+    const isModalOpen=queryParams.get('message_open')
+    console.log("🚀 ~ file: MainPage.js ~ line 18 ~ useEffect ~ isModalOpen", isModalOpen)
+        const isSendSuccess = queryParams.get('send_success')
+        console.log("🚀 ~ file: MainPage.js ~ line 19 ~ useEffect ~ isSendSuccess", isSendSuccess)
+        history.replace({
+            search: '',
+          })
+        if (isModalOpen != null && isModalOpen != null) 
+         setMessageStatus({isShown:isModalOpen==='true',isSuccess:isSendSuccess==='true'})
+         console.log("🚀 ~ file: MainPage.js ~ line 62 ~ messageStatus", messageStatus)
 
-export default () => 
-    (<div className="page-container">
-       
+    }, [])
+    useEffect(()=>{         console.log("🚀 ~ file: MainPage.js ~ line 62 ~ messageStatus", messageStatus)
+},[messageStatus])
+   return (
+      
+        <div className="page-container">
+    <ResultModal isSuccess={messageStatus.isSuccess} show={messageStatus.isShown} setShow={(isShow)=>setMessageStatus({...messageStatus,isShown:isShow}) }/>
+
        
         <section id="search-panel-section" >
             <SearchPanel />
@@ -41,8 +62,8 @@ export default () =>
             <p><strong>למה חברות השמה? </strong>כחברת השמה להייטק אנו מבינים את החשיבות של תכנון הקריירה שלכם. העבודה לפי צוותי התמחות בשילוב מידע אודות דרישות החברות המגייסות מאפשרים לנו לקדם אתכם לשלב הבא ולהתבלט מבין כל המועמדים. עם לקוחותינו נמנות חברות מובילות בתעשיות ההייטק והביומד, סטרטאפים, חברות בינלאומיות ומרכזי פיתוח הפועלים בארץ.</p>
                 </div>
                 </div>
-            <a className="send-CV"><i class="fab fa-studiovinari "></i> שלח קו"ח אלינו</a>
+            <a className="send-CV"><i className="fab fa-studiovinari "></i> שלח קו"ח אלינו</a>
         </section>
    
         <BackToTop headerSelector="#search-panel-section"/>
-    </div>)
+    </div>)}

@@ -40,7 +40,7 @@ export default (props) => {
                 <option value="europe">Europe</option>
                 <option value="far east">Far East</option>
                 <option value="USA">United States</option>
-                <option selected="true" value="all-areas">כל האזורים</option>
+                <option defaultValue="true" value="all-areas">כל האזורים</option>
             </select>
                 <i href="#arear-selection" className="fas fa-angle-down"></i>
                 </div>
@@ -48,6 +48,6 @@ export default (props) => {
             <button className="submit-btn" type="submit">חפש</button>
             <Link to="/search-work" className="advanced-search">חיפוש מתקדם</Link>
         </form>
-        <a className="send-CV big-orange-butoon"><i class="fab fa-studiovinari "></i> שלח קו"ח אלינו</a>
+        <a className="send-CV big-orange-butoon"><i className="fab fa-studiovinari "></i> שלח קו"ח אלינו</a>
     </div>)
 }

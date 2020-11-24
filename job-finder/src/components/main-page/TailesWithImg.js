@@ -13,7 +13,7 @@ export default () => {
     </div>
     <div id="recru-tail" className="tail-container">
         <div className="img-round-container"></div>
-                <div className="text-tail-container">מגייסים<br /><i class="fas fa-plus"></i></div>
+                <div className="text-tail-container">מגייסים<br /><i className="fas fa-plus"></i></div>
                 <ul className="box-contant hiden-tile-menu">
                     <div className="little-triangle"></div>
                     <li>גיוס עובדי הייטק מנוסים</li>

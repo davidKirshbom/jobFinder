@@ -21,14 +21,14 @@ export default ({NodeComponent,sortObj,setSort, jobsList, resultOffset, setResul
         <div className="result-list-container">
     
             <div className="result-list-title-row desktop-only">
-                <i class="fas fa-sort sort-results-icon"></i>
+                <i className="fas fa-sort sort-results-icon"></i>
                 <div className={` list-title-name result-title-item`}>שם <i onClick={() => { setSort({ attribute: 'role_name', isAscending: !sortObj.isAscending }) }} className={(sortObj.attribute==='role_name'?(sortObj.isAscending?'fas fa-sort-up':'fas fa-sort-down'):"fas fa-sort")+" sort-results-icon"}  ></i></div>
                 <div className="list-title-code result-title-item">קוד </div>
                 <div className="list-title-location result-title-item">מיקום <i onClick={()=>setSort({attribute:'location_area',isAscending:!sortObj.isAscending})}  className={(sortObj.attribute==='location_area'?(sortObj.isAscending?'fas fa-sort-up':'fas fa-sort-down'):"fas fa-sort")+" sort-results-icon"}></i></div>
             </div>
           
             {
-              jobsList? (jobsList.slice(pageOffset,pageOffset+20).filter((job)=>!job.end_date).map((job,index)=>(<NodeComponent  className={index%2===0?"gray-bg":"white-bg"} {...job} index={resultOffset+ pageOffset+ index}/>))):""
+              jobsList? (jobsList.slice(pageOffset,pageOffset+20).map((job,index)=>(<NodeComponent  className={index%2===0?"gray-bg":"white-bg"} {...job} index={resultOffset+ pageOffset+ index}/>))):""
             }
             
             <div className="list-navigator-container">

@@ -46,14 +46,14 @@ export default ({ onLoginPress }) => {
             <div className="navigation-content">
             {user.data ?
                 <div className="user-detail-container">
-                    <span onClick={(e)=>setIsUserMenuOpen(!isUserMenuOpen)} className={`name-title ${isUserMenuOpen?"open":""}`}>{user.data.first_name||user.data.name}<i class="fas fa-chevron-down"></i></span>   
+                    <span onClick={(e)=>setIsUserMenuOpen(!isUserMenuOpen)} className={`name-title ${isUserMenuOpen?"open":""}`}>{user.data.first_name||user.data.name}<i className="fas fa-chevron-down"></i></span>   
                     <ul className={` user-menu-container ${isUserMenuOpen?"open":""}`}>
                         <Link to={user.data.user_type==='user'?'/register/user':'/register/company'} onClick={()=>setIsUserMenuOpen(false)}>עדכון פרטים וקו"ח</Link>
                         <li onClick={(e) => {
                             setUser({})
                             setIsUserMenuOpen(false)
                         }}  >יציאה</li>
-                        <Link to='/my-jobs-wall'>נהל עבודות</Link>
+                       {user.data&&user.data.user_type==='company'? <Link to='/my-jobs-wall'>נהל עבודות</Link>:''}
                     </ul>
                 </div> : ""}
                 <ul className={`navigation-links-container ${user.data?"hide":""}`}>

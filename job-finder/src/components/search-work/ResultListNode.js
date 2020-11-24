@@ -44,11 +44,11 @@ export default ({additional_positions, name,role_name, id, location_area, classN
                 </div>
                 </div>
                 <div className={`extra-data-container ${isExtraInfoOpen?"open":""} `}>
-                    <span className="job-title"><span className=" mobile-only">{name}</span><i onClick={(e) => { setIsExtraInfoOpen(false);e.stopPropagation()}} class="fas fa-times close-extra-data"></i></span>
+                    <span className="job-title"><span className=" mobile-only">{name}</span><i onClick={(e) => { setIsExtraInfoOpen(false);e.stopPropagation()}} className="fas fa-times close-extra-data"></i></span>
                     <div className="wigets-container">
                         <div className="data-widget">
                             <div className="data-widget-content">
-                            <div className="icon-container"><i class={`far fa-clock ${type[0]}-fill`}></i></div>
+                            <div className="icon-container"><i className={`far fa-clock ${type[0]}-fill`}></i></div>
                                 <div className="data-widget-text">
                                     {type}
                                 </div>
@@ -112,7 +112,7 @@ export default ({additional_positions, name,role_name, id, location_area, classN
                         </div>
                         <div className="data-widget">
                             <div className="data-widget-content">
-                               <div className="icon-container"> <i class="far fa-compass"></i></div>
+                               <div className="icon-container"> <i className="far fa-compass"></i></div>
                                 <div className="data-widget-text">{location_area}</div>
                             </div>
                         </div>
@@ -130,16 +130,16 @@ export default ({additional_positions, name,role_name, id, location_area, classN
                         </div>
                         
                     </div>
-                    <a className="send-CV big-orange-butoon"><i class="fab fa-studiovinari "></i> שלח קו"ח </a>
+                    <a className="send-CV big-orange-butoon"><i className="fab fa-studiovinari "></i> שלח קו"ח </a>
                     <div className="share-icons-container">
-                        <div className="share-icon"><i class="fab fa-whatsapp"></i><span className="share-icon-text">שתף</span></div>
-                        <div className="share-icon"><i class="fab fa-facebook-f"></i><span className="share-icon-text">שתף</span></div>
-                        <div className="share-icon"><i class="far fa-eye"></i><span className="share-icon-text">משרות דומות</span></div>
-                        <div className="share-icon"><i class="fas fa-share"></i><span className="share-icon-text">שלח לחבר</span></div>
+                        <div className="share-icon"><i className="fab fa-whatsapp"></i><span className="share-icon-text">שתף</span></div>
+                        <div className="share-icon"><i className="fab fa-facebook-f"></i><span className="share-icon-text">שתף</span></div>
+                        <div className="share-icon"><i className="far fa-eye"></i><span className="share-icon-text">משרות דומות</span></div>
+                        <div className="share-icon"><i className="fas fa-share"></i><span className="share-icon-text">שלח לחבר</span></div>
                     </div>
                 </div>
          
-            <i aria-hidden="true" class="fas fa-angle-left"></i>
+            <i aria-hidden="true" className="fas fa-angle-left"></i>
     </div>)
 // }
 

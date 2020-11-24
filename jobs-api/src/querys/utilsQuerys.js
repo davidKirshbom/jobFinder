@@ -21,4 +21,16 @@ const getCategoryIdByName = (name) => {
 const getJobCompanyUid = (jobId) => {
     return(`SELECT company_uid from jobs WHERE id='${jobId}'`)
 }
-module.exports={getJobCompanyUid,getPositionsList,getCategoryIdByName,getCategoryList,getAllCompanies,getOpenJobsCount,getTokenRow}
+const getPositionsAvailableByPositionCategory = (categoryId) => {
+    return (`SELECT COUNT(positions.id),positions.id,positions.name FROM positions 
+             INNER JOIN position_jobs_connection ON positions.id=position_jobs_connection.position_id
+             INNER JOIN jobs ON jobs.id=position_jobs_connection.job_id
+             WHERE
+             jobs.category=${categoryId} AND
+             jobs.end_date IS NULL 
+             GROUP BY positions.id,positions.name
+             
+             
+             `)
+}
+module.exports={getJobCompanyUid,getPositionsList,getCategoryIdByName,getCategoryList,getAllCompanies,getOpenJobsCount,getTokenRow,getPositionsAvailableByPositionCategory}

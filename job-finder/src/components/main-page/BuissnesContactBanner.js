@@ -37,7 +37,7 @@ useEffect(() => {
             <img className="recommendation hide" src={require('../../images/buisness-banner/rec-hr-3.jpg')} alt="" />
             <img className="recommendation hide" src={require('../../images/buisness-banner/rec-recrument.jpg')} alt="" />
             </div>
-            <button className="open-contact"><i class="far fa-paper-plane"></i>צור קשר</button>
+            <button className="open-contact"><i className="far fa-paper-plane"></i>צור קשר</button>
             <div className="form-container close">
                 <div className="exit-button">
                 <div className="exit-line-1"></div>
@@ -51,7 +51,7 @@ useEffect(() => {
                     <input type="text" placeholder="שם החברה:"/>
                     <input className="" placeholder="טלפון:"></input>
                     <input className="" placeholder='דוא"ל:'></input>
-                    <button>שלח<i class="far fa-paper-plane"></i></button>
+                    <button>שלח<i className="far fa-paper-plane"></i></button>
                 </form>
             </div>
         </div>)

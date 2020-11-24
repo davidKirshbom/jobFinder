@@ -44,7 +44,7 @@ export default (props) => {
     return (
         <div className={`filters-menu ${isMenuOpen?"open":""}`}>
             <div onClick={()=>setMenuOpen(!isMenuOpen)} className="open-menu-toggle">
-            <i class="fas fa-filter"></i>
+            <i className="fas fa-filter"></i>
             </div>
             <div className="filters-container">
                 <h4>סנן לפי</h4>
@@ -53,14 +53,14 @@ export default (props) => {
                     {jobsArea.slice(0,isMoreAreasExpended?undefined:10).map(
                         (area) => (<OrangeCheckBox text={area} value={area} id={`${area}-filter-area`} />)
                     )}
-                    <div onClick={()=>setMoreAreasExpended(!isMoreAreasExpended)} className="more-fillter-btn">עוד<i class="fas fa-angle-down" aria-hidden="true"></i></div>
+                    <div onClick={()=>setMoreAreasExpended(!isMoreAreasExpended)} className="more-fillter-btn">עוד<i className="fas fa-angle-down" aria-hidden="true"></i></div>
                 </ul>
                 <ul id="positions_checkbox">
                     <h5>תפקיד</h5>
                     {jobPosition.slice(0,isMoreJobsExpended?undefined:10).map(
                         (position)=>(<OrangeCheckBox text={position} value={position} id={`${position}-filter-position`} />)
                     )}
-                    <div onClick={()=>setMoreJobsExpended(!isMoreJobsExpended)} className="more-fillter-btn">עוד<i class="fas fa-angle-down" aria-hidden="true"></i></div>
+                    <div onClick={()=>setMoreJobsExpended(!isMoreJobsExpended)} className="more-fillter-btn">עוד<i className="fas fa-angle-down" aria-hidden="true"></i></div>
                 </ul>
                 <ul id="location_checkbox">
                     <h5>אזור</h5>

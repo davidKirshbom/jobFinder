@@ -13,8 +13,14 @@ import FloatShareIcons from '../components/global/FloatShareIcons'
 import CompanyRegisterPage from '../components/register/CompanyRegisterPage'
 import ClientRegisterPage from '../components/register/SearchWorkRegisterPage'
 import Footer from '../components/global/Footer';
-import DataRoute from '../router/DataRoute'
+import DataRoute from '../router/DataRoute';
+import SoftwareWantedPage from '../components/pages-data/WantedSoftware'
 import PrivateRoute from '../router/PrivateRoute'
+import WantedIInternet from '../components/pages-data/WantedIInternet';
+import WantedHardware from '../components/pages-data/WantedHardware';
+import WantedInfrastructure from '../components/pages-data/WantedInfrastructure';
+import WantedInformationSystem from '../components/pages-data/WantedInformationSystem';
+import SenorEmail from '../components/pages-data/SenorEmail';
 export default () => {
     const [isLoginBarOpen,setIsLoginBarOpen]=useState(false)
     return (
@@ -42,8 +48,14 @@ export default () => {
                         <DataRoute path="/search-work" component={SearchWorkPage} />
                         <DataRoute path="/register/user" component={ClientRegisterPage}/>
                         <DataRoute path="/register/company" component={CompanyRegisterPage}/>
-                        <DataRoute path="/register" component={ChooseRegisterTypePage}/>
-                        <PrivateRoute path="/my-jobs-wall" component={CompanyJobsWall}/>
+                        <DataRoute path="/register" component={ChooseRegisterTypePage} />
+                        <DataRoute path="/software-wanted" component={SoftwareWantedPage}/>
+                        <DataRoute path='/internet-wanted' component={WantedIInternet}/>
+                        <DataRoute path='/hardware-wanted' component={WantedHardware}/>
+                        <DataRoute path='/infrastructure-wanted' component={WantedInfrastructure}/>
+                        <DataRoute path='/information-system-wanted' component={WantedInformationSystem}/>
+                        <DataRoute path='/senor-email' component={SenorEmail}/>
+                        <PrivateRoute path="/my-jobs-wall" component={CompanyJobsWall} />
                         <DataRoute component={NotFondPage} />
                      
                     </Switch>
