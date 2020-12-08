@@ -1,10 +1,15 @@
-import React,{useEffect,useState} from 'react'
-import OrangeCheckBox from '../global/OrangeCheckBox'
 
+import React, { useEffect, useState, useContext } from 'react'
+import userContext from '../../contexts/UserContext'
+import OrangeCheckBox from '../global/OrangeCheckBox'
+import {removeUserSavedJob, sendCv, userSaveJob} from '../../server/usersDB'
 export default ({additional_positions, name,role_name, id, location_area, className, index, type, experience_years,
-                qualifications,company_occupation,description,category}) => {
-    const [isExtraInfoOpen,setIsExtraInfoOpen]=useState(false)
-  
+                qualifications,company_occupation,description,category,defaultChecked}) => {
+               
+          
+    const [isExtraInfoOpen, setIsExtraInfoOpen] = useState(false)
+    const [isMarked,setIsMarked]=useState(defaultChecked)
+    const {user,setUser}=useContext(userContext)
     const createList = (title, attribute) => {
         if(Array.isArray(attribute))
         if (attribute.length>0)
@@ -15,6 +20,8 @@ export default ({additional_positions, name,role_name, id, location_area, classN
         else
             return ;
     }
+  
+   useEffect(()=>{setIsMarked(defaultChecked)},[defaultChecked])
     const createParagraph = (title, attribute,isEmphasis) => {
         if (attribute)
             return (<p className={isEmphasis?"emphsis":""}>
@@ -24,13 +31,34 @@ export default ({additional_positions, name,role_name, id, location_area, classN
         else
             return ;
     }
+    const saveJob = async (id) => {
+        try
+        {
+            const result = userSaveJob(id, user)
+        }
+        catch(err) {
+            console.log(err)
+        }
+        
+    }
+    const removeSavedJob = async (id) => {
+        try {
+            const result = await removeUserSavedJob(id, user)
+        } catch (err) {
+            console.log(err)
+        }
+
+    }
+    const sendCvHandler = async () => {
+        const result=sendCv(id,user)
+   }
     return (
         <div className={`list-node-container ${className||""}` } onClick={()=>setIsExtraInfoOpen(true)}>
             <div  className={`summary-container ${isExtraInfoOpen?"yellow-select":""}`} >
          
-                <OrangeCheckBox id={"checkbox-id-"+id} />
+                <OrangeCheckBox checked={isMarked} onChange={isChecked => { setIsMarked(!isMarked); isChecked ? saveJob(id) : removeSavedJob(id)}} id={"checkbox-id-"+id} />
                 <div className="data-container">
-                    {index!==null?<span className="index-node">{`${index+1}.`}</span>:""}
+                    {index!==null?<span className="index-node">{`${index}.`}</span>:""}
                     <span className="data-title">שם</span>
                     <span className="name-data search-data">{role_name || "not supplied"}</span>
                 </div>
@@ -130,7 +158,7 @@ export default ({additional_positions, name,role_name, id, location_area, classN
                         </div>
                         
                     </div>
-                    <a className="send-CV big-orange-butoon"><i className="fab fa-studiovinari "></i> שלח קו"ח </a>
+                    <button onClick={(e)=>{sendCvHandler()}} className="send-CV big-orange-butoon"><i className="fab fa-studiovinari "></i> שלח קו"ח </button>
                     <div className="share-icons-container">
                         <div className="share-icon"><i className="fab fa-whatsapp"></i><span className="share-icon-text">שתף</span></div>
                         <div className="share-icon"><i className="fab fa-facebook-f"></i><span className="share-icon-text">שתף</span></div>

@@ -1,9 +1,11 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import { totalJobs } from '../../data/jobs'
 import {Link} from 'react-router-dom'
 import ShareIcons from '../global/FloatShareIcons'
 import history from '../../router/history'
+import userContext from '../../contexts/UserContext'
 export default (props) => {
+    const { user, setUser } = useContext(userContext)
     const submitHandler = (e) => {
         e.preventDefault()
         const searchWord = e.target.elements[0].value
@@ -48,6 +50,13 @@ export default (props) => {
             <button className="submit-btn" type="submit">חפש</button>
             <Link to="/search-work" className="advanced-search">חיפוש מתקדם</Link>
         </form>
-        <a className="send-CV big-orange-butoon"><i className="fab fa-studiovinari "></i> שלח קו"ח אלינו</a>
+        
+        {user.data ?
+            <div className='container-flex-row user-buttons-container  '>
+                <Link to='/user-save-jobs' className="orange-button user-button"><i class="fas fa-suitcase"></i> המשרות שלי</Link>
+                <Link to='/user-agent' className="orange-button user-button"><i class="far fa-address-card"></i> הסוכנים שלי</Link>
+            </div>
+                : <a className="send-CV big-orange-butoon"><i className="fab fa-studiovinari "></i> שלח קו"ח אלינו</a>}
+                
     </div>)
 }

@@ -1,10 +1,10 @@
 const express = require('express');
 
 const client  = require('../postgres');
-const { searchJob, searchJobCount, getJobPositionById } = require('../querys/querys');
+const { searchJob, searchJobCount, getJobPositionById, getUserByUidAndType } = require('../querys/querys');
 const { updateJobsTable } = require('../querys/updateQuery')
 const { removePosition,removeJob } = require('../querys/removeQuerys');
-const { insertPositions,insertJobsTableReturnId } = require('../querys/insertQuerys');
+const { insertPositions,insertJobsTableReturnId,insertUserSendedJobs } = require('../querys/insertQuerys');
 const { getJobCompanyUid } = require('../querys/utilsQuerys')
 const { isTokenValid } = require('../utils/tokenUtils');
 const { json } = require('express');
@@ -18,7 +18,7 @@ const router =  express.Router();
 
 
 router.get('', async (req, res) => {
-console.log("jobs=>req, res", req, res)
+
    
     if (Object.keys(req.query).length === 0)
     {
@@ -77,12 +77,16 @@ router.get('/jobs-get-positions/:id', (req, res) => {
 router.post('/registar/company', async (req, res) => {
     console.log(req.data)
 })
-const isJobsOwner = async (email, token, jobId,userId) => {
-    token = token.replace('Bearer', '').trim();
+const isJobsOwner = async (email, token, jobId,userId) => {   
+    token = token.replace('Bearer ', '').trim();
+
     let companyUid
     try
     {
-        const isAuth = await isTokenValid(email, token)
+
+        const isAuth = await isTokenValid(email,JSON.stringify(token))
+        console.log("🚀 ~ file: jobsRouter.js ~ line 87 ~ isJobsOwner ~ isAuth", isAuth)
+        
         console.log("getJobCompanyUid(jobId)", getJobCompanyUid(jobId))
          companyUid = (await client.query(getJobCompanyUid(jobId))).rows[0].company_uid
         
@@ -94,13 +98,14 @@ const isJobsOwner = async (email, token, jobId,userId) => {
     return userId===companyUid
 }
 router.put('/update', async (req, res) => {
+console.log("🚀 ~ file: jobsRouter.js ~ line 97 ~ router.put ~ req.body", req.body)
     
-    const data =JSON.parse(req.body.data);
+    const data =req.body;
     const positionList=data.positions
     // const isAuth = await isTokenValid(data.user.data.email, JSON.parse(req.body.headers.Authorization))
     // const companyUid=(await client.query(getJobCompanyUid(data.id))).rows[0].company_uid
   
-    if(await isJobsOwner(data.user.data.email, JSON.parse(req.body.headers.Authorization),data.id,data.user.data.uuid))
+    if(await isJobsOwner(data.user.data.email, JSON.parse(req.headers.authorization),data.id,data.user.data.uuid))
     {try
         {
        
@@ -109,11 +114,19 @@ router.put('/update', async (req, res) => {
        
         console.log(positionList)
         if(positionList)
-        { removeOldPosition=await client.query(removePosition(data.id))  
-        await positionList.forEach(async position => {
+        {
+            console.log("🚀 ~ file: jobsRouter.js ~ line 119 ~ router.put ~ removePosition(data.id)", removePosition(data.id))
+
+            removeOldPosition = await client.query(removePosition(data.id)) 
             
-            const queryAnser = await client.query(insertPositions(data.id, position.id))
-            console.log("queryAnser", position)
+        console.log("🚀 ~ file: jobsRouter.js ~ line 119 ~ router.put ~ removeOldPosition", removeOldPosition)
+        
+            await positionList.forEach(async position => {
+                console.log("🚀 ~ file: jobsRouter.js ~ line 1 ~ router.put ~ data.id, position.id", data.id, position.id)
+
+                const queryAnser = await client.query(insertPositions(data.id, position.id))
+                
+            console.log("queryAnser", queryAnser)
         });}
        
         res.send('update successful')
@@ -123,13 +136,17 @@ router.put('/update', async (req, res) => {
     
     
 })
-router.put('/insert',async (req, res) => {
-    const data = JSON.parse(req.body.data);
+router.put('/insert', async (req, res) => {
+    console.log("🚀 ~ file: jobsRouter.js ~ line 139 ~ router.put ~ req.body", req.headers)
+
+    const data = req.body;
+    console.log("🚀 ~ file: jobsRouter.js ~ line 130 ~ router.put ~ data", data)
+    
     const userData=data.user.data
     console.log("insert data", data)
     const positionList=data.positions
-    console.log("req.body.headers.Authorization", req.body.headers.Authorization)
-    const isAuth = await isTokenValid(userData.email, JSON.parse(req.body.headers.Authorization))
+  
+    const isAuth = await isTokenValid(userData.email,req.headers.authorization)
     console.log("isAuth", isAuth)
     console.log('insert data ,userData', data, userData)
     console.log("insertJobsTable({...data,...userData,company_uid:userData.uuid})", insertJobsTableReturnId({...data,...userData,company_uid:userData.uuid,category:data.category}))
@@ -165,6 +182,7 @@ router.delete('/remove/:id/:email', async (req, res) => {
   
     const id=req.params.id
     console.log("/remove id", id)
+    
     console.log("removeJob(id)", removeJob(id))
     if(await isJobsOwner(email, JSON.parse(req.body.Authorization),id,req.body.user.uuid))
     {
@@ -178,8 +196,27 @@ router.delete('/remove/:id/:email', async (req, res) => {
         const  removeOldPosition=await client.query(removePosition(id))    
         console.log("removeOldPosition", removeOldPosition)
         res.send('update successful')
-    } catch (err) {
+        } catch (err) {
+            console.log(err)
         res.status(500).send({status:500,message:'error while updates'})
     }}
+})
+router.post('/send-cv/:jobId/:userUid',async (req,res) => {
+    const jobId = req.params.jobId;
+    const userUid = req.params.userUid;
+    console.log('insertUserSendedJobs(userUid,jobId)',insertUserSendedJobs(userUid,jobId))
+    try
+    {
+        const userData = (await client.query(getUserByUidAndType(userUid, 'user'))).rows[0];
+        const isAuth =await isTokenValid(userData.email,req.body.headers.Authorization.replace('Bearer ','').trim())       
+        if (isAuth) {
+            const result= await client.query(insertUserSendedJobs(userUid,jobId))
+            res.send(result)
+        }
+        else throw new Error('not auth')
+    
+    } catch (err) {
+        res.status(404).send({status:404,message:`error ${err}`})
+    }
 })
 module.exports = router;

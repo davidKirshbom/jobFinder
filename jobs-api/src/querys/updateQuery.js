@@ -3,7 +3,7 @@ const updateUser = (client,userType) => {
     return (`UPDATE users 
             SET
             ${client.first_name ? `first_name='${client.first_name}' ` : "first_name=first_name"} ,
-            ${client.last_name ? `last_name='$client.{last_name}' ` : "last_name=last_name"} ,
+            ${client.last_name ? `last_name='${client.last_name}' ` : "last_name=last_name"} ,
             ${client.phone_number ? `phone_number='${client.phone_number}' ` : "phone_number=phone_number"} ,
             ${client.password ? `password='${client.password}' ` : "password=password"} ,
             ${client.email ? `email='${client.email}' ` : "email=email"} ,
@@ -45,5 +45,10 @@ const updateJobsTable = ({role_name,description ,qualifications,start_date,end_d
         jobs.id=${id}
     `)
 }
+const updateAgentSended = (agentId) => {
+    return (`
+    UPDATE user_smart_agents SET  last_scan_date=NOW() WHERE id=${agentId}
+    `)
+}
 
-module.exports={updateUser,updateJobsTable}
+module.exports={updateUser,updateJobsTable,updateAgentSended}

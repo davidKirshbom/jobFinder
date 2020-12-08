@@ -49,6 +49,7 @@ color: white;
         }
 }
 .send-CV{
+    @include remove-button-defaults;
     margin: 20px 0px ;
     height: 65px;
 }

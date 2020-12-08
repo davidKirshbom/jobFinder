@@ -1,0 +1,157 @@
+#create-agent-form{
+    display: flex;
+    flex-flow: column;
+    padding: 20px;
+}
+.input-text{
+    font-weight: 100;
+    color: $soft-gray;
+    .orange-mark:not(.font-emphasis){
+        font-size: .85rem;
+        margin-right: 5px;
+    }
+    .orange-mark.font-emphasis{
+        position: relative;
+        top:3px;
+       
+    }
+    .checkboxes-container{
+        height:328px ;
+        overflow-y: scroll;
+    }
+}
+.border-bottom-input-style{
+    border: none ;
+    border-bottom: .5px solid $soft-gray ;
+    outline: none !important;
+    width: 100%;
+}
+#free-word-search{
+    height: 2rem;
+    resize: none;
+    outline: none !important;
+}
+select.border-bottom-input-style{
+    -moz-appearance:none; /* Firefox */
+    -webkit-appearance:none; /* Safari and Chrome */
+    appearance:none;
+    outline: none !important;
+   
+}
+.custom-input-arrow{
+    position: absolute;
+    left: 25px;
+    padding-top: 5px;
+    color: $soft-gray;
+}
+.job-type{
+    width: 100%;
+}
+.custom-select{
+    width: 100%;
+}
+.small-letters{
+    font-size: .95rem;
+}
+.read-only{
+    pointer-events: none;
+    opacity: .6;
+}
+.form-data-container{
+    background: #ffedd8;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+  
+    align-content: center;
+    min-height: 200px;
+}
+.selected-title{
+    color: #557fa6;
+    font-size: .88rem;
+}
+.agent-page-button{
+    margin-top: 15px ;
+}
+.tag-container{
+    background: #fff;
+    display: inline;
+    padding: 5px;
+    padding-right: 1px;
+    display: flex;
+    align-items: center;
+    max-width: 200px;
+    margin: 5px ;
+    margin-right: 0px;
+}
+.tag-exit-button{
+    margin-top:5px;
+    font-weight: 600;
+    font-size: .85rem;
+    height: 100%;
+    margin-left: 15px;
+    margin-right: 10px;
+}
+.tag-text{
+    border-right: 1px solid #e5e4e4;
+    padding-right: 5px;
+}
+.data-page-text{
+    margin-right: 20px;
+}
+.tags-container{
+    margin: 5px;
+}
+.tabs-container{
+    display: flex;
+    width: 560px;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+}
+
+@media(min-width:$break-point-desktop){
+#create-agent-form{
+    display: grid;
+    grid-template-columns: repeat(2,50%);
+    grid-template-rows:1fr, repeat(3,3fr);
+    max-width: 1100px;
+    margin-right: 70px;
+}
+.data-page-text{
+    margin-right: 85px;
+}
+.form-data-container{
+    grid-column:-3/-1 ;
+}
+.agent-page-button{
+    width:250px;
+}
+.gray-button.agent-page-button{
+    margin-right: auto;
+}
+#agent-name-input{
+    margin-top: -3px;
+}
+.border-bottom-input-style{
+    width: 90%;
+}
+.custom-input-arrow{
+    position: relative;
+    left: 20px;
+}
+
+    .checkboxes-container{
+        overflow-y: scroll;
+}
+.input-container{
+    max-height: 200px;
+}
+.tags-container{
+    display: flex;
+    flex-flow: column;
+    flex-wrap: wrap;
+    height: 100%;
+    
+}
+}

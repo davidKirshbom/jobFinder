@@ -3,7 +3,8 @@ import { useEffect,useState, useContext } from 'react';
 import userContext from '../../contexts/UserContext'
 import ResultList from '../search-work/ResultList'
 import JobWallNode from '../usersData/JobWallNode'
-import axios from 'axios';
+
+import { getCompanyJobs } from '../../server/usersDB';
 export default () => {
     const [resultOffset,setResultOffset]=useState(0);
     const [jobsList, setJobsList] = useState({rows:[],total:0});
@@ -17,14 +18,10 @@ export default () => {
     ()=>(async () => {
         console.log("useEffect user", user)
         try {
-          const queryResult=await  axios.get(`http://localhost:3000/users/company-job-wall/${user.data.email}/${user.data.uuid}`, {
-            headers: {
-              'Authorization' :user.token, 
-            },
-           
-          })
-            console.log("queryResult.data", queryResult.data)
-            setJobsList({rows:queryResult.data,totla:50});
+          const queryResult = await getCompanyJobs(user)
+          console.log("🚀 ~ file: CompanyJobsWall.js ~ line 22 ~ queryResult", queryResult)
+          
+            setJobsList({rows:queryResult,total:50});
             
       } catch (err) {
           console.log(err)

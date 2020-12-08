@@ -1,23 +1,17 @@
 import React, { useEffect,useState } from 'react'
-import axios from 'axios'
+
+import { getAllCompanies } from '../../server/utilsDB';
 export default ({className="",onChange}) => {
     const [sendCompanies, setSendCompanies] = useState([]);
     const [notSendCompanies, setNotSendCompanies] = useState([]);
     const [selectedIndexSendList, setSelectedIndexSendList] = useState();
     const [selectedIndexNotSendList, setSelectedIndexNotSendList] = useState();
     const [isCompaniesListFilterOpen,setIsCompaniesListFilterOpen]=useState(false)
-    
-
     useEffect(() => {
-        try {
-            axios.get('http://localhost:3000/utils/get-all-companies').then((value) => {
-                console.log(value.data)
-                const allCompanies=value.data.map((company) =>  company.name)
-                setSendCompanies(allCompanies.concat([5,5]))
-            }).catch((err)=>console.log(err))
-        } catch (err) {
-            console.log(err)
-        }
+        getAllCompanies().then((value) => {
+            const allCompanies=value.map((company) =>  company.name)
+            setSendCompanies(allCompanies)
+        }).catch((err)=>console.log(err))
     },[])
     useEffect(() => { sendCompanies.sort();notSendCompanies.sort()},[sendCompanies,notSendCompanies])
     useEffect(() => {

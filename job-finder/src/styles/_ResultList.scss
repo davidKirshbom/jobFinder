@@ -10,13 +10,13 @@
         padding:10px 15px;
         align-items: center;
         .list-title-name{
-            margin-right: 38px;
+            margin-right: 30px;
         }
         .list-title-code{
-            margin-right: 240px;
+            margin-right: 260px;
         }
         .list-title-location{
-            margin-right: 65px;
+            margin-right: 57px;
         }
         .result-title-item{
             color: white;
@@ -27,7 +27,7 @@
       
     }
     .sort-results-icon{
-        color: $dark-gray;
+        color: $dark-gray !important;
         font-size: .9rem;
         margin-right: 5px;
     }

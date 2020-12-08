@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import { Link, Switch, Route, Router } from "react-router-dom";
 import MainPage from '../components/main-page/MainPage'
 import SearchWorkPage from '../components/search-work/SearchWorkPage'
@@ -21,7 +21,20 @@ import WantedHardware from '../components/pages-data/WantedHardware';
 import WantedInfrastructure from '../components/pages-data/WantedInfrastructure';
 import WantedInformationSystem from '../components/pages-data/WantedInformationSystem';
 import SenorEmail from '../components/pages-data/SenorEmail';
+import UserJobsData from '../components/usersData/UserJobsData';
+import userAgentsPage from '../components/usersData/UserAgentsPage';
+import AgentsListsPage from '../components/usersData/AgentsListsPage';
+
 export default () => {
+    useEffect(() => {
+        window.addEventListener('error', (msg, src, lineno, colno, err) => {
+            console.log("msg error", msg)
+        })
+        
+        
+        // console.log('sksklasdmalkmdaslkdmsalkmaskl')
+        // setUser(null)
+},[])
     const [isLoginBarOpen,setIsLoginBarOpen]=useState(false)
     return (
   
@@ -56,6 +69,9 @@ export default () => {
                         <DataRoute path='/information-system-wanted' component={WantedInformationSystem}/>
                         <DataRoute path='/senor-email' component={SenorEmail}/>
                         <PrivateRoute path="/my-jobs-wall" component={CompanyJobsWall} />
+                        <PrivateRoute path='/user-save-jobs' component={UserJobsData}/>
+                        <PrivateRoute path='/user-agent' component={AgentsListsPage} />
+                        <PrivateRoute path='/agent-page' component={userAgentsPage}/>
                         <DataRoute component={NotFondPage} />
                      
                     </Switch>

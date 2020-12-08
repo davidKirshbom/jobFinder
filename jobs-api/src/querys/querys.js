@@ -28,7 +28,7 @@ const searchJob = (parameters) => {
              ${openJobsOnly ? " jobs.end_date IS NULL " : "1=1"} AND
              ${location_area ? `location_area IN (${location_area})`:"1=1"} AND
              
-             ${job_type ? ` positions_category.name IN ('${job_type}')` : "1=1"} AND
+             ${job_type&&job_type!=='all types' ? ` type IN ('${job_type}')` : "1=1"} AND
              ${dateLimits==='true'?`jobs.start_date BETWEEN current_date - integer '7' AND current_date `:"1=1"}
             ${sortBy&&sortBy.attribute? (`ORDER BY jobs.${sortBy.attribute} ${sortBy.isAscending ? "ASC" : "DESC"}`)
             : (`ORDER BY jobs.start_date`)}
@@ -106,5 +106,59 @@ const getJobPositionById = (id) => {
             INNER JOIN position_jobs_connection ON position_jobs_connection.position_id=positions.id
             WHERE position_jobs_connection.job_id='${id}'`)
 }
-module.exports = {getJobPositionById,searchJob,getCompanysJobs,getPositionsByJobId,searchJobCount,getUserLoginData,getUserByUidAndType};
+const getUserSavedJobs = (userId) => {
+    return (`SELECT jobs.* FROM user_saved_jobs 
+            INNER JOIN jobs ON jobs.id=user_saved_jobs.job_id
+            WHERE user_uid='${userId}'
+    `)
+}
+const getUserSendedJobs = (userId) => {
+    return (`SELECT jobs.* FROM user_sended_jobs 
+            INNER JOIN jobs ON jobs.id=user_sended_jobs.job_id
+            WHERE user_uid='${userId}'
+    `)
+}
+const getAgents = (userUid, agentId) => {
+   
+    return (`
+    SELECT *,TRUNC(DATE_PART('day', NOW() - last_scan_date)/7) AS weeks_from_last_scan  FROM user_smart_agents 
+    INNER JOIN (SELECT agent_id,string_agg(positions_category.name,',') AS categories,string_agg(CAST(positions_category.id AS varchar),',') AS catgories_id FROM smart_agent_categories
+                INNER JOIN positions_category ON positions_category.id=smart_agent_categories.category_id 
+                GROUP BY smart_agent_categories.agent_id) AS categories
+    ON categories.agent_id=user_smart_agents.id
+    INNER JOIN (SELECT smart_agent_positions.agent_id,string_agg(positions.name,',') AS positions,string_agg(CAST(positions.id AS varchar),',') AS positions_id FROM smart_agent_positions
+                INNER JOIN positions ON positions.id=smart_agent_positions.position_id 
+                GROUP BY smart_agent_positions.agent_id) AS positions
+    ON positions.agent_id=user_smart_agents.id
+    LEFT JOIN (SELECT agent_id,COALESCE(COUNT(job_id),0) AS last_scan_found_count FROM agents_sended_jobs GROUP BY agent_id) AS last_scan_result
+    ON last_scan_result.agent_id=user_smart_agents.id
+    WHERE ${userUid ? ` user_smart_agents.user_uid='${userUid}'` : '1=1'} AND
+    ${agentId?`user_smart_agents.id=${agentId}`:'1=1'}
+    `)
+}
+const getAgentsPositions = (agentId) => {
+    return (`
+    SELECT smart_agent_positions.position_id AS id,positions.name FROM smart_agent_positions
+    INNER JOIN positions ON positions.id=smart_agent_positions.position_id
+    WHERE agent_id=${agentId}
+    `)
+}
+const getAgentsCategories = (agentId) => {
+    return (`
+    SELECT smart_agent_categories.category_id AS id,positions_category.name FROM smart_agent_categories
+    INNER JOIN positions_category ON positions_category.id=smart_agent_categories.category_id 
+    WHERE agent_id=${agentId}
+    `)
+}
+const getLastScanResult = (agentId) => {
+    return (`
+    SELECT jobs.*,agents_sended_jobs.scanned_date FROM jobs
+    INNER JOIN agents_sended_jobs ON agents_sended_jobs.job_id=jobs.id
+    WHERE agents_sended_jobs.agent_id=${agentId}
+    `)
+}
+module.exports = {
+    getJobPositionById, searchJob, getCompanysJobs, getPositionsByJobId, searchJobCount, getUserLoginData, getUserByUidAndType,
+    getUserSavedJobs, getUserSendedJobs, getAgents, getAgentsPositions, getAgentsCategories,getLastScanResult
+};
 // OR (description LIKE '%${searchWord}%') OR ( qualifications LIKE '%${searchWord}%'))

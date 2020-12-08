@@ -47,8 +47,33 @@ text-decoration: none;
      color: white;
      padding: 15px;
 }
+.gray-button{
+    @include remove-button-defaults;
+    background: $soft-gray;
+    color: white;
+    padding: 15px;
+}
+.orange-mark{
+    color:$orange
+    
+}
+.font-emphasis{
+    font-size: 1.3rem;
+}
 .gray-title{
     color: $dark-gray;
+}
+.container-flex-row{
+    display: flex;
+    flex-flow: row;
+}
+.orange-small-title{
+    font-size: .935rem;
+    color: $orange;
+}
+.new-scan-button{
+    width: 100%;
+    margin-top: 1.5rem;
 }
 @media(min-width: $break-point-desktop){
     .mobile-only{

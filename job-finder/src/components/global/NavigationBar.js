@@ -1,25 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react'
 
 import userContext from '../../contexts/UserContext';
-import axios from 'axios'
-import { totalJobs } from '../../data/jobs'
 import { Link } from 'react-router-dom'
 
+    import { getTotalJobs } from '../../server/jobsDB';
 export default ({ onLoginPress }) => {
     const [jobsCount, setJobsCount] = useState(0);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const { user, setUser } = useContext(userContext)
-
-    console.log("user", user)
     useEffect(() => {
-        try
-       { axios.get('http://localhost:3000/utils/get-jobs-count').then((value) => {
-           console.log(value.data[0].count)
-           setJobsCount(value.data[0].count)
-       }).catch(err=>console.log(err))
-        } catch (err) {
-            console.log(err)
-        }
+        getTotalJobs().then((value)=>setJobsCount(value))
+        
     },[])
     useEffect(()=>
     {

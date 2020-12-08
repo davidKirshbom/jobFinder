@@ -1,16 +1,12 @@
 import React,{useEffect,useState} from 'react'
-import axios from 'axios'
 import {Link} from 'react-router-dom'
 import history from '../../router/history'
+import { jobsByCategoryId } from '../../server/jobsDB'
 export default () => {
     const [positionsList, setPositionsList] = useState([])
+    
     useEffect(() => {
-         axios.get('http://localhost:3000/utils/jobs-by-category?categoryId=4').then(
-                (result)=>setPositionsList(result.data.data)
-            )
-            
-        
-       
+        jobsByCategoryId(4).then((result)=>setPositionsList(result)) 
     }, [])
  return   (<div className='wanted-page'>
         <h2>דרושים למשרות מהנדס מערכות מידע </h2>

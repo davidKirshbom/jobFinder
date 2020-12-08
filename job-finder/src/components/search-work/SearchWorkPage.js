@@ -1,14 +1,18 @@
-import React, { useEffect, useState } from "react"
-import axios from 'axios'
+import React, { useEffect, useState, useContext } from "react"
+import userContext from '../../contexts/UserContext'
+
 import {useLocation,useHistory} from 'react-router-dom'
 import SearchForm from './SearchForm'
 import ResultList from './ResultList'
 import ResultListNode from '../search-work/ResultListNode'
 import FloatFilterMenu from './FloatFilterMenu'
 import {locationsAreas as locationDictonary} from './dictionaty'
-export default () => {
+import { getUserSavedJobs, searchJobs } from '../../server/jobsDB'
+    export default () => {
     const [resultOffset,setResultOffset]=useState(0);
-    const [jobsList, setJobsList] = useState({rows:[],total:0});
+    const [jobsList, setJobsList] = useState({ rows: [], total: 0 });
+    const [savedJobs, setSavedJobs] = useState([]);
+    const {user,setUser}=useContext(userContext)
     const [activeFilters, setActiveFilters] = useState({});
     const [sortBy,setSortBy]=useState({isAscending:true})
     const queryParms = new URLSearchParams(useLocation().search);
@@ -34,10 +38,22 @@ export default () => {
             search: '',
           })
     }
-
+    const updateSavedUserJobs = async (userId,token) => {
+    console.log("🚀 ~ file: SearchWorkPage.js ~ line 42 ~ updateSavedUserJobs ~ userId,token", userId,token)
+        
+        try {
+            const savedList = await getUserSavedJobs(userId, token)
+            console.log("🚀 ~ file: SearchWorkPage.js ~ line 45 ~ updateSavedUserJobs ~ savedList", savedList)
+            return savedList.map((data)=>data.job_id)
+           
+        }catch (err) {
+            console.log('err',err)
+           
+           }
+       
+    }
     useEffect(() => {
         handleSearchAtStart();
-        
         const newSearchTooogle = document.getElementsByClassName("new-search-open-form-toggle")[0];
         const form = document.getElementsByClassName("search-form-container")[0];
         newSearchTooogle.addEventListener("click", () => {
@@ -60,33 +76,18 @@ export default () => {
         newSearch()
         
     })(), [resultOffset, activeFilters, sortBy])
-    const newSearch = () => {  
-                
+    
+    const newSearch =async () => {             
         const form = document.getElementById("new-search-form");
         const searchWord = form.children[1].value;
         const isSenor = document.getElementById("senior-checkbox").checked;
         const isSearchOnlyLastWeek = document.getElementById('last-week-jobs-radio-btn').checked;          
         console.log(`queryParms.get('position_name')`,queryParms.get('position_name'))
             try {
-              axios.get('http://localhost:3000/jobs',
-                    {
-                        params: {
-                            sortBy:sortBy,
-                            searchWord: searchWord,
-                            isSenorSearch: isSenor,
-                            job_type:activeFilters&&activeFilters.type? activeFilters.type:"",
-                            positions:activeFilters&&activeFilters.positions? activeFilters.positions:"",
-                            location_area:activeFilters&&activeFilters.location_area? activeFilters.location_area:"",
-                            resultsLimit: '80',
-                            resultOffset: resultOffset,
-                            openJobsOnly: true,
-                            dateLimits: isSearchOnlyLastWeek,
-                        }
-                    }
-              ).then((response) => {
-                console.log(response.data)
-                  setJobsList({rows: response.data.rows,total:response.data.total });
-                })
+          const jobsListDB=(await searchJobs({sortBy,searchWord,isSenor,activeFilters,resultsLimit:80,resultOffset,isSearchOnlyLastWeek}))
+                setJobsList(jobsListDB)
+                if(user.data)
+                updateSavedUserJobs(user.data.uid,user.token).then((value)=>console.log('fav-list',value));
             } catch (err) {
                 console.log("problem ocuured",err)
         }
@@ -106,7 +107,7 @@ export default () => {
                     <SearchForm handleSearch={function handleSearch(e)  {
                         e.preventDefault();
                         setResultOffset(0)
-                        newSearch().then();
+                        newSearch();
                     }}/>
             <div className="result-section">
                 
@@ -119,6 +120,11 @@ export default () => {
                                 setSort={setSortBy || ""}
                                 sortObj={sortBy || ""}
                                 NodeComponent={ResultListNode || ""}
+                                markedNodesFunction={updateSavedUserJobs}
+                                titlesList={[{ sortFunc: () => { },attributeName: 'saved_jobs' }
+                                    , { text: 'שם',className:'list-title-name',attributeName: 'role_name', sortFunc: () => setSortBy({ attribute: 'role_name', isAscending: !sortBy.isAscending }) },
+                                    , { text: 'קוד',className:'list-title-code' }
+                                    , {text:'מיקום',attributeName:'location_area',sortFunc:()=>setSortBy({attribute:'location_area',isAscending:!sortBy.isAscending}),className:'list-title-location'}]}
                             />
                 
                             <div className="jobs-button-container">

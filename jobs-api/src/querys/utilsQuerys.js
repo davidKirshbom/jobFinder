@@ -26,11 +26,30 @@ const getPositionsAvailableByPositionCategory = (categoryId) => {
              INNER JOIN position_jobs_connection ON positions.id=position_jobs_connection.position_id
              INNER JOIN jobs ON jobs.id=position_jobs_connection.job_id
              WHERE
-             jobs.category=${categoryId} AND
+             ${Array.isArray(categoryId) ? ` jobs.category IN (${categoryId.map((id) => `'${id}'`)})` :
+            `jobs.category = ${ categoryId }`
+} AND
              jobs.end_date IS NULL 
              GROUP BY positions.id,positions.name
              
              
              `)
 }
-module.exports={getJobCompanyUid,getPositionsList,getCategoryIdByName,getCategoryList,getAllCompanies,getOpenJobsCount,getTokenRow,getPositionsAvailableByPositionCategory}
+const getLocationAreas = () => {
+    return (`
+    SELECT DISTINCT(jobs.location_area) FROM jobs
+    `)
+}
+const getPositionsType = () => {
+    return (`
+    SELECT DISTINCT(jobs.type) FROM jobs
+    `)
+}
+const isUserAgent = (userUid,agentId) => {
+    return (`
+    SELECT true
+    FROM user_smart_agents
+    WHERE EXISTS  ( SELECT * FROM user_smart_agents WHERE user_uid='${userUid}' AND id=${agentId} )
+    `)
+}
+module.exports={getJobCompanyUid,isUserAgent,getPositionsType,getLocationAreas,getPositionsList,getCategoryIdByName,getCategoryList,getAllCompanies,getOpenJobsCount,getTokenRow,getPositionsAvailableByPositionCategory}

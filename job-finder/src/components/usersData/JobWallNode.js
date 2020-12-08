@@ -1,10 +1,14 @@
-import Axios from 'axios';
+
 import React, { useEffect, useState,useContext,useRef } from 'react'
 import SelectPositions from '../usersData/selectPositionsList'
 import AreasSelect from '../global/AreasSelect'
 import userContext from '../../contexts/UserContext'
 import OrangeCheckBox from '../global/OrangeCheckBox'
-import axios from 'axios'
+
+import { getAllCategories } from '../../server/utilsDB';
+import { insertNewJob, updateJob } from '../../server/jobsDB';
+import requestsHandler from '../../server/requestsHandler';
+import { removeJob } from '../../server/jobsDB';
 export default ({is_managerial_position,isNewJob,hideSummary,isOpen, end_date,start_date, role_name, id, location_area, className, index, type, experience_years,
     qualifications, description, category }) => {
        
@@ -19,21 +23,22 @@ export default ({is_managerial_position,isNewJob,hideSummary,isOpen, end_date,st
         console.log("setFormData->data", formData)
     }
     const { user } = useContext(userContext)
-    useEffect(()=>{console.log('effect form data',formData)},[formData])
     useEffect(()=>{setIsExtraInfoOpen(isOpen)},[isOpen])
     useEffect(
         () => 
         (
             async () => 
-                {const categoryList = (await axios.get('http://localhost:3000/utils/get-categorys')).data
-                console.log("is_managerial_position", is_managerial_position)
-                setCategoryList(categoryList)}
+            {
+                const categoryList = await getAllCategories(); 
+            
+                setCategoryList(categoryList)
+            }
                     
     )()
             
     , [])
     const handleValidForm = () => {
-        const inputs = document.getElementById(`jobs-form${id}`).children;
+        const inputs = document.getElementById(`jobs-form${id||''}`).children;
         const roleName = inputs[0].children[1].value;
         console.log("handleValidForm -> roleName", roleName)
         const description = inputs[1].children[1].value;
@@ -61,8 +66,6 @@ export default ({is_managerial_position,isNewJob,hideSummary,isOpen, end_date,st
         
     }
     const handleUpdate = async (end_date) => {
-    console.log("end_date", end_date)
-        console.log("formData", formData)
         const isFormValid = !handleValidForm();
         setFormData({...formData,is_managerial_position:document.getElementById(`checkbox-${id||""}`).checked})
         
@@ -74,25 +77,13 @@ export default ({is_managerial_position,isNewJob,hideSummary,isOpen, end_date,st
             formData.category = document.getElementById('category-select').value;
             
             console.log('insert new job')
-            const insertResult = await axios.put(`http://localhost:3000/jobs/insert`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization':JSON.stringify('Bearer '+user.token),
-                   
-                         },
-                data: JSON.stringify({...formData,id,user })
-            })
+            const insertResult = await insertNewJob(formData,user)
+            console.log("🚀 ~ file: JobWallNode.js ~ line 79 ~ handleUpdate ~ insertResult", insertResult)
+        
         }
         else
         {
-            const updateResult = await axios.put(`http://localhost:3000/jobs/update`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization':JSON.stringify('Bearer '+user.token),
-               
-                     },
-            data: JSON.stringify({...formData,id:id,user:user,end_date})
-            })
+            const updateResult = await updateJob(id,formData,user,end_date)
             console.log(updateResult)
         }}
     }
@@ -108,25 +99,7 @@ export default ({is_managerial_position,isNewJob,hideSummary,isOpen, end_date,st
         
     }
     const handleRemove = async () => {
-        const answer = await axios({
-            url: `http://localhost:3000/jobs/remove/${id}/${user.data.email}`,
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                
-               
-                     },
-            data: JSON.stringify({ user: user.data,Authorization:JSON.stringify('Bearer '+user.token) }),
-           
-        })
-        // const updateResult = await axios.delete(``, {
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         'Authorization':JSON.stringify('Bearer '+user.token),
-               
-        //              },
-        //     data: JSON.stringify({user:user.data})
-        //     })
+        const removeResult = await removeJob(id,user)
     }
     return (
         <div id='jobs-wall-node' className={`list-node-container ${className || ""}`} onClick={() => setIsExtraInfoOpen(true)}>

@@ -3,9 +3,10 @@ import userContext from '../../contexts/UserContext'
 import React from 'react'
 import validator from 'validator'
 import OrangeCheckBox from '../global/OrangeCheckBox'
-import axios from 'axios'
+
 import FilterCompaniesList from './filterCompaniesList'
 import {useHistory} from 'react-router-dom'
+import { registerUser, updateUser } from '../../server/usersDB'
 
 export default () => {
    
@@ -42,9 +43,8 @@ export default () => {
             unvalueFields.push('email');
             result = true;
             }
-          console.log(!formObj.password)
-        if ((user.data&&(formObj.password.length!==0||formObj.password.length!==8))||(!user.data&&formObj.password.length !== 8))
-        {
+          console.log(formObj.password.length)
+          if ((user.data&&(formObj.password.length!==0&&formObj.password.length!==8))||(!user.data&&formObj.password.length !== 8))        {
             unvalueFields.push('password');
             result = true;
         }
@@ -52,52 +52,40 @@ export default () => {
         return result;
     }
     useEffect(() => { console.log(unValidFields) }, [unValidFields])
-    const updateUserData = (e) => {
+    const updateUserData =async (e) => {
         e.preventDefault()
         console.log(user)
         const result = {};
-        const formInputs = e.target.children;
-        result.first_name = formInputs[0].firstChild.value;
-        result.last_name = formInputs[1].firstChild.value;
-        result.phone_number = formInputs[2].firstChild.value;
-        result.password = formInputs[3].firstChild.value;
-        result.email = formInputs[4].firstChild.value;
-        result.email_subscribe = formInputs[7].firstChild.firstChild.checked;
-        result.send_auto_cv = formInputs[8].firstChild.firstChild.checked;
-        result.cv = formInputs[5].firstChild.children[1].files[0];
+        const formInputs = e.target;
+        console.log("🚀 ~ file: SearchWorkRegisterPage.js ~ line 60 ~ updateUserData ~ formInputs", formInputs)
+        
+        result.first_name = formInputs[0].value;
+        result.last_name = formInputs[1].value;
+        result.phone_number = formInputs[2].value;
+        result.password = formInputs[3].value;
+        result.email = formInputs[4].value;
+        result.email_subscribe = formInputs[8].checked;
+        result.send_auto_cv = formInputs[9].checked;
+        result.cv = formInputs[5].files[0];
         result.uid = user.data.uid;
-        result.clientType='user'
+        result.userType='user'
         console.log(result)
     
         if (!handleFormValidation(result))
         {
+            console.log("🚀 ~ file: SearchWorkRegisterPage.js ~ line 82 ~ updateUserData ~ user", user)
+
             console.log("updateUserData -> user.token", user.token)
-        try {
-            axios.put('http://localhost:3000/users/update', {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization':JSON.stringify('Bearer '+user.token),
-                   
-                         },
-                data: JSON.stringify(result)
-            }).then(() => {
-                try
-                {
-                    axios.get(`http://localhost:3000/users/get-user/${result.uid}/user`).then((value) => {
-                        setUser({ data: value.data.rows[0], token: user.token })
-                    console.log("updateUserData -> value", value)
-                    })
-                }
-                catch (err) {
-                    throw new Error("cant get new user")
-                }
-            })
+            try {
+                const updatedDataDB = (await updateUser(result, user))
+                setUser(updatedDataDB)
+            console.log("🚀 ~ file: SearchWorkRegisterPage.js ~ line 78 ~ updateUserData ~ updatedDataDB", updatedDataDB)
         }
         catch (err) {
             console.log(err)
             }}
     }
-    const Registar = (e) => {
+    const Registar =async (e) => {
         e.preventDefault()
         console.log(user)
         const result = {};
@@ -114,28 +102,19 @@ export default () => {
         result.cv = formInputs[5].firstChild.children[1].files[0];
         if(!handleFormValidation(result))
             try {
-                axios.post('http://localhost:3000/users/registar/users', {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    data: JSON.stringify(result)
-                }).then((value) => {
-                    console.log("🚀 ~ file: CompanyRegisterPage.js ~ line 122 ~ Registar ~ value", value)
-                    setUser(value.data)
-                    history.push({
-                        pathname: '/',
-                        search: '?message_open=true&send_success=true'
-                    })
-                }).catch(err => {
-                    console.log(err);
-                    history.push({
-                        pathname: '/',
-                        search: '?message_open=true&send_success=false'
-                    })
+                const userResult = (await registerUser(result))
+                setUser(userResult)
+                history.push({
+                    pathname: '/',
+                    search: '?message_open=true&send_success=true'
                 })
             }
         catch (err) {
-            console.log(err)
+                console.log(err)
+                history.push({
+                    pathname: '/',
+                    search: '?message_open=true&send_success=false'
+                })
             }
         
     }

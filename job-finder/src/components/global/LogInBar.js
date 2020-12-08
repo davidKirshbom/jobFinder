@@ -1,24 +1,25 @@
-import React, { useState,useContext } from 'react'
+import React, { useState, useContext } from 'react'
+import {login} from '../../server/auth'
 import userContext from '../../contexts/UserContext'
-import axios from 'axios'
 export default ({ isOpen, setIsOpen }) => {
     const {user, setUser} = useContext(userContext);
-    const [isBadLoginData,setIsBadLoginData]=useState(false)
-    const handleLogin =async (email, password) => {
-        axios.post('http://localhost:3000/users/login', {
-            headers: { 'Content-Type': 'application/json' },
-            data: ({ email, password })
-        }).then((value) => {
-            setUser({ data: value.data.user, token: value.data.token });
-        
+    const [isBadLoginData, setIsBadLoginData] = useState(false)
+    
+    const handleLogin = async (email, password) => {
+        try
+        {
+            const user = await login(email, password)            
+            if(user)
+            {
+            setUser(user);
             setIsBadLoginData(false)
-            setIsOpen(false);
-        }).catch(err => {
+            setIsOpen(false);}
+        }catch (err) {
             if (err.response.data.code === 401)
                 setIsBadLoginData(true)
             else
                 throw new Error('bad connection')
-        })
+        }
     }
     return (<div className={`login-bar-container  ${isOpen?"open":""}`}>
       

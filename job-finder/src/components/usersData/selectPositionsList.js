@@ -1,5 +1,7 @@
 import React, { useEffect,useState } from 'react'
-import axios from 'axios'
+
+import { getAllPositions } from '../../server/utilsDB';
+import { getJobPositions } from '../../server/jobsDB';
 export default ({className="",onChange,jobId}) => {
     const [positionsList, setPositionsList] = useState([]);
     const [selectedPositions, setSelectedPositions] = useState([]);
@@ -9,18 +11,14 @@ export default ({className="",onChange,jobId}) => {
         ()=>{
       return ( async () => {
         try {
-            const positions = (await axios.get('http://localhost:3000/utils/get-positions')).data
+            const positions = await getAllPositions();
          
             if(jobId)
             {
-                const selectedPositionsData = (await axios.get(`http://localhost:3000/jobs/jobs-get-positions/${jobId}`)).data
+                const selectedPositionsData = (await getJobPositions(jobId))
                 setSelectedPositions(selectedPositionsData)
-                console.log('selectedPositionsData',selectedPositionsData)
             }
             setPositionsList(positions)
-            
-         
-            console.log('positions',positions)
         } catch (err) {
             console.log(err)
         }})()

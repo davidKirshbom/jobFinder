@@ -4,9 +4,9 @@ import validator from 'validator'
 import OrangeCheckBox from '../global/OrangeCheckBox'
 import userContext from '../../contexts/UserContext'
 import AreasSelect from '../global/AreasSelect'
-import axios from 'axios'
 import {useHistory} from 'react-router-dom'
 import ResultModal from '../global/ResultModal'
+import { registerCompany, updateUserCompany } from '../../server/usersDB'
 
 const Comp = () => {
     const history = useHistory();
@@ -15,7 +15,6 @@ const Comp = () => {
     const { user, setUser } = useContext(userContext);
     const [registarResult,setRegistarResult]=useState({isSendRegister:false,isSuccess:false})
     const maxLattersTextArea = 300;
-    // const formFields=document.getElementById('registar-form').children
     const handleFormValidation = (formObj) => {
         let result=false
         let unvalueFields = []
@@ -34,7 +33,6 @@ const Comp = () => {
             unvalueFields.push('email');
             result = true;
             }
-
         if ((user.data&&(formObj.password.length!==0&&formObj.password.length!==8))||(!user.data&&formObj.password.length !== 8))
         {
             unvalueFields.push('password');
@@ -44,87 +42,68 @@ const Comp = () => {
         console.log("handleFormValidation -> unvalueFields", unvalueFields)
         return result;
     }
-    const updateUserData = (e) => {
+    const updateUserData =async (e) => {
         e.preventDefault()
         console.log(user)
         const result = {};
-        const formInputs = e.target.children;
-        result.name = formInputs[0].value;
-        result.phone_number = formInputs[2].value;
-        result.email = formInputs[4].value;
-        result.password = formInputs[6].value;
-        result.area_location = formInputs[8].value;
-        result.category = formInputs[9].value;
+        const formInputs = e.target;
+        console.log("🚀 ~ file: CompanyRegisterPage.js ~ line 51 ~ updateUserData ~ e.target.value", e.target)
+        
+        console.log("🚀 ~ file: CompanyRegisterPage.js ~ line 51 ~ updateUserData ~ formInputs", formInputs)        
+        result.name = formInputs[0].value||formInputs[0].defaultValue;
+        result.phone_number = formInputs[1].value;
+        result.email = formInputs[2].value;
+        result.password = formInputs[3].value||'';
+        result.area_location = formInputs[4].value;
+        result.category = formInputs[5].value;
         result.uid = user.data.uuid;
-        result.clientType='company'
+        result.clientType = 'company' 
+        
         
         if (!handleFormValidation(result))
         {
-            console.log("updateUserData -> user.token", user.token)
-        try {
-            axios.put('http://localhost:3000/users/update', {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization':JSON.stringify('Bearer '+user.token),
-                   
-                         },
-                data: JSON.stringify(result)
-            }).then(() => {
-                try
-                {
-                    axios.get(`http://localhost:3000/users/get-user/${result.uid}/company`).then((value) => {
-                        setUser({ data: value.data.rows[0], token: user.token })
-                    console.log("updateUserData -> value", value)
-                    })
-                }
-                catch (err) {
-                    throw new Error("cant get new user")
-                }
-            })
+            try {
+
+                const updatedUserData = await updateUserCompany(user, result)
+                console.log("🚀 ~ file: CompanyRegisterPage.js ~ line 72 ~ updateUserData ~ user", user)
+                setUser({data:updatedUserData,token:user.token})
+            
         }
         catch (err) {
             console.log(err)
-            }}
+            }
+        }
     }
  
-    const Registar = (e) => {
+    const Registar =async (e) => {
         e.preventDefault()
         const result = {};
-        const formInputs = e.target.children;
-        console.log("Registar -> formInputs", formInputs)
-        result.name = formInputs[0].firstChild.value;
-        result.phone_number = formInputs[1].children[0].value;
-        result.email = formInputs[2].children[0].value;
-        result.password = formInputs[3].children[0].value;
+        const formInputs = e.target;
+        result.name = formInputs[0].value||formInputs[0].defaultValue;
+        result.phone_number = formInputs[1].value;
+        result.email = formInputs[2].value;
+        result.password = formInputs[3].value||'';
         result.area_location = formInputs[4].value;
         result.category = formInputs[5].value;
+        console.log("Registar -> formInputs", formInputs)
         console.log("Registar -> result", result)
         
         if(!handleFormValidation(result))
-        try {
-            axios.post('http://localhost:3000/users/registar/company', {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                data: JSON.stringify(result)
-            }).then((value) => {
-                console.log("🚀 ~ file: CompanyRegisterPage.js ~ line 122 ~ Registar ~ value", value)
-                setUser(value.data)
+            try {
+                const registerResult = await registerCompany(result)
+                setUser(registerResult)
                 history.push({
-                    pathname:'/',
-                    search:'?message_open=true&send_success=true'
-                })
-            }).catch(err => {
-                console.log(err);
-                history.push({
-                    pathname:'/',
-                    search:'?message_open=true&send_success=false'
-                })
-            })
+                            pathname:'/',
+                            search:'?message_open=true&send_success=true'
+                        })
         }
         catch (err) {
             setRegistarResult({isSendRegister:true,isSuccess:false})
-            console.log(err)
+                console.log(err)
+                history.push({
+                            pathname:'/',
+                            search:'?message_open=true&send_success=false'
+                        })
             }
         
     }
@@ -134,7 +113,7 @@ const Comp = () => {
                 <div className="page-title">הוספת חברה</div>
                 <div className="form-register-container">
                     <h5>מציאת עובדים בכל הארץ! מלאו פרטים והצטרפו למשפחת ג'ובאינפו</h5>
-                    <form onSubmit={user.data?updateUserData:Registar} id="registar-form" >
+                    <form   id="registar-form" onSubmit={user.data?updateUserData:Registar}>
                         <div className='input-container'>
                         <input
                             type="text"
@@ -172,7 +151,7 @@ const Comp = () => {
                             value='subscribe-mail'
                             id='subscribe-mail-checkbox' />
                         <div className="small-letters-container">*שדה חובה</div>
-                        <input className="registar-button" type="submit" value={user.data?'עדכן':'הירשם'} />
+                        <input className="registar-button" type="submit" onSubmit={user.data?updateUserData:Registar} value={user.data?'עדכן':'הירשם'} />
                     </form>
                 </div>
             </div>
