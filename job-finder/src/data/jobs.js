@@ -53,4 +53,4 @@ const jobsList = [
         companyOccupation: "Hight Tech",
     }
 ]
-export {totalJobs,jobsList}
+export {jobsList}

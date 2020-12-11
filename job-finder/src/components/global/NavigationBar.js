@@ -4,17 +4,16 @@ import userContext from '../../contexts/UserContext';
 import { Link } from 'react-router-dom'
 
     import { getTotalJobs } from '../../server/jobsDB';
-export default ({ onLoginPress }) => {
+export default ({ onLoginPress,isMainPage }) => {
     const [jobsCount, setJobsCount] = useState(0);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const { user, setUser } = useContext(userContext)
     useEffect(() => {
-        getTotalJobs().then((value)=>setJobsCount(value))
+        getTotalJobs().then((value) => { console.log(value);setJobsCount(value)})
         
     },[])
     useEffect(()=>
-    {
-       
+    { 
         let prevScrollpos = window.pageYOffset;
         window.addEventListener("scroll", () => {
             const currentScrollPos = window.pageYOffset;
@@ -31,7 +30,8 @@ export default ({ onLoginPress }) => {
         )
     }
         , [])
-    return (<nav className="navigation-bar">
+    useEffect(()=>{console.log('alsdalk line 5',user)},[user])
+    return (<nav className={`navigation-bar`}>
        
        <div className="darken-skin mobile-only"></div>
             <div className="navigation-content">
@@ -65,11 +65,11 @@ export default ({ onLoginPress }) => {
             
         </div>
         
-        <div className="triangle-container">
-           <div className="background-triangle mobile-only"></div>
+        <div className={`triangle-container ${isMainPage?'':'none-overflow'}`}>
+           <div className={`background-triangle `}></div>
            </div>
             <div className="logo-container">
-        <Link to="/">  
+        <Link to="">  
            <img className="logo-image" src="https://www.jobinfo.co.il/Portals/_default/Skins/Jobinfo-2016Design/images/JI_logo_mobile.png" alt="" />
         </Link> 
             <span className="logo-text">הרבה מעבר לחברת השמה</span>

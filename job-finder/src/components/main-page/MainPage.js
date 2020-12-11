@@ -1,4 +1,5 @@
-import React,{useEffect,useState} from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import userContext from '../../contexts/UserContext'
 import SearchPanel from './SearchPanel'
 import NavigationBoxes from './NavigationBoxs'
 import BrandsRolling from './RollingText'
@@ -10,18 +11,33 @@ import BackToTop from './BackToTopBtn'
 import {useLocation,useHistory} from 'react-router-dom'
 
 export default () => {
-  
+    const { user, setUser } = useContext(userContext);
     const queryParams = new URLSearchParams(useLocation().search);
     const [messageStatus,setMessageStatus]=useState({isShown:false,isSuccess:false})
     const history = useHistory();
     useEffect(() => {
+        const params = new URLSearchParams(window.location.search); 
+        if (params.get('logout')==='true'&&user)
+        {
+            console.log(user)
+            setUser({})
+            history.replace({
+            search: '',
+            })
+            localStorage.removeItem("userData")
+        }
+    },[user])
+    useEffect(() => {
+        
+        
+        
     const isModalOpen=queryParams.get('message_open')
     console.log("🚀 ~ file: MainPage.js ~ line 18 ~ useEffect ~ isModalOpen", isModalOpen)
         const isSendSuccess = queryParams.get('send_success')
         console.log("🚀 ~ file: MainPage.js ~ line 19 ~ useEffect ~ isSendSuccess", isSendSuccess)
-        history.replace({
-            search: '',
-          })
+        // history.replace({
+        //     search: '',
+        //   })
         if (isModalOpen != null && isModalOpen != null) 
          setMessageStatus({isShown:isModalOpen==='true',isSuccess:isSendSuccess==='true'})
          console.log("🚀 ~ file: MainPage.js ~ line 62 ~ messageStatus", messageStatus)

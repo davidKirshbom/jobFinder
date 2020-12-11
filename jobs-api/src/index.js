@@ -6,6 +6,7 @@ const testRoute=require('./router/router')
 const jobsRouter = require('./router/jobsRouter');
 const usersRouter = require('./router/usersRouter');
 const utilsRouter = require('./router/utilsRouter');
+const agentsRouter=require('./router/agentsRouter')
 const {logger}=require('./utils/middlewares')
 const publicDirectoryPath = path.join(__dirname, '../public')
 const app = express();
@@ -17,7 +18,8 @@ app.use(logger)
 app.use('/',testRoute)
 app.use('/jobs',jobsRouter)
 app.use('/users', usersRouter)
-app.use('/utils',utilsRouter)
+app.use('/utils', utilsRouter)
+app.use('/agents',agentsRouter)
 app.listen(port, () => {
     console.log('Server connected, port:',port)
 })

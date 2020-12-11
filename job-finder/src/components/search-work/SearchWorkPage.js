@@ -11,7 +11,6 @@ import { getUserSavedJobs, searchJobs } from '../../server/jobsDB'
     export default () => {
     const [resultOffset,setResultOffset]=useState(0);
     const [jobsList, setJobsList] = useState({ rows: [], total: 0 });
-    const [savedJobs, setSavedJobs] = useState([]);
     const {user,setUser}=useContext(userContext)
     const [activeFilters, setActiveFilters] = useState({});
     const [sortBy,setSortBy]=useState({isAscending:true})
@@ -32,19 +31,17 @@ import { getUserSavedJobs, searchJobs } from '../../server/jobsDB'
         }
        
        setActiveFilters({ location_area:queryParms.get('location_area')||'',positions:queryParms.get('position_name'),type:queryParms.get('category')})//useEffect fires new search
-       console.log("🚀 ~ file: SearchWorkPage.js ~ line 31 ~ handleSearchAtStart ~ queryParms.get('category')", queryParms.get('category'))
-       console.log("🚀 ~ file: SearchWorkPage.js ~ line 31 ~ handleSearchAtStart ~ queryParms.get('position_name')", queryParms.get('position_name'))
         history.replace({
             search: '',
           })
     }
-    const updateSavedUserJobs = async (userId,token) => {
-    console.log("🚀 ~ file: SearchWorkPage.js ~ line 42 ~ updateSavedUserJobs ~ userId,token", userId,token)
-        
+    const updateSavedUserJobs = async (userId,token) => {      
         try {
             const savedList = await getUserSavedJobs(userId, token)
-            console.log("🚀 ~ file: SearchWorkPage.js ~ line 45 ~ updateSavedUserJobs ~ savedList", savedList)
-            return savedList.map((data)=>data.job_id)
+            console.log("🚀 ~ file: SearchWorkPage.js ~ line 41 ~ updateSavedUserJobs ~ savedList", savedList)
+
+            
+            return savedList.map((data)=>data.id)
            
         }catch (err) {
             console.log('err',err)

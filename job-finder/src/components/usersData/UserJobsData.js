@@ -23,7 +23,7 @@ export default () => {
         if(isSavedJobsTabSelected)
         updateSavedUserJobs(user.data.uid, user.token).then((value) => {setJobsList({rows:value})})
         else
-        updateSendedUserJobs(user.data.uid, user.token).then((value) => { setJobsList({ rows: value }) })
+            updateSendedUserJobs(user.data.uid, user.token).then((value) => { console.log(value); setJobsList({ rows: value }) })
     }, [isSavedJobsTabSelected])
     
 
@@ -39,20 +39,22 @@ export default () => {
     }
     
     return (
-        <div>
+        <div className='page-context'>
             <div className="chart-tabs container-flex-row">
-                <div onClick={()=>setIsSavedJobsTabSelected(true)} className="tab">המשרות ששמרתי</div>
-                <div onClick={()=>setIsSavedJobsTabSelected(false)} className='tab'>המשרות ששלחתי</div>
+                <div onClick={() => setIsSavedJobsTabSelected(true)} className={`tab ${isSavedJobsTabSelected?'selected':''}`}>המשרות ששמרתי</div>
+                <div onClick={()=>setIsSavedJobsTabSelected(false)} className={`tab ${isSavedJobsTabSelected?'':'selected'}`}>המשרות ששלחתי</div>
             </div>
             {
                 <ResultList
-        sortObj={sortBy}
-        setSort={setSortBy}
-        resultOffset={resultOffset}
-        setResultOffset={setResultOffset}
-        totalResults={jobsList.total}
-        jobsList={jobsList.rows}
-        NodeComponent={ResultListNode}></ResultList>
+                    sortObj={sortBy}
+                    setSort={setSortBy}
+                    resultOffset={resultOffset}
+                    setResultOffset={setResultOffset}
+                    totalResults={jobsList.total}
+                    jobsList={jobsList.rows}
+                    NodeComponent={ResultListNode}
+                    isWithOutCheckbox={true}
+                    titlesList={[{ text: 'שם',className:'name-title' },{text:'קוד',className:'code-title'},{text:'מיקום',className:'location-title'}]}></ResultList>
             }
         </div>
     )

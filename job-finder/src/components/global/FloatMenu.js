@@ -24,7 +24,12 @@ export default () => {
         const menuItemsList = document.getElementsByClassName("menu-item")
         for (let index = 0; index < menuItemsList.length; index++)
         {
-            menuItemsList[index].addEventListener("click", () => FloatMenuToogle(menuButton))
+            menuItemsList[index].addEventListener("click", () => {
+                if (document.body.clientWidth > 990)
+                    FloatMenuToogle(menuButton)
+                    console.log("🚀 ~ file: FloatMenu.js ~ line 36 ~ menuItemsList[index].addEventListener ~ window.screen.width", document.body.clientWidth)
+
+            })
             const childrenList = menuItemsList[index].children
             if(childrenList.length>1)
                 childrenList[0].addEventListener("click", (e) => {

@@ -134,7 +134,6 @@ padding: 10px;
     overflow-y: scroll;
     direction: ltr;
     width: 100%;
-    height: 100vh;
     position: fixed;
     top: 0px;
     right: 0px;
@@ -250,7 +249,7 @@ padding: 10px;
     margin-right: 55px;
 }
 .extra-data-container{
-    transition: max-height .15s linear ;
+    transition: max-height .25s linear ;
 max-height: 0px;
 display: flex;
 flex-wrap: nowrap;
@@ -273,7 +272,7 @@ overflow: hidden;
 }
 
 .extra-data-container.open{
-            max-height: 1000px;
+            max-height: 2000px;
             z-index: unset;
             position: relative;
             overflow: visible;
@@ -285,6 +284,9 @@ overflow: hidden;
             .job-title{
                 
                 transform: translateX(0px);
+                position: relative;
+                top:-10px;
+                height: 67px;
             .close-extra-data{
                     display: inline;
            margin: 0px;
@@ -329,7 +331,7 @@ overflow: hidden;
               top:0,
            }
         }
-        .summary-container:not(.yellow-select):hover+.extra-data-container{
+        .summary-container:not(.yellow-select):not(.no-float):hover+.extra-data-container{
             position: absolute;
             direction: ltr;
             background: white;

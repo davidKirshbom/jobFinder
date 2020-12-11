@@ -5,10 +5,13 @@ export default () => {
     useEffect(() => {
         try
        { 
-        getTotalJobs().then((value)=>setJobsCount(value))
+            getTotalJobs().then((value) => {
+                console.log('val', value);
+                setJobsCount(value)
+            })
             
         } catch (err) {
-            console.log(err)
+            console.log('error',err)
         }
     },[])
     return (

@@ -3,7 +3,9 @@ const searchJob = (parameters) => {
     let sortBy,dateLimits,occupation,job_type,positions,location_area,resultOffset, searchWord, isSenorSearch, filters, resultsLimit,openJobsOnly;
     if (parameters) {
         sortBy =parameters.sortBy?JSON.parse(parameters.sortBy):undefined;
-        searchWord = parameters.searchWord
+        searchWord =parameters.searchWord==='undefined'?'': parameters.searchWord  
+        console.log("🚀 ~ file: querys.js ~ line 7 ~ searchJob ~ searchWord", searchWord)
+        
         isSenorSearch = parameters.isSenorSearch
         positions = parameters.positions
         resultsLimit = parameters.resultsLimit
@@ -18,7 +20,7 @@ const searchJob = (parameters) => {
             INNER JOIN companies ON jobs.company_uid=companies.uuid 
             INNER JOIN (SELECT position_jobs_connection.job_id,string_agg(positions.name,',') AS category FROM position_jobs_connection
                   INNER JOIN positions ON positions.id=position_jobs_connection.position_id
-                  ${positions ? `WHERE upper(positions.name) IN ('${positions.toUpperCase()}')`:"" }
+                  ${positions ? `WHERE upper(positions.name) IN (${positions.toUpperCase()})`:"" }
                   GROUP BY position_jobs_connection.job_id) AS p 
                   ON jobs.id=p.job_id
             WHERE
@@ -28,7 +30,7 @@ const searchJob = (parameters) => {
              ${openJobsOnly ? " jobs.end_date IS NULL " : "1=1"} AND
              ${location_area ? `location_area IN (${location_area})`:"1=1"} AND
              
-             ${job_type&&job_type!=='all types' ? ` type IN ('${job_type}')` : "1=1"} AND
+             ${job_type&&job_type!=='all types' ? ` type IN (${job_type})` : "1=1"} AND
              ${dateLimits==='true'?`jobs.start_date BETWEEN current_date - integer '7' AND current_date `:"1=1"}
             ${sortBy&&sortBy.attribute? (`ORDER BY jobs.${sortBy.attribute} ${sortBy.isAscending ? "ASC" : "DESC"}`)
             : (`ORDER BY jobs.start_date`)}
@@ -57,7 +59,7 @@ const searchJobCount = (parameters) => {
         INNER JOIN companies ON jobs.company_uid=companies.uuid 
         INNER JOIN (SELECT position_jobs_connection.job_id,string_agg(positions.name,',') AS category FROM position_jobs_connection
               INNER JOIN positions ON positions.id=position_jobs_connection.position_id
-              ${positions ? `WHERE upper(positions.name) IN ('${positions.toUpperCase()}')`:"" }
+              ${positions ? `WHERE upper(positions.name) IN (${positions.toUpperCase()})`:"" }
               GROUP BY position_jobs_connection.job_id) AS p 
               ON jobs.id=p.job_id
         WHERE
@@ -65,9 +67,9 @@ const searchJobCount = (parameters) => {
         ${isSenorSearch==='true' ? " jobs.is_managerial_position='True' " : "1=1"} AND
          ${filters ? getFiltersQueryString(filters)  : "1=1"} AND
          ${openJobsOnly ? " jobs.end_date IS NULL " : "1=1"} AND
-         ${location_area ? `location_area IN ('${location_area}')`:"1=1"} AND
+         ${location_area ? `location_area IN (${location_area})`:"1=1"} AND
          
-         ${job_type ? ` positions_category.name IN ('${job_type}')` : "1=1"} AND
+         ${job_type ? ` positions_category.name IN (${job_type})` : "1=1"} AND
          ${dateLimits==='true'?`jobs.start_date BETWEEN current_date - integer '7' AND current_date `:"1=1"}
     
          

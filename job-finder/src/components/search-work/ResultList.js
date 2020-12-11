@@ -3,7 +3,7 @@ import userContext from '../../contexts/UserContext'
 import ListNode from './ResultListNode'
 // import { jobsList } from '../../data/jobs'
 
-export default ({NodeComponent,sortObj,setSort, jobsList, resultOffset, setResultOffset,totalResults,markedNodesFunction,titlesList }) => {
+export default ({NodeComponent,sortObj,setSort, jobsList, resultOffset, setResultOffset,totalResults,markedNodesFunction,titlesList ,isWithOutCheckbox}) => {
     
     const [pageOffset, setPageOffset] = useState(0);
     const [markedList, setMarkedList] = useState([])
@@ -64,7 +64,7 @@ export default ({NodeComponent,sortObj,setSort, jobsList, resultOffset, setResul
                         <div className="list-title-location result-title-item">מיקום <i onClick={()=>{if(setSort)setSort({attribute:'location_area',isAscending:!sortObj.isAscending})}}  className={sortObj?(sortObj.attribute==='location_area'?(sortObj.isAscending?'fas fa-sort-up':'fas fa-sort-down'):"fas fa-sort"):''+" sort-results-icon"}></i></div>*/}
             </div>
             {
-                jobsList ? (jobsList.slice(pageOffset, pageOffset + 20).map((job, index) => (<NodeComponent defaultChecked={markedList?markedList.includes(job.id):''} className={index % 2 === 0 ? "gray-bg" : "white-bg"} {...job} index={pageOffset  + index+1} />))) : ""
+                jobsList ? (jobsList.slice(pageOffset, pageOffset + 20).map((job, index) => (<NodeComponent defaultChecked={markedList?markedList.includes(job.id):''} className={index % 2 === 0 ? "gray-bg" : "white-bg"} {...job} isWithOutCheckbox={isWithOutCheckbox} index={pageOffset  + index+1} />))) : ""
                 
             }
             <div className="list-navigator-container">

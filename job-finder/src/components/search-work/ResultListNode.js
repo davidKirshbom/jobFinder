@@ -4,7 +4,8 @@ import userContext from '../../contexts/UserContext'
 import OrangeCheckBox from '../global/OrangeCheckBox'
 import {removeUserSavedJob, sendCv, userSaveJob} from '../../server/usersDB'
 export default ({additional_positions, name,role_name, id, location_area, className, index, type, experience_years,
-                qualifications,company_occupation,description,category,defaultChecked}) => {
+                qualifications,company_occupation,description,category,defaultChecked,isWithOutCheckbox}) => {
+                console.log("🚀 ~ file: ResultListNode.js ~ line 8 ~ isWithOutCheckbox", isWithOutCheckbox)
                
           
     const [isExtraInfoOpen, setIsExtraInfoOpen] = useState(false)
@@ -56,7 +57,8 @@ export default ({additional_positions, name,role_name, id, location_area, classN
         <div className={`list-node-container ${className||""}` } onClick={()=>setIsExtraInfoOpen(true)}>
             <div  className={`summary-container ${isExtraInfoOpen?"yellow-select":""}`} >
          
-                <OrangeCheckBox checked={isMarked} onChange={isChecked => { setIsMarked(!isMarked); isChecked ? saveJob(id) : removeSavedJob(id)}} id={"checkbox-id-"+id} />
+              {isWithOutCheckbox?'': (<OrangeCheckBox checked={isMarked} onChange={isChecked => { setIsMarked(!isMarked); isChecked ? saveJob(id) : removeSavedJob(id)}} id={"checkbox-id-"+id}
+               />)}
                 <div className="data-container">
                     {index!==null?<span className="index-node">{`${index}.`}</span>:""}
                     <span className="data-title">שם</span>

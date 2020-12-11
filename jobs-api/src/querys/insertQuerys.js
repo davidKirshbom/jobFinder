@@ -29,6 +29,7 @@ const insertUserSendedJobs = (userUid, jobId) => {
     return (`INSERT INTO user_sended_jobs (job_id,user_uid) VALUES (${jobId},'${userUid}')`)
 }
 const insertNewAgent = ({ name, frequency, jobType, userUid, location, searchWords }) => {
+  
     return (`
     INSERT INTO user_smart_agents (name,location_area,job_type,search_words,user_uid,frequency_weeks) VALUES ('${name}','${location}','${jobType}','{${searchWords}}','${userUid}',${frequency})
     RETURNING id
@@ -39,7 +40,8 @@ const insertCategoriesPositionsToAgent = (categories, positions, id) => {
     let insertCategoriesQuery=''
     positions.forEach((position)=>insertPositionsQuery+=` INSERT INTO smart_agent_positions (agent_id,position_id) VALUES (${id},${position});\n`)
    categories.forEach((category)=>insertCategoriesQuery+=`INSERT INTO smart_agent_categories (agent_id,category_id) VALUES (${id},${category});\n`)
-    return insertCategoriesQuery+insertPositionsQuery
+   console.log('query insert agent', insertCategoriesQuery + insertPositionsQuery)
+    return insertCategoriesQuery + insertPositionsQuery
 }
 const insertAgentSandedEmail = (agentId,jobId) => {
     return (`

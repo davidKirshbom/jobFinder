@@ -51,6 +51,7 @@
     position: absolute;
     left: 0px;
     height: 54px;
+    height: 100%;
     overflow: hidden;
 } 
 .logo-image{
@@ -149,13 +150,14 @@ height: 34px;
     }
  
     .logo-container{
+       
         display: flex;
         flex-flow: column;
         align-items: center;
         margin-top: auto;
         margin-bottom: auto;
         margin-left: 50px;
-        
+        z-index: 10000;
         .logo-image{
             height: 55px;
             width:141px ;
@@ -186,7 +188,7 @@ height: 34px;
         align-items: center;
         position: relative;
         width: 110px;
-        padding-right: 10px;
+        padding-right: 70px;
         right: 30px;
         margin-right: 10px;
         &:hover{
@@ -212,7 +214,7 @@ height: 34px;
     margin-top: 0px;
     padding: 0px;
     position: relative;
-    right: 60px;
+ 
     a,
     li{
         display: flex;
@@ -252,6 +254,23 @@ height: 34px;
     .user-detail-container{
         position: absolute;
         right: 700px;
+        .name-title{
+            right: -70px;
+            margin: 0px;
+            
+            width: unset;
+            padding: 0px;
+      }
      
+    }
+    .background-triangle{
+    position: relative;
+        top:-50px;
+        z-index: 10;
+      
+   
     } 
+    .user-menu-container.open{
+        right: -70px;
+    }
 }

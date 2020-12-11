@@ -3621,7 +3621,7 @@ header .panel_total-jobs .total-jobs-text .total-jobs-number .big-splitter.split
             transform: translateX(-50px);
   }
   .extra-data-container.open {
-    max-height: 1000px;
+    max-height: 2000px;
     z-index: unset;
     position: relative;
     overflow: visible;

@@ -28,16 +28,21 @@ export default () => {
         }
     })(),[resultOffset,sortBy])
     
-    return (<div>
-        <ResultList
+    return (<div className='page-context'>
+      <ResultList
+        className='no-float'
             sortObj={sortBy}
             setSort={setSortBy}
             resultOffset={resultOffset}
             setResultOffset={setResultOffset}
             totalResults={jobsList.total}
             jobsList={jobsList.rows}
-        NodeComponent={JobWallNode}></ResultList>
-      <button onClickCapture={(e)=>setIsNewJobFormOpen(true)} className="add-job-button ">הוסף חדש</button>
+        NodeComponent={JobWallNode}
+        titlesList={[{ text: 'status', className: 'status-title' }
+                   , { text: 'name',className:'name-title' }, { text: 'code',className:'code-title' },
+                     { text: 'location',className:'location-title' }]}
+      ></ResultList>
+      <button onClickCapture={(e)=>setIsNewJobFormOpen(true)} className="add-job-button orange-button">הוסף חדש</button>
       <div className='add-job-modal open'>
         <JobWallNode isNewJob={true} isOpen={isNewJobFormOpen} hideSummary={true}/>
       </div>

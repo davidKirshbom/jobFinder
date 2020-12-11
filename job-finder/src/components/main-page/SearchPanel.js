@@ -1,22 +1,37 @@
-import React,{useContext} from 'react'
-import { totalJobs } from '../../data/jobs'
+import React,{useContext,useEffect,useState} from 'react'
 import {Link} from 'react-router-dom'
 import ShareIcons from '../global/FloatShareIcons'
 import history from '../../router/history'
 import userContext from '../../contexts/UserContext'
+import { getTotalJobs } from '../../server/jobsDB'
 export default (props) => {
     const { user, setUser } = useContext(userContext)
+    const [totalJobs,setTotalJobs]=useState(0)
     const submitHandler = (e) => {
         e.preventDefault()
         const searchWord = e.target.elements[0].value
         const area_search = e.target.elements[1].value === 'all-areas' ? undefined : e.target.elements[1].value;
 
-        history.push(`/search-work?searchWord=${searchWord}&location_area='${area_search}'`)
+        history.push(`/search-work?searchWord=${searchWord}&location_area=${area_search}`)
         console.log(e.target.elements[1].value)
         
     }
+    useEffect(() => {
+        console.log('user',user)
+        try
+        { 
+        
+             getTotalJobs().then((value) => {
+                 console.log('val', value);
+                 setTotalJobs(value)
+             })
+             
+         } catch (err) {
+             console.log('error',err)
+         }
+    },[])
     return(<div className="panel-container">
-        <div className="background-triangle"/>
+        
         <ShareIcons/>
         <div className="panel_total-jobs">
             <div className="total-jobs-text">
@@ -27,6 +42,7 @@ export default (props) => {
                    <span className="total-jobs-subtitle">משרות מחכות לך</span> 
                </div>
         </div>
+        <div className='flex-column-desktop-only form-center'>
         <form onSubmit={submitHandler} className="search-work-form">
             <input className="job-name-input" type="text" placeholder="חפש משרה(לדוגמא: SEO,אבטחת מידע,C++,JAVA)"></input>
            
@@ -51,12 +67,23 @@ export default (props) => {
             <Link to="/search-work" className="advanced-search">חיפוש מתקדם</Link>
         </form>
         
-        {user.data ?
-            <div className='container-flex-row user-buttons-container  '>
-                <Link to='/user-save-jobs' className="orange-button user-button"><i class="fas fa-suitcase"></i> המשרות שלי</Link>
-                <Link to='/user-agent' className="orange-button user-button"><i class="far fa-address-card"></i> הסוכנים שלי</Link>
-            </div>
-                : <a className="send-CV big-orange-butoon"><i className="fab fa-studiovinari "></i> שלח קו"ח אלינו</a>}
-                
+            {(() => {
+                console.log('user-mainpage',user)
+                if (user.data) {
+                    if (user.data.user_type === 'user')
+                        return (<div className='container-flex-row user-buttons-container  '>
+                            <Link to='/user-save-jobs' className="orange-button user-button"><i class="fas fa-suitcase"></i> המשרות שלי</Link>
+                            <Link to='/user-agent' className="orange-button user-button"><i class="far fa-address-card"></i> הסוכנים שלי</Link>
+                        </div>)
+                    else
+                        return (<div className='container-flex-row user-buttons-container  '> <Link to='/my-jobs-wall' className="orange-button company-button"><i class="fas fa-suitcase"></i> נהל משרות</Link></div>)
+                }
+                else
+                    return <a className="send-CV big-orange-butoon"><i className="fab fa-studiovinari "></i> שלח קו"ח אלינו</a>
+            })()
+                 
+          
+            }
+                </div> 
     </div>)
 }

@@ -1,6 +1,8 @@
 
 import React, { useState, useEffect, useContext } from 'react'
 import history from '../../router/history'
+import { useLocation } from 'react-router-dom'
+
 import {Link} from 'react-router-dom'
 import userContext from '../../contexts/UserContext'
 import ResultList from '../search-work/ResultList'
@@ -13,6 +15,8 @@ export default () => {
     const [lastScannedJobs, setLastScannedJobs] = useState([]);
     const [listOffset,setListOffset]=useState(0)
     const { user,setUser } = useContext(userContext);
+    const queryParams = new URLSearchParams(useLocation().search);
+
     const updateAgentsList = async () => {
         try{
         const agents=(await getUserAgents(user))
@@ -21,12 +25,8 @@ export default () => {
                 setAgentList([...agents])
     }catch (err)
     {
-        console.log('err', err.response)
-            if (err.response.status === 505)
-            {
-                history.push('/')
-                setUser({data:null})
-            }
+        console.log('err', err)
+          
             
         }
         
@@ -69,6 +69,9 @@ export default () => {
             הגדירו תפקידים בהם אתם מעוניינים ותדירות קבלת עדכונים.<br/>
 הסוכן החכם יאתר משרות עבורכם וישלח מייל עם כל הצעות העבודה המתאימות.
             </p>
+            {queryParams.get('success') === 'true' ?
+            <div className='success-letters'>הסוכן החדש נוצר בהצלחה</div>:''}
+
             <div className='tools-bar'>
                 <div className='tabs-container'>
                 {agentList.map((agent,index) => <span onClick={(e)=>setAgentSelectedIndex(index)} className={`tab ${agentSelectedIndex===index?'selected':''}`}>{agent.name}({agent.last_scan_found_count||0})</span>)}
@@ -95,7 +98,7 @@ export default () => {
                 </div>
                 <div className='agent-detail-container'>
                     <label className='orange-small-title'>מילות מפתח</label>
-                    <div className='data-text'>{currentAgent? currentAgent.search_words:''}</div>
+                    <div className='data-text'>{currentAgent&&currentAgent.search_words==='undefined'? currentAgent.search_words||'':''}</div>
                         </div>
                         </div>
                     <div className='data-left-side no-border'>
@@ -116,10 +119,10 @@ export default () => {
                     }} ><i class="fas fa-pencil-alt"></i>ערוך סוכן</Link>
                     <Link onClick={handleDelete} to='/user-agent'><i class="fas fa-trash"></i> מחק סוכן</Link>
                     </div>
-                <button className='orange-button new-scan-button' onClick={(e) =>
+                <button className='orange-button new-scan-button' onClick={async(e) =>
                 {
                     const tempSelectedIndex=agentSelectedIndex
-                    startScan(agentList[agentSelectedIndex]);
+                  await  startScan(agentList[agentSelectedIndex]);
                     updateAgentsList();
                     updateLastScannedJobs(agentList[agentSelectedIndex]);
                 }}>הרץ כעת</button>
@@ -130,7 +133,7 @@ export default () => {
                     setResultOffset={setListOffset || ""}
                     jobsList={lastScannedJobs}
                     NodeComponent={ResultListNode || ""}
-                    titlesList={[{ text: 'שם',className:'name-title' }, { text: 'קוד',className:'code-title' },{text:'מיקום',className:'area-title'}]}
+                    titlesList={[{ text: 'שם',className:'name-title' }, { text: 'קוד',className:'code-title' },{text:'מיקום',className:'location-title'}]}
 
         />
             </div>

@@ -142,7 +142,8 @@ useEffect(() => {
                     searchWord: searchWord.split('\n').map((word) => `"${word}"`)
 
                 })
-        }      
+        } 
+        history.push({pathname:'/user-agent',search:'?success=true'})
     }
     return (<div className=''>
         <div className='data-page-text'>
@@ -151,6 +152,8 @@ useEffect(() => {
         הגדירו תפקידים בהם אתם מעוניינים ותדירות קבלת עדכונים.<br/>
 הסוכן החכם יאתר משרות עבורכם וישלח מייל עם כל הצעות העבודה המתאימות.
         </p>
+            {queryParams.get('success') === 'true' ?
+                <div className='success-letters'>הסוכן החדש נוצר בהצלחה</div>:''}
         </div>
         <form id='create-agent-form' onSubmit={handleSendForm} >
             <div className="input-container">

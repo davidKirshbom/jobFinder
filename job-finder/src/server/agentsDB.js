@@ -1,6 +1,6 @@
 import requestsHandler from './requestsHandler'
 const getUserAgents =async (user) => {
-    const result = (await requestsHandler('get', '/users/get-agents',{
+    const result = (await requestsHandler('get', '/agents/get-agents',{
         headers: {
             'Authorization':JSON.stringify('Bearer '+user.token),
         },
@@ -13,7 +13,7 @@ const getUserAgents =async (user) => {
 
 }
 const deleteAgent = async (agentId,user) => {
-    const result = await requestsHandler('delete', `/users/delete-agent/${agentId}/${user.data.email}`,
+    const result = await requestsHandler('delete', `/agents/delete-agent/${agentId}/${user.data.email}`,
     {
         headers: {
             'Authorization':JSON.stringify('Bearer '+user.token)
@@ -22,7 +22,7 @@ const deleteAgent = async (agentId,user) => {
     return result;
 }
 const getAgentLastScan = async (agentId,user) => {
-    const result = (await requestsHandler('get', `/users/agent-last-scan/${agentId}/${user.data.email}`,
+    const result = (await requestsHandler('get', `/agents/agent-last-scan/${agentId}/${user.data.email}`,
         {
             headers: { 'Authorization':JSON.stringify('Bearer '+user.token)}
         })).data
@@ -30,7 +30,7 @@ const getAgentLastScan = async (agentId,user) => {
 }
 const forceAgentScan = async(agent,user) =>
 {
-    const result = (await requestsHandler('post', `/users/agent-scan/${agent.id}/${user.data.email}/${user.data.uid}`,
+    const result = (await requestsHandler('post', `/agents/agent-scan/${agent.id}/${user.data.email}/${user.data.uid}`,
         {
             headers: { 'Authorization': JSON.stringify('Bearer ' + user.token) }
         
@@ -38,7 +38,7 @@ const forceAgentScan = async(agent,user) =>
     return result
 }
 const getAgent = async (user,agentId,editedData) => {
-    const result=(await requestsHandler('get','/users/get-agents',{
+    const result=(await requestsHandler('get','/agents/get-agents',{
         headers: {
             'Authorization':JSON.stringify('Bearer '+user.token),
         },
@@ -51,7 +51,7 @@ const getAgent = async (user,agentId,editedData) => {
     return result
 }
 const newAgent = async (user,agentData) => {
-    const result=(await requestsHandler('post',`/users/new-agent/${user.data.uid}`,{
+    const result=(await requestsHandler('post',`/agents/new-agent/${user.data.uid}`,{
         headers: {
             // authorization:
             'Authorization': JSON.stringify('Bearer '+user.token), 
@@ -63,7 +63,7 @@ const newAgent = async (user,agentData) => {
     }))
 } 
 const editAgent = async (user, agentData) => {
-    const result =(await requestsHandler('post',`/users/update-agent/${user.data.uid}`,{
+    const result =(await requestsHandler('post',`/agents/update-agent/${user.data.uid}`,{
         headers: {
             'Authorization': JSON.stringify('Bearer '+user.token), 
         },

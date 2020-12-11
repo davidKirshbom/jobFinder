@@ -204,18 +204,27 @@ router.delete('/remove/:id/:email', async (req, res) => {
 router.post('/send-cv/:jobId/:userUid',async (req,res) => {
     const jobId = req.params.jobId;
     const userUid = req.params.userUid;
+    const token=JSON.stringify(req.headers.authorization)
     console.log('insertUserSendedJobs(userUid,jobId)',insertUserSendedJobs(userUid,jobId))
     try
     {
         const userData = (await client.query(getUserByUidAndType(userUid, 'user'))).rows[0];
-        const isAuth =await isTokenValid(userData.email,req.body.headers.Authorization.replace('Bearer ','').trim())       
+     
+
+
+        const isAuth = await isTokenValid(userData.email, token) 
+        console.log("🚀 ~ file: jobsRouter.js ~ line 215 ~ router.post ~ isAuth", isAuth)
+        
         if (isAuth) {
-            const result= await client.query(insertUserSendedJobs(userUid,jobId))
+            const result = await client.query(insertUserSendedJobs(userUid, jobId))
+            console.log("🚀 ~ file: jobsRouter.js ~ line 215 ~ router.post ~ result", result)
+            
             res.send(result)
         }
         else throw new Error('not auth')
     
     } catch (err) {
+        console.log(err)
         res.status(404).send({status:404,message:`error ${err}`})
     }
 })

@@ -13,7 +13,8 @@ export default ({ isOpen, setIsOpen }) => {
             {
             setUser(user);
             setIsBadLoginData(false)
-            setIsOpen(false);}
+                setIsOpen(false);
+            }
         }catch (err) {
             if (err.response.data.code === 401)
                 setIsBadLoginData(true)

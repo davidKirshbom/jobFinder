@@ -75,11 +75,26 @@ text-decoration: none;
     width: 100%;
     margin-top: 1.5rem;
 }
+.none-overflow{
+    overflow: hidden !important;
+}
+.success-letters{
+    color: #008000;
+}
+
 @media(min-width: $break-point-desktop){
     .mobile-only{
         display: none !important;
     }
     .desktop-only{
         display: inline !important;
+    }
+    .page-context{
+        padding-right: 20px;
+        margin-bottom: 20px;
+    }
+    .flex-column-desktop-only{
+        display: flex;
+        flex-flow: column;
     }
 }

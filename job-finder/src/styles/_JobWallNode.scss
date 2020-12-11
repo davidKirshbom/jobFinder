@@ -13,19 +13,10 @@
 
             }
         }
-    }
-  .extra-data-container{
-  
-    .all-positions-container{
-      
-    
-    }
-  }  
-  *{
-      direction: ltr;
-  }
+    }  
+ 
 }
-#jobs-form{
+.job-form{
     padding-right: 10px;
     display: flex;
     flex-wrap: wrap;
@@ -35,15 +26,22 @@
     .job-detail-container{
         display: flex;
         flex-flow: column;
-        width: 100%;
+        width: 95%;
         margin:0px 5px;
     textarea{
         width: 100%;
-        
+        resize: none;
+        border: 1px solid black;
     }
     }
     select{
         width: 100%;
+        
+        border: 1px solid black;
+    }
+    input:not([type='submit']){
+  
+        border: 1px solid black;
     }
 }
 .select-Positions{
@@ -112,6 +110,7 @@
     color: $orange;
     background: none;
     border: 1px solid $orange;
+    margin-right: 10px;
     &:hover{
         background: $light-blue;
         border-color: $light-blue;
@@ -139,5 +138,15 @@
     color: white;
     font-size: 1.5rem;
     font-weight: 600;
+    width: 94%;
+    margin:0px auto;
 
+}
+
+@media(min-width:$break-point-desktop){
+    #jobs-wall-node{
+    .summary-container{
+        width: 100%;
+    }
+}
 }

@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import { Link, Switch, Route, Router } from "react-router-dom";
+import { Link, Switch, Route, Router,withRouter } from "react-router-dom";
 import MainPage from '../components/main-page/MainPage'
 import SearchWorkPage from '../components/search-work/SearchWorkPage'
 import CompanyJobsWall from '../components/usersData/CompanyJobsWall'
@@ -34,8 +34,16 @@ export default () => {
         
         // console.log('sksklasdmalkmdaslkdmsalkmaskl')
         // setUser(null)
-},[])
+    }, [])
+    
+history.listen((location, action) => {
+    console.log("one change");
+    // Do stuff.
+    setIsMainPage(location.pathname==='/')
+})
+    const [isOnMainPage,setIsMainPage]=useState(true)
     const [isLoginBarOpen,setIsLoginBarOpen]=useState(false)
+    console.log('history.location.pathname',history.location.pathname)
     return (
   
         <div>
@@ -45,7 +53,10 @@ export default () => {
                         isOpen={isLoginBarOpen}
                         setIsOpen={setIsLoginBarOpen}
                     />
-            <NavigationBar onLoginPress={()=>setIsLoginBarOpen(true)} />
+                    <NavigationBar
+                        onLoginPress={() => setIsLoginBarOpen(true)}
+                        isMainPage={isOnMainPage}
+                    />
             <FloatMenu />
             <FloatShareIcons />
          

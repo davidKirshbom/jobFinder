@@ -24,18 +24,18 @@ export default ({is_managerial_position,isNewJob,hideSummary,isOpen, end_date,st
     }
     const { user } = useContext(userContext)
     useEffect(()=>{setIsExtraInfoOpen(isOpen)},[isOpen])
-    useEffect(
-        () => 
-        (
-            async () => 
-            {
-                const categoryList = await getAllCategories(); 
+    useEffect(() => {
+        try
+        {
+            getAllCategories().then((categoryList) => setCategoryList(categoryList))
+        } catch (error) {
+            console.log(error)
+        }
             
-                setCategoryList(categoryList)
-            }
-                    
-    )()
+                
             
+                    }
+      
     , [])
     const handleValidForm = () => {
         const inputs = document.getElementById(`jobs-form${id||''}`).children;
@@ -68,8 +68,6 @@ export default ({is_managerial_position,isNewJob,hideSummary,isOpen, end_date,st
     const handleUpdate = async (end_date) => {
         const isFormValid = !handleValidForm();
         setFormData({...formData,is_managerial_position:document.getElementById(`checkbox-${id||""}`).checked})
-        
-       
         if(isFormValid||end_date||end_date==='')
         {if (isNewJob)
         {
@@ -77,14 +75,22 @@ export default ({is_managerial_position,isNewJob,hideSummary,isOpen, end_date,st
             formData.category = document.getElementById('category-select').value;
             
             console.log('insert new job')
-            const insertResult = await insertNewJob(formData,user)
-            console.log("🚀 ~ file: JobWallNode.js ~ line 79 ~ handleUpdate ~ insertResult", insertResult)
+            try
+            {
+                const insertResult = await insertNewJob(formData, user)
+            } catch (err) {
+                console.log(err)
+            }
         
         }
         else
         {
-            const updateResult = await updateJob(id,formData,user,end_date)
-            console.log(updateResult)
+            try
+            {
+                const updateResult = await updateJob(id, formData, user, end_date)
+            } catch (err) {
+                console.log(err)
+            }
         }}
     }
     
@@ -103,7 +109,7 @@ export default ({is_managerial_position,isNewJob,hideSummary,isOpen, end_date,st
     }
     return (
         <div id='jobs-wall-node' className={`list-node-container ${className || ""}`} onClick={() => setIsExtraInfoOpen(true)}>
-            <div className={`summary-container ${hideSummary?'hide':''} ${isExtraInfoOpen ? "yellow-select" : ""}`} >
+            <div className={`summary-container no-float ${hideSummary?'hide':''} ${isExtraInfoOpen ? "yellow-select" : ""}`} >
          
                 <div className="data-container">
                     {index !== null ? <span className="index-node">{`${index + 1}.`}</span> : ""}
@@ -135,10 +141,10 @@ export default ({is_managerial_position,isNewJob,hideSummary,isOpen, end_date,st
                     <label>end date:</label>{end_date?end_date.slice(0,end_date.indexOf('T')):""}
                     </div> : ''}
                     </div>
-                <form onSubmit={(e) => { e.preventDefault(); handleUpdate() }} id={`jobs-form${id||''}`}  >
+                <form onSubmit={(e) => { e.preventDefault(); handleUpdate() }} className='job-form'  id={`jobs-form${id||''}`}  >
                     <div className="job-detail-container">
                         <label htmlFor="name-update-input">name:</label>
-                        <input onChange={(e)=>setFormData({...formData,role_name:e.target.value})}  type="text" name="" id="name-update-input" defaultValue={role_name||""} />
+                        <input className='' onChange={(e)=>setFormData({...formData,role_name:e.target.value})}  type="text" name="" id="name-update-input" defaultValue={role_name||""} />
                         <label className="small-letters-container unvalid-label" hidden={!unvalidInputs.includes('role_name')}>חובה להזין שם באנגלית </label>
                     </div>
                     <div className="job-detail-container">

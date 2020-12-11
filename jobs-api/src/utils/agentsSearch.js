@@ -27,7 +27,7 @@ console.log("🚀 ~ file: agentsSearch.js ~ line 22 ~ handleAgentScan ~ agent", 
             agent.jobs=[]
             agent.location_area="'"+agent.location_area+"'"
             agent.location_area = agent.location_area.split(',').join("','")
-            agent.positions = agent.positions.split(',').join("','");
+            agent.positions ="'"+ agent.positions.split(',').join("','")+"'";
             for (let indexWord = 0; indexWord < agent.search_words.length;indexWord++)
             {
                 console.log("🚀 ~ file: agentsSearch.js ~ line 32 ~ handleAgentScan ~ searchJob({ ...agent, searchWord: agent.search_words[indexWord], openJobsOnly: true })", searchJob({ ...agent, searchWord: agent.search_words[indexWord], openJobsOnly: true }))
