@@ -4,7 +4,7 @@ const jwt =require('jsonwebtoken')
 const { getTokenRow } = require('../querys/utilsQuerys')
 const isTokenValid = async (email, token) => {
   
-  token = JSON.parse(token)+'kkk'
+  token = JSON.parse(token)
   
   token = token.replace('Bearer', '').trim().slice();
   
